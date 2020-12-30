@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .cell {
+        width: 100px;
+        height: 100px;
+        background-color: green;
+        border: 1px solid #fff;
+        display: inline-block;
+        vertical-align: middle;
+        font-size: 50px;
+        line-height: 100px;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="borad"></div>
+    <script>
+      let pattern = [
+        [1, 0, 0],
+        [0, 2, 0],
+        [0, 0, 0],
+      ];
+      let color = 1; //小技巧 通过 3-color 实现 1 2 交替
+      //2 = x ; 1 = o
+      show(pattern);
+      function show() {
+        //绘制
+        let borad = document.getElementById("borad");
+        borad.innerHTML = "";
+        for (let i = 0; i < 3; i++) {
+          for (let j = 0; j < 3; j++) {
+            let cell = document.createElement("div");
+            cell.classList.add("cell");
+            cell.innerHTML =
+              pattern[i][j] == 2 ? "❌" : pattern[i][j] == 1 ? "⭕" : "";
+            cell.addEventListener("click", () => move(j, i)); //j 表示很坐标 i表示纵坐标
+            borad.appendChild(cell);
+          }
+          borad.appendChild(document.createElement("br"));
+        }
+      }
+
+      function move(x, y) {
+        //落子
+        console.log(x, y);
+        if (pattern[y][x]) return;
+        pattern[y][x] = color;
+        if (check()) {
+          alert(color == 1 ? "⭕赢了" : "❌赢了");
+        }
+
+        color = 3 - color; //下一步该谁走
+        show(pattern);
+      }
+
+      function check() {
+        console.log("开始判断横排");
+        for (let i = 0; i < 3; i++) {
+          //判断每一排
+          let win = true;
+          for (let j = 0; j < 3; j++) {
+            if (pattern[i][j] != color) {
+              win = false;
+              console.log(color);
+            }
+          }
+          if (win) {
+            return win;
+          }
+        }
+        for(let i=0;i<3;i++){
+            //判断每一列
+            let win = true;
+            for(let j=0;j<3;j++){
+                if(pattern[j][i] !== color){
+                    win = false;
+                }
+            }
+            if(win) 
+                return win 
+        }
+        for(let i=0;i<3;i++){
+            let win = true;
+            for(let j=0;j<3;j++){
+                
+            }
+        }
+      }
+    </script>
+  </body>
+</html>
