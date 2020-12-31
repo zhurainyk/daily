@@ -15,22 +15,63 @@
         font-size: 50px;
         line-height: 100px;
         text-align: center;
+        transition: 0.5s;
+      }
+      body {
+        user-select: none;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .cell:empty:hover {
+        cursor: pointer;
+        background-color: pink;
+      }
+      button {
+        width: 20%;
+        float: right;
+        margin-top: 20px;
+        text-align: center;
       }
     </style>
   </head>
   <body>
-    <div id="borad"></div>
+    <div>
+      <div id="borad"></div>
+      <button id="btn">重置</button>
+    </div>
     <script>
       let pattern = [
-        [1, 0, 0],
-        [0, 2, 0],
+        [0, 0, 0],
+        [0, 0, 0],
         [0, 0, 0],
       ];
-      let color = 1; //小技巧 通过 3-color 实现 1 2 交替
+
+      let color = 2; //小技巧 通过 3-color 实现 1 2 交替
       //2 = x ; 1 = o
+
+      let switchMark = true;
+
+      btn.onclick = function () {
+        pattern = [
+          [0, 0, 0],
+          [0, 0, 0],
+          [0, 0, 0],
+        ];
+        switchMark = true;
+        color = 2;
+        show();
+      };
+
+
       show(pattern);
+      
       function show() {
         //绘制
+        if (!switchMark) {
+          return;
+        }
         let borad = document.getElementById("borad");
         borad.innerHTML = "";
         for (let i = 0; i < 3; i++) {
@@ -48,50 +89,90 @@
 
       function move(x, y) {
         //落子
-        console.log(x, y);
-        if (pattern[y][x]) return;
+        if (pattern[y][x]) return; //首先判断是否有棋子
         pattern[y][x] = color;
-        if (check()) {
+        if (check(pattern, color) && switchMark) {
+          //switchMark用于防止重复提示
           alert(color == 1 ? "⭕赢了" : "❌赢了");
+          setTimeout(() => {
+            switchMark = false; //关闭
+          });
         }
-
         color = 3 - color; //下一步该谁走
         show(pattern);
+        if (willWin(pattern, color) && switchMark) {
+          //判断谁可能赢
+          console.log(color == 1 ? "⭕可能赢" : "❌可能赢");
+        }
       }
 
-      function check() {
-        console.log("开始判断横排");
+      function check(pattern, color) {
+        //判断谁赢
+        // console.log("开始判断横排");
         for (let i = 0; i < 3; i++) {
           //判断每一排
           let win = true;
           for (let j = 0; j < 3; j++) {
             if (pattern[i][j] != color) {
               win = false;
-              console.log(color);
             }
           }
           if (win) {
             return win;
           }
         }
-        for(let i=0;i<3;i++){
-            //判断每一列
-            let win = true;
-            for(let j=0;j<3;j++){
-                if(pattern[j][i] !== color){
-                    win = false;
-                }
+        for (let i = 0; i < 3; i++) {
+          //判断每一列
+          let win = true;
+          for (let j = 0; j < 3; j++) {
+            if (pattern[j][i] !== color) {
+              win = false;
             }
-            if(win) 
-                return win 
+          }
+          if (win) return win;
         }
-        for(let i=0;i<3;i++){
-            let win = true;
-            for(let j=0;j<3;j++){ 
+        {
+          //判断每一个正斜向 用了一个作用域技巧
+          let win = true;
+          for (let i = 0; i < 3; i++) {
+            if (pattern[i][i] != color) {
+              win = false;
             }
+          }
+          if (win) return win;
+        }
+        {
+          //
+          //判断反斜向 也用了一个小技巧 2-i 实现反斜向坐标
+          let win = true;
+          for (let i = 0; i < 3; i++) {
+            if (pattern[i][2 - i] != color) {
+              win = false;
+            }
+          }
+          if (win) return win;
         }
       }
 
+      function clone(data) {
+        //深拷贝
+        return JSON.parse(JSON.stringify(data));
+      }
+
+      function willWin(pattern, color) {
+        //预测谁会赢
+        for (let i = 0; i < 3; i++) {
+          for (let j = 0; j < 3; j++) {
+            if (pattern[i][j]) continue;
+            let temp = clone(pattern);
+            temp[i][j] = color;
+            if (check(temp, color)) {
+              return true;
+            }
+          }
+        }
+        return false;
+      }
     </script>
   </body>
 </html>
