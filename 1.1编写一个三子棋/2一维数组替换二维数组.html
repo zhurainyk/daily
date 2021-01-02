@@ -42,11 +42,11 @@
       <button id="btn">重置</button>
     </div>
     <script>
-      let pattern = [
-        [0, 0, 1],
-        [0, 2, 0],
-        [0, 0, 0],
-      ];
+      let  pattern = [ //替换为一维数组技巧  i*3 + j 表示   横坐标j 纵坐标i
+          0, 0, 0,
+          0, 0, 0,
+          0, 0, 0,
+        ];
 
       let color = 2; //小技巧 通过 3-color 实现 1 2 交替
       //2 = x ; 1 = o
@@ -55,9 +55,9 @@
 
       btn.onclick = function () {
         pattern = [
-          [0, 0, 0],
-          [0, 0, 0],
-          [0, 0, 0],
+          0, 0, 0,
+          0, 0, 0,
+          0, 0, 0,
         ];
         switchMark = true;
         color = 2;
@@ -67,7 +67,7 @@
 
       show(pattern);
       
-        console.log( bestChoice(pattern,color))
+       
       function show() {
         //绘制
         if (!switchMark) {
@@ -80,7 +80,7 @@
             let cell = document.createElement("div");
             cell.classList.add("cell");
             cell.innerHTML =
-              pattern[i][j] == 2 ? "❌" : pattern[i][j] == 1 ? "⭕" : "";
+              pattern[i*3 + j] == 2 ? "❌" : pattern[i*3 + j] == 1 ? "⭕" : "";
             cell.addEventListener("click", () => move(j, i)); //j 表示很坐标 i表示纵坐标
             borad.appendChild(cell);
           }
@@ -90,8 +90,8 @@
 
       function move(x, y) {
         //落子
-        if (pattern[y][x]) return; //首先判断是否有棋子
-        pattern[y][x] = color;
+        if (pattern[y*3 + x]) return; //首先判断是否有棋子
+        pattern[y*3 + x] = color;
         if (check(pattern, color) && switchMark) {
           //switchMark用于防止重复提示
           alert(color == 1 ? "⭕赢了" : "❌赢了");
@@ -105,6 +105,7 @@
           //判断谁可能赢
           console.log(color == 1 ? "⭕可能赢" : "❌可能赢");
         }
+         console.log( bestChoice(pattern,color))
     
       }
 
@@ -115,7 +116,7 @@
           //判断每一排
           let win = true;
           for (let j = 0; j < 3; j++) {
-            if (pattern[i][j] != color) {
+            if (pattern[ i*3 + j ] != color) {
               win = false;
             }
           }
@@ -127,7 +128,7 @@
           //判断每一列
           let win = true;
           for (let j = 0; j < 3; j++) {
-            if (pattern[j][i] !== color) {
+            if (pattern[j*3 + i] !== color) {
               win = false;
             }
           }
@@ -137,7 +138,7 @@
           //判断每一个正斜向 用了一个作用域技巧
           let win = true;
           for (let i = 0; i < 3; i++) {
-            if (pattern[i][i] != color) {
+            if (pattern[i*3 + i] != color) {
               win = false;
             }
           }
@@ -148,7 +149,7 @@
           //判断反斜向 也用了一个小技巧 2-i 实现反斜向坐标
           let win = true;
           for (let i = 0; i < 3; i++) {
-            if (pattern[i][2 - i] != color) {
+            if (pattern[i*3 + 2-i] != color) {
               win = false;
             }
           }
@@ -158,16 +159,17 @@
 
       function cloneData(pattern) {
         //深拷贝
-        return JSON.parse(JSON.stringify(pattern));
+        // return JSON.parse(JSON.stringify(pattern));
+        return Object.create(pattern)
       }
 
       function willWin(pattern, color) {
         //预测谁会赢
         for (let i = 0; i < 3; i++) {
           for (let j = 0; j < 3; j++) {
-            if (pattern[i][j]) continue;
+            if (pattern[i*3 + j]) continue;
             let temp = cloneData(pattern);
-            temp[i][j] = color;
+            temp[i*3 + j] = color;
             if (check(temp, color)) {
               return [j,i];//返回一个坐标点
             }
@@ -177,27 +179,29 @@
       }
 
       function bestChoice(pattern,color){
-        let p //
-        if(p = willWin(pattern,color)){
+        let point = willWin(pattern,color)
+        if(point ){
           return {
-            point:p,
+            point,
             result:1
           }
         }
-        let result = -2  //定义一种最差的状态
-        let point = null;
-        for(let i=0;i<3;i++){
+        let result = -1  //定义一种最差的状态
+
+       outer: for(let i=0;i<3;i++){
           for(let j = 0;j<3;j++){
-            if(pattern[i][j]) continue; //找到非空点试错
+            if(pattern[i*3 + j] !=0) continue; //找到非空点试错
             let temp = cloneData(pattern)
-            temp[i][j] = color;// 预填
-            let r = bestChoice(temp,3-color).result; //落子预判
-            if( -r > result ){
+            temp[i*3 + j] = color;// 预填
+            let oop = bestChoice(temp,3-color); //落子预判
+            if( -oop.result >= result ){
              //如果找到一个点 就叫胜负剪枝 后面的点就不用去算了
              //全搜索 保证赢得最多
-             result = -r ;
+             result = -oop.result;
              point = [j , i]
             }
+            if(result ==1)
+                break outer;//break 两层循环 需要在外层加一个label ‘outer’
           }
         }
         return {
