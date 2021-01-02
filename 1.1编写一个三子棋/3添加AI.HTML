@@ -71,9 +71,9 @@
 
       function show() {
         //绘制
-        if (!switchMark) {
-          return;
-        }
+        // if (!switchMark) {
+        //   return;
+        // }
         let borad = document.getElementById("borad");
         borad.innerHTML = "";
         for (let i = 0; i < 3; i++) {
@@ -86,7 +86,11 @@
                 : pattern[i * 3 + j] == 1
                 ? "⭕"
                 : "";
-            cell.addEventListener("click", () => userMove(j, i)); //j 表示很坐标 i表示纵坐标
+            if (switchMark) {
+              cell.addEventListener("click", () => userMove(j, i)); //j 表示很坐标 i表示纵坐标
+            } else {
+              cell.removeEventListener("click", userMove);
+            }
             borad.appendChild(cell);
           }
           borad.appendChild(document.createElement("br"));
@@ -100,9 +104,10 @@
         if (check(pattern, color) && switchMark) {
           //switchMark用于防止重复提示
           alert(color == 1 ? "⭕赢了" : "❌赢了");
-          setTimeout(() => {
-            switchMark = false; //关闭
-          });
+           switchMark = false; //关闭
+        //   setTimeout(() => {
+        //     switchMark = false; //关闭
+        //   });
         }
         color = 3 - color; //下一步该谁走
         show(pattern);
@@ -126,9 +131,10 @@
 
         if (check(pattern, color)) {
           alert(color == 1 ? "⭕赢了" : "❌赢了");
-           setTimeout(() => {
-            switchMark = false; //关闭
-          });
+           switchMark = false; //关闭
+        //   setTimeout(() => {
+        //     switchMark = false; //关闭
+        //   });
         }
         color = 3 - color; //交互颜色
         show(pattern);
