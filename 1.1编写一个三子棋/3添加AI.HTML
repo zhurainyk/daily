@@ -104,10 +104,10 @@
         if (check(pattern, color) && switchMark) {
           //switchMark用于防止重复提示
           alert(color == 1 ? "⭕赢了" : "❌赢了");
-           switchMark = false; //关闭
-        //   setTimeout(() => {
-        //     switchMark = false; //关闭
-        //   });
+          switchMark = false; //关闭
+          //   setTimeout(() => {
+          //     switchMark = false; //关闭
+          //   });
         }
         color = 3 - color; //下一步该谁走
         show(pattern);
@@ -131,10 +131,10 @@
 
         if (check(pattern, color)) {
           alert(color == 1 ? "⭕赢了" : "❌赢了");
-           switchMark = false; //关闭
-        //   setTimeout(() => {
-        //     switchMark = false; //关闭
-        //   });
+          switchMark = false; //关闭
+          //   setTimeout(() => {
+          //     switchMark = false; //关闭
+          //   });
         }
         color = 3 - color; //交互颜色
         show(pattern);
@@ -237,6 +237,33 @@
           point: point,
           result: point ? result : 0,
         };
+      }
+      function bestChoice2(pattern, color) {
+        let point = willWin(pattern, color);
+        if (point) {
+          return {
+            point,
+            result: 1,
+          };
+        }
+        let result = -1;
+        outer: for (let i = 0; i < 3; i++) {
+          for (let j = 0; j < 3; j++) {
+            if (pattern[i][j]) continue;
+            let oop = bestChoice(pattern, color);
+            if (-oop.result >= result) {
+              result = -oop.result;
+              point = [i, j];
+            }
+            if (result >= -1) {
+              break outer;
+            }
+          }
+        }
+        return {
+          point,
+          result:point?point:0
+        }
       }
     </script>
   </body>
