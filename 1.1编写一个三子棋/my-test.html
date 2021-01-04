@@ -41,6 +41,7 @@
         [0, 0, 0],
       ];
       let color = 1;
+       let switchMark = true;
       show();
 
       function show() {
@@ -52,15 +53,18 @@
             cell.classList.add("cell");
             cell.innerHTML =
               pattern[i][j] == 1 ? "❌" : pattern[i][j] == 2 ? "⭕" : "";
+
             cell.addEventListener("click", () => userMove(i, j));
             borad.appendChild(cell);
           }
         }
       }
       function userMove(x, y) {
+         if (pattern[x][y]) return; //首先判断是否有棋子
         pattern[x][y] = color;
         if (check(pattern, color)) {
           alert(color == 1 ? "❌赢了" : "⭕赢了");
+          
         }
 
         color = 3 - color;
@@ -71,8 +75,8 @@
             willWin(pattern, color)
           );
         }
-        console.log(bestChoice(pattern, color))
-        setTimeout(()=>computerMove(),500)
+        console.log(bestChoice(pattern, color));
+        setTimeout(() => computerMove(), 200);
       }
 
       function check(pattern, color) {
@@ -167,7 +171,7 @@
               //如果找到一个点 就叫胜负剪枝 后面的点就不用去算了
               //全搜索 保证赢得最多
               result = -oop.result;
-              point = [i,j];
+              point = [i, j];
             }
             if (result == 1) break outer; //break 两层循环 需要在外层加一个label ‘outer’
           }
@@ -177,17 +181,16 @@
           result: point ? result : 0,
         };
       }
-      
-      function computerMove(){
-          let choice = bestChoice(pattern,color);
-          let {point,result} = choice
-          pattern[point[0]][point[1]] = color;
-          if(check(pattern,color)){
-              alert(color == 1 ? "❌赢了" : "⭕赢了");
-          }
-           color = 3- color
-          show()
-         
+
+      function computerMove() {
+        let choice = bestChoice(pattern, color);
+        let { point, result } = choice;
+        pattern[point[0]][point[1]] = color;
+        if (check(pattern, color)) {
+          alert(color == 1 ? "❌赢了" : "⭕赢了");
+        }
+        color = 3 - color;
+        show();
       }
     </script>
   </body>

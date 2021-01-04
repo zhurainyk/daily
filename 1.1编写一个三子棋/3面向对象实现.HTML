@@ -42,18 +42,193 @@
       <button id="btn">重置</button>
     </div>
     <script>
-      let pattern = [
-        //替换为一维数组技巧  i*3 + j 表示   横坐标j 纵坐标i
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-        0,
-      ];
+      class Cheese {
+        constructor(id, pattern, color) {
+          this.borad = document.querySelector(id?id:'#borad');
+          this.pattern = pattern || [0, 0, 0, 0, 0, 0, 0, 0, 0];
+          this.color = color || 2;
+          this.switchMark = true;
+          
+          this.resetBtn = document.querySelector("#btn");
+          this.reset()
+          this.init();
+        }
+        reset() {
+          this.resetBtn.addEventListener("click", () => {
+            this.pattern = [0, 0, 0, 0, 0, 0, 0, 0, 0];
+            this.switchMark = true;
+            this.color = 2;
+            this.init()
+          });
+        }
+
+        init() {
+          this.borad.innerHTML = "";
+          for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+              let cell = document.createElement("div");
+              cell.classList.add("cell");
+              cell.innerHTML =
+                this.pattern[i * 3 + j] == 2
+                  ? "❌"
+                  : this.pattern[i * 3 + j] == 1
+                  ? "⭕"
+                  : "";
+              if (this.switchMark) {
+                cell.addEventListener("click", () => this.userMove(j, i)); //j 表示很坐标 i表示纵坐标
+              } else {
+                cell.removeEventListener("click", this.userMove);
+              }
+              this.borad.appendChild(cell);
+            }
+            this.borad.appendChild(document.createElement("br"));
+          }
+        }
+
+        userMove(x, y) {
+          if (this.pattern[y * 3 + x]) return; //首先判断是否有棋子
+          this.pattern[y * 3 + x] = this.color;
+          if (this.check(this.pattern, this.color) && switchMark) {
+            //switchMark用于防止重复提示
+            alert(color == 1 ? "⭕赢了" : "❌赢了");
+            this.switchMark = false; //关闭
+          }
+          this.color = 3 - this.color; //下一步该谁走
+          this.init(this.pattern);
+          if (this.willWin(this.pattern, this.color) && this.switchMark) {
+            //判断谁可能赢
+            console.log(this.color == 1 ? "⭕可能赢" : "❌可能赢");
+          }
+          setTimeout(() => {
+            if (this.switchMark) {
+              this.computerMove();
+            }
+          }, 200);
+        }
+
+        check(pattern, color) {
+          //判断谁赢
+          // console.log("开始判断横排");
+          for (let i = 0; i < 3; i++) {
+            //判断每一排
+            let win = true;
+            for (let j = 0; j < 3; j++) {
+              if (pattern[i * 3 + j] != color) {
+                win = false;
+              }
+            }
+            if (win) {
+              return win;
+            }
+          }
+          for (let i = 0; i < 3; i++) {
+            //判断每一列
+            let win = true;
+            for (let j = 0; j < 3; j++) {
+              if (pattern[j * 3 + i] !== color) {
+                win = false;
+              }
+            }
+            if (win) return win;
+          }
+          {
+            //判断每一个正斜向 用了一个作用域技巧
+            let win = true;
+            for (let i = 0; i < 3; i++) {
+              if (pattern[i * 3 + i] != color) {
+                win = false;
+              }
+            }
+            if (win) return win;
+          }
+          {
+            //
+            //判断反斜向 也用了一个小技巧 2-i 实现反斜向坐标
+            let win = true;
+            for (let i = 0; i < 3; i++) {
+              if (pattern[i * 3 + 2 - i] != color) {
+                win = false;
+              }
+            }
+            if (win) return win;
+          }
+        }
+
+        willWin(pattern, color) {
+          //预测谁会赢
+          for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+              if (pattern[i * 3 + j]) continue;
+              let temp = this.cloneData(pattern);
+              temp[i * 3 + j] = color;
+              if (this.check(temp, color)) {
+                return [j, i]; //返回一个坐标点
+              }
+            }
+          }
+          return null;
+        }
+
+        cloneData(pattern) {
+          //深拷贝
+          // return JSON.parse(JSON.stringify(pattern));
+          return Object.create(pattern);
+        }
+
+        computerMove() {
+          let choice = this.bestChoice(this.pattern, this.color);
+          if (choice.point) {
+            let { point } = choice;
+            this.pattern[point[1] * 3 + point[0]] = this.color; //已经换过颜色 直接填充
+          }
+
+          if (this.check(this.pattern, this.color)) {
+            alert(this.color == 1 ? "⭕赢了" : "❌赢了");
+            this.switchMark = false; //关闭
+            //   setTimeout(() => {
+            //     switchMark = false; //关闭
+            //   });
+          }
+          this.color = 3 - this.color; //交互颜色
+          this.init(this.pattern);
+        }
+
+        bestChoice(pattern, color) {
+          let point = this.willWin(pattern, color);
+          if (point) {
+            return {
+              point,
+              result: 1,
+            };
+          }
+          let result = -1; //定义一种最差的状态
+
+          outer: for (let i = 0; i < 3; i++) {
+            for (let j = 0; j < 3; j++) {
+              if (pattern[i * 3 + j] != 0) continue; //找到非空点试错
+              let temp = this.cloneData(pattern);
+              temp[i * 3 + j] = color; // 预填
+              let oop = this.bestChoice(temp, 3 - color); //落子预判
+              if (-oop.result >= result) {
+                //如果找到一个点 就叫胜负剪枝 后面的点就不用去算了
+                //全搜索 保证赢得最多
+                result = -oop.result;
+                point = [j, i];
+              }
+              if (result == 1) break outer; //break 两层循环 需要在外层加一个label ‘outer’
+            }
+          }
+          return {
+            point: point,
+            result: point ? result : 0,
+          };
+        }
+      }
+      
+
+      let cheese  = new Cheese()
+      /*
+      let pattern = [0, 0, 0, 0, 0, 0, 0, 0, 0]; //替换为一维数组技巧  i*3 + j 表示   横坐标j 纵坐标i
 
       let color = 2; //小技巧 通过 3-color 实现 1 2 交替
       //2 = x ; 1 = o
@@ -70,10 +245,6 @@
       show(pattern);
 
       function show() {
-        //绘制
-        // if (!switchMark) {
-        //   return;
-        // }
         let borad = document.getElementById("borad");
         borad.innerHTML = "";
         for (let i = 0; i < 3; i++) {
@@ -99,6 +270,7 @@
 
       function userMove(x, y) {
         //落子
+        console.log("点击了");
         if (pattern[y * 3 + x]) return; //首先判断是否有棋子
         pattern[y * 3 + x] = color;
         if (check(pattern, color) && switchMark) {
@@ -262,9 +434,10 @@
         }
         return {
           point,
-          result:point?point:0
-        }
+          result: point ? point : 0,
+        };
       }
+      */
     </script>
   </body>
 </html>
