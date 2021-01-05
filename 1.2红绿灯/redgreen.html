@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      .light {
+        display: inline-block;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        margin-right: 20px;
+        background-color: #eee;
+      }
+      .red {
+        background-color: #f00;
+      }
+      .yellow {
+        background-color: yellow;
+      }
+      .green {
+        background-color: green;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="box">
+      <p>要求交通灯循环变化</p>
+      <div class="light"></div>
+      <div class="light"></div>
+      <div class="light"></div>
+      <button id="btn">next</button>
+    </div>
+    <script>
+      let lights = document.querySelectorAll(".light");
+      let red = lights[2];
+      let green = lights[0];
+      let yellow = lights[1];
+
+      /*
+
+        第一种方式
+
+        run()
+        function run(){
+            green.classList.add('green')
+            setTimeout(()=>{
+                green.classList.remove('green')
+                yellow.classList.add('yellow')
+                setTimeout(()=>{
+                    yellow.classList.remove('yellow')
+                    red.classList.add('red')
+                    setTimeout(()=>{
+                        red.classList.remove('red')
+                        run()
+                    },2000)
+                },1000)
+            },3000)
+        }
+        */
+
+      /*
+        第二种
+        run()
+
+      function delayTime(time) {
+        return new Promise((res) => {
+          setTimeout(() => {
+            res();
+          }, time);
+        });
+      }
+
+      
+      async function run() {
+        while (true) {
+          green.classList.add("green");
+
+          await delayTime(2000);
+          green.classList.remove("green");
+          yellow.classList.add("yellow");
+
+          await delayTime(1000);
+          yellow.classList.remove("yellow");
+          red.classList.add("red");
+
+          await delayTime(1000);
+          red.classList.remove("red");
+        }
+      }
+
+      */
+
+
+
+      /**
+       第三种
+        run()
+      function allow(ele, event) {
+        return new Promise((res) => {
+          document.querySelector(ele).addEventListener(event, () => {
+            res();
+          });
+        });
+      }
+      async function run() {
+        while (true) {
+          green.classList.add("green");
+          await allow("#btn", "click");
+          green.classList.remove("green");
+          yellow.classList.add("yellow");
+          await allow("#btn", "click");
+          yellow.classList.remove("yellow");
+          red.classList.add("red");
+          await allow("#btn", "click");
+          red.classList.remove("red");
+        }
+      }
+      */
+
+
+    //   第四种  generator yield
+    
+    </script>
+  </body>
+</html>
