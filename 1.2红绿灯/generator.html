@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="box"></div>
+    <script>
+      function sleep(t) {
+        return new Promise((res) => {
+          setTimeout(res, t);
+        });
+      }
+
+      async function* counter() {
+        let i = 0;
+        while (true) {
+          await sleep(1000);
+          yield i++;
+        }
+      }
+
+      //   (async function () { //匿名自执行
+      //     for await (let value of counter()) {
+      //       box.innerText = value;
+      //     }
+      //   })();
+      async function run() {
+        for await (let value of counter()) {
+          box.innerText = value;
+        }
+      }
+      run();
+    </script>
+  </body>
+</html>

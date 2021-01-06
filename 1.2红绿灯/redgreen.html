@@ -92,16 +92,16 @@
 
       */
 
-
-
-      /**
-       第三种
+      /*
+      //  第三种
         run()
       function allow(ele, event) {
         return new Promise((res) => {
-          document.querySelector(ele).addEventListener(event, () => {
-            res();
-          });
+          // document.querySelector(ele).addEventListener(event, () => {
+          //   res();
+          // });
+          //优化写法
+           document.querySelector(ele).addEventListener(event,res,{once:true});
         });
       }
       async function run() {
@@ -119,9 +119,51 @@
       }
       */
 
+      //   第四种  generator yield
+      //异步编程 用generator + yield实现
 
-    //   第四种  generator yield
-        //异步编程 用generator + yield实现 
+      function delayTime(time) {
+        return new Promise((res) => {
+          setTimeout(res, time);
+        });
+      }
+
+      function* go() {
+        while (true) {
+          green.classList.add("green");
+          yield delayTime(1000);
+          green.classList.remove("green");
+          yellow.classList.add("yellow");
+          yield delayTime(200);
+          yellow.classList.remove("yellow");
+          red.classList.add("red");
+          yield delayTime(1000);
+          red.classList.remove("red");
+        }
+      }
+
+      function run(iterator) {
+        let { value, done } = iterator.next(); //
+
+        if (done) {
+          //迭代完成
+          return;
+        }
+        if (value instanceof Promise) {
+          // 返回一个promise
+          value.then(() => run(iterator));
+        }
+      }
+
+      function co(generator) {
+        //co框架
+        return function () {
+          return run(generator());
+        };
+      }
+
+      go = co(go);
+      go();
     </script>
   </body>
 </html>
