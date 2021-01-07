@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 701px;
+      }
+      .cell {
+        --size: 6px;
+        float: left;
+        line-height: var(--size);
+        width: var(--size);
+        height: var(--size);
+        background-color: gray;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    <pre>
+        
+        寻路问题 不适合用递归 因为递归默认是一个深度优先算法 这里适合用广度优先算法
+    push - shift 数组是一个队列 pop - unshift 也是一个队列 push - pop 这是一个栈
+    shift - unshift 也是一个栈
+
+        关于深度优先还是广度优先 
+        如果把数组的 push-pop联合使用 这里 就是一个深度优先
+    </pre>
+    <div class="container"></div>
+    <button onclick="localStorage['data'] = JSON.stringify(data)">保存</button>
+
+    <script>
+
+
+      let data = localStorage["data"]
+        ? JSON.parse(localStorage["data"])
+        : Array(10000).fill(0);
+      let mouseDown = false;
+      let celar = false;
+      let container = document.querySelector(".container");
+      for (let y = 0; y < 100; y++) {
+        for (let x = 0; x < 100; x++) {
+          let cell = document.createElement("div");
+          cell.classList.add("cell");
+
+          if (data[y * 100 + x] == 1) {
+            cell.style.backgroundColor = "black";
+          } else if (data[y * 100 + x] == 2) {
+            cell.style.backgroundColor = "purple";
+          }
+          cell.addEventListener("mousemove", () => {
+            if (mouseDown) {
+              if (clear) {
+                cell.style.backgroundColor = "";
+                data[y * 100 + x] = 0;
+              } else {
+                cell.style.backgroundColor = "black";
+                data[y * 100 + x] = 1;
+              }
+            }
+          });
+          container.appendChild(cell);
+        }
+      }
+
+      document.addEventListener("mousedown", (e) => {
+        mouseDown = true;
+
+        clear = e.which == 3;
+        console.log(celar, e);
+      });
+      document.addEventListener("mouseup", () => {
+        mouseDown = false;
+      });
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+      function path(map, start, end) {
+        var queue = [start]; // 先放入一个起点；
+
+        function insert(x, y) {
+          if (x < 0 || y < 0 || x >= 100 || y >= 100) {
+            return;
+          }
+          if (map[y * 100 + x]) return; // 因为初始都是0  有值就表示墙 或者已经寻过该点了
+          map[y * 100 + x] = 2; //标记该点
+          queue.push([x, y]);
+        }
+        while (queue.length) {
+          let [x, y] = queue.shift(); //从前面取一个出来
+          if (x == end[0] && y == end[1]) {
+            console.log("找到该点");
+            return true; //表示找到了该点
+          }
+          console.log(x, y);
+          insert(x - 1, y);
+          insert(x + 1, y);
+          insert(x, y + 1);
+          insert(x, y - 1);
+        }
+        console.log("无法到达该点");
+        return false;
+      }
+    </script>
+  </body>
+</html>
