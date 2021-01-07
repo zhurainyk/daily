@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 701px;
+      }
+      .cell {
+        --size: 6px;
+        float: left;
+        line-height: var(--size);
+        width: var(--size);
+        height: var(--size);
+        background-color: gray;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container"></div>
+    <button onclick="localStorage['data'] = JSON.stringify(data)">保存</button>
+    <script>
+      let data = localStorage["data"]
+        ? JSON.parse(localStorage["data"])
+        : Array(10000).fill(0);
+      let mouseDown = false;
+      let celar = false;
+      let container = document.querySelector(".container");
+      for (let y = 0; y < 100; y++) {
+        for (let x = 0; x < 100; x++) {
+          let cell = document.createElement("div");
+          cell.classList.add("cell");
+
+          if (data[y * 100 + x] == 1) {
+            cell.style.backgroundColor = "black";
+          }
+          cell.addEventListener("mousemove", () => {
+            if (mouseDown) {
+              if (clear) {
+                cell.style.backgroundColor = "";
+                data[y * 100 + x] = 0;
+              } else {
+                cell.style.backgroundColor = "black";
+                data[y * 100 + x] = 1;
+              }
+            }
+          });
+          container.appendChild(cell);
+        }
+      }
+
+      document.addEventListener("mousedown", (e) => {
+        mouseDown = true;
+
+        clear = e.which == 3;
+        console.log(celar, e);
+      });
+      document.addEventListener("mouseup", () => {
+        mouseDown = false;
+      });
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+    </script>
+  </body>
+</html>
