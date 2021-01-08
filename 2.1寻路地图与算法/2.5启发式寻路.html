@@ -42,7 +42,11 @@
 
         需要一种数据结果 有提供一定的优先级 保证每次取数据的时候拿出来一个最近距离的点 
 
-        这种方法叫sorted,是一种有序的数据, 类型有 winner-tree  , heap堆 ,排序二叉树  
+        这种方法叫sorted,是一种有序的数据, 类型有 winner-tree  , heap堆 ,排序二叉树
+        
+        let s = new Sorted([5,3,2,4,6,7,1]) 
+        保证每次取出来数据都是最小的  s.take()
+        Sorted还能传递compare函数 这个很重要
     </pre>
     <div class="container"></div>
     <button onclick="localStorage['data'] = JSON.stringify(data)">保存</button>
@@ -95,6 +99,40 @@
                 setTimeout(res, t);
               });
             }
+
+
+
+    class Sorted{ //排序算法 保证每次拿到的都是最小的值
+        constructor(data,compare){
+            this.data = data.slice()
+            this.compare = compare || ((a,b) => a-b)
+        }
+        take(){
+            if(!this.data.length){
+                return 
+            }
+            let min = this.data[0]
+            let minIndex = 0;
+            const len = this.data.length;
+            for(let i=1 ;i<len ;i++){ //类似冒泡排序
+                if(this.compare(this.data[i],min)<0){ //通过比较函数 判断大小
+                    min = this.data[i]
+                    minIndex = i;
+                }
+            }
+            this.data[minIndex] = this.data[len-1] // 把最小值和最后一个值交互 ,然后再删掉最后一个
+            // 这是一个o(1)的复杂度操作 如果用splice 将会是一个o(n)
+            this.data.pop()
+            return min ;
+        }
+        give(v){
+            this.data.push(v)
+        }
+        length(){
+            return this.data.length ;
+        }
+    }
+
 
      async function findPath(map, start, end) {
               //初始化启点和终点样式
