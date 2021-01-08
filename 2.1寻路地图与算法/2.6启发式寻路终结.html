@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        width: 701px;
+      }
+      .cell {
+        --size: 6px;
+        float: left;
+        line-height: var(--size);
+        width: var(--size);
+        height: var(--size);
+        background-color: gray;
+        border-right: 1px solid white;
+        border-bottom: 1px solid white;
+      }
+    </style>
+  </head>
+  <body>
+    <pre>
+        
+        寻路问题 不适合用递归 因为递归默认是一个深度优先算法 这里适合用广度优先算法
+    push - shift 数组是一个队列 pop - unshift 也是一个队列 push - pop 这是一个栈
+    shift - unshift 也是一个栈
+
+        关于深度优先还是广度优先 
+        如果把数组的 push-pop联合使用 这里 就是一个深度优先
+
+        本节介绍 启发式寻路 
+        通过一个函数 判断 
+
+        找不到终点  叫A寻路
+        能找到终点  叫A星寻路 A星是A寻路的一个特例
+
+        需要一种数据结果 有提供一定的优先级 保证每次取数据的时候拿出来一个最近距离的点 
+
+        这种方法叫sorted,是一种有序的数据, 类型有 winner-tree  , heap堆 ,排序二叉树
+        
+        let s = new Sorted([5,3,2,4,6,7,1]) 
+        保证每次取出来数据都是最小的  s.take()
+        Sorted还能传递compare函数 这个很重要
+    </pre>
+    <div class="container"></div>
+    <button onclick="localStorage['data'] = JSON.stringify(data)">保存</button>
+
+    <script>
+      let data = localStorage["data"]
+        ? JSON.parse(localStorage["data"])
+        : Array(10000).fill(0);
+      let mouseDown = false;
+      let celar = false;
+      let container = document.querySelector(".container");
+      for (let y = 0; y < 100; y++) {
+        for (let x = 0; x < 100; x++) {
+          let cell = document.createElement("div");
+          cell.classList.add("cell");
+
+          if (data[y * 100 + x] == 1) {
+            cell.style.backgroundColor = "black";
+          } else if (data[y * 100 + x] == 2) {
+            cell.style.backgroundColor = "purple";
+          }
+          cell.addEventListener("mousemove", () => {
+            if (mouseDown) {
+              if (clear) {
+                cell.style.backgroundColor = "";
+                data[y * 100 + x] = 0;
+              } else {
+                cell.style.backgroundColor = "black";
+                data[y * 100 + x] = 1;
+              }
+            }
+          });
+          container.appendChild(cell);
+        }
+      }
+
+      document.addEventListener("mousedown", (e) => {
+        mouseDown = true;
+
+        clear = e.which == 3;
+        console.log(celar, e);
+      });
+      document.addEventListener("mouseup", () => {
+        mouseDown = false;
+      });
+      document.addEventListener("contextmenu", (e) => e.preventDefault());
+
+      function sleep(t) {
+        return new Promise((res) => {
+          setTimeout(res, t);
+        });
+      }
+
+      //排序算法 保证每次拿到的都是最小的值
+      class Sorted {
+        constructor(data, compare) {
+          this.data = data.slice();
+          this.compare = compare || ((a, b) => a - b);
+        }
+        take() {
+          if (!this.data.length) {
+            return;
+          }
+          let min = this.data[0];
+          let minIndex = 0;
+          const len = this.data.length;
+          for (let i = 1; i < len; i++) {
+            //类似冒泡排序
+            if (this.compare(this.data[i], min) < 0) {
+              //通过比较函数 判断大小
+              min = this.data[i];
+              minIndex = i;
+            }
+          }
+          this.data[minIndex] = this.data[len - 1]; // 把最小值和最后一个值交互 ,然后再删掉最后一个
+          // 这是一个o(1)的复杂度操作 如果用splice 将会是一个o(n)
+          this.data.pop();
+          return min;
+        }
+        give(v) {
+          this.data.push(v);
+        }
+        length() {
+          return this.data.length;
+        }
+      }
+
+        findPath(data,[0,0],[50,50]) 
+
+      async function findPath(map, start, end) {
+        //初始化启点和终点样式
+        const [i, j] = start;
+        const [m, n] = end;
+        //  map[j*100 + i] = 3;//绘制路径的时候要取消该点
+        container.children[j * 100 + i].style =
+          "background-color:red;box-shadow: 0 0 2px yellow";
+        container.children[n * 100 + m].style =
+          "background-color:blue;box-shadow: 0 0 20px 5px yellow;z-index:20";
+
+        let table = Object.create(map); //拷贝一份 用于对比data绘制路线
+
+        let queue = new Sorted([start], (a, b) => distance(a) - distance(b)); // 先放入一个起点； 这里使用sorte
+
+        function distance(point) {
+          //距离计算  勾股定理
+          return (point[0] - end[0]) ** 2 + (point[1] - end[1]) ** 2;
+        }
+
+        async function insert(x, y, pre) {
+          if (x < 0 || y < 0 || x >= 100 || y >= 100) {
+            return;
+          }
+          if (table[y * 100 + x]) return; // 因为初始都是0  有值就表示墙 或者已经寻过该点了
+          await sleep(0); //等待过程
+          //   container.childNodes[y*100 +x].style.backgroundColor = 'lightgreen'
+          container.children[y * 100 + x].style.backgroundColor = "lightgreen";
+          //   map[y * 100 + x] = 2; //标记该点
+          table[y * 100 + x] = pre; //标记该点为前置点 用于绘制路径
+          queue.give([x, y]);
+        }
+
+        while (queue.length) {
+          let [x, y] = queue.take(); //从前面取一个出来
+
+          if (x == end[0] && y == end[1]) {
+            //该点等于终点 表示找到
+            console.log("找到该点,开始绘制路径");
+            let path = [];
+
+            while (x != start[0] || y != start[1]) {
+              //反向绘制起点
+              path.push(map[y * 100 + x]); //存入路径
+              [x, y] = table[y * 100 + x]; //存入该点
+              await sleep(5);
+              container.children[y * 100 + x].style.backgroundColor = "purple";
+            }
+            return path; //表示找到了该点
+          }
+          //   console.log(x, y);
+          //斜方向 //多传递一个参数 前置节点
+          await insert(x - 1, y, [x, y]);
+          await insert(x - 1, y - 1, [x, y]);
+          await insert(x + 1, y, [x, y]);
+          await insert(x + 1, y + 1, [x, y]);
+          await insert(x, y + 1, [x, y]);
+          await insert(x - 1, y + 1, [x, y]);
+          await insert(x, y - 1, [x, y]);
+          await insert(x + 1, y - 1, [x, y]);
+        }
+        console.log("无法到达该点");
+        return false;
+      }
+    </script>
+  </body>
+</html>
