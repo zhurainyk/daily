@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .cell {
+            width: 6px;
+            height: 6px;
+            border-right: 1px solid #aaa;
+            border-bottom: 1px solid #aaa;
+            float: left;
+            vertical-align: middle;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 701px;
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container"></div>
+    <script>
+        let container = document.querySelector('.container')
+        let map = Array(10000).fill(0)
+        let down = false;
+        let move = false;
+        for (let i = 0; i < 100; i++) {
+            for (let j = 0; j < 100; j++) {
+                let cell = document.createElement('div')
+                cell.classList.add('cell')
+                cell.addEventListener('mousemove', () => {
+                    if (down) {
+                        cell.style.backgroundColor = 'gray'
+                        map[i * 100 + j] = 1;
+                    }
+                }, { once: true })
+                container.appendChild(cell)
+                if (map[i * 100 + j] == 1) {
+                    cell.style.backgroundColor = 'gray'
+                }
+            }
+        }
+        document.addEventListener('mousedown', () => {
+            down = true;
+        })
+        document.addEventListener('mouseup', () => {
+            down = false;
+        })
+
+        function draw(x, y) {
+            map[y * 100 + x] = 1;
+        }
+
+        function sleep(t) {
+            return new Promise(res => {
+                setTimeout(res, t)
+            })
+        }
+        class Sorted {
+            constructor(data, compare) {
+                this.data = data;
+                this.compare = compare || ((a, b) => a - b)
+            }
+            take() {
+                if (!this.data.length) return;
+                const len = this.data.length
+                let min = this.data[0]
+                let minIndex = 0;
+                for (let i = 1; i < len; i++) {
+                    if (this.compare(this.data[i], min) < 0) {
+                        min = this.data[i]
+                        minIndex = i;
+                    }
+                }
+                this.data[minIndex] = this.data[len - 1]
+                this.data.pop()
+                return min
+            }
+            give(v) {
+                this.data.push(v)
+            }
+            length() {
+                this.data.length;
+            }
+        }
+        async function findPath(map, start, end) {
+            let table = Object.create(map)
+            let queue = [start]
+
+            async function insert(x, y, pre) {
+                if (x < 0 || x >= 100 || y < 0 || y >= 100) {
+                    return
+                }
+                if (table[y * 100 + x]) return;
+                table[y * 100 + x] = pre;
+                await sleep(4)
+                container.children[x * 100 + y].style.backgroundColor = 'lightgreen'
+                queue.push([x, y])
+            }
+            while (queue.length) {
+                let [x, y] = queue.shift()
+                if (x == end[0] && y == end[1]) {
+                    console.log('zhaodaolujing')
+                    let path = []
+                    while (x != start[0] || y != start[1]) {
+                        path.push(map[y * 100 + x]); //存入路径
+                        [x, y] = table[y * 100 + x]; //存入该点
+                        await sleep(5);
+                        container.children[y * 100 + x].style.backgroundColor = "purple";
+                    }
+                    return path;
+                }
+                await insert(x - 1, y, [x, y])
+                await insert(x + 1, y, [x, y])
+                await insert(x, y - 1, [x, y])
+                await insert(x, y + 1, [x, y])
+            }
+            console.log('没有找到')
+            return false
+        }
+    </script>
+</body>
+
+</html>
