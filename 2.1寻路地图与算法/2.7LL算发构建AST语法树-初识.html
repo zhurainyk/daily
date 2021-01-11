@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+       <h1> 何为LL算法</h1>
+        <p>编译原理的语法分析中一个入门的算法就是LL</p>
+        <p>通过一个四则运算来解析js的编译原理</p>
+        <pre>
+            tokenNumber:0,1,2,3,4,5,6,7,8,9,0的组合
+            operator：+ - * /
+            whiteSpace:&lt;SP&gt;
+            LineTerminator:&lt;LR&gt;  &lt;CR&gt;
+        </pre>
+
+        <h2>四则运算表达式的组成</h2>
+        <pre>
+            expression = &lt;AdditiveExpression&gt; &lt;EOF&gt;
+
+            表达式 = 加法表达式 EOF  （终结符 end of file）
+
+            加法表达式 = 乘法表达式 | 加法表达式 + 乘法表达式 | 加法表达式 - 乘法表达式 
+
+            乘法表达式 = 数字 | 乘法表达式 * 数字 | 乘法表达式 / 数字 
+            
+            加法表达式 = 数字 | 乘法表达式  * 数字 | 乘法表达式 / 数字 | 加法表达式 + 乘法表达式 | 加法表达式 - 乘法表达式
+
+        </pre>
+
+        
+    </div>
+</body>
+</html>
