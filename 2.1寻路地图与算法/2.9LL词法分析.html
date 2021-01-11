@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>何为LL算法</h1>
+      <p>编译原理的语法分析中一个入门的算法就是LL</p>
+      <p>通过一个四则运算来解析js的编译原理</p>
+      <pre>
+            tokenNumber:0,1,2,3,4,5,6,7,8,9,0的组合
+            operator：+ - * /
+            whiteSpace:&lt;SP&gt;
+            LineTerminator:&lt;LR&gt;  &lt;CR&gt;
+        </pre
+      >
+
+      <h2>四则运算表达式的组成</h2>
+      <pre>
+            expression = &lt;AdditiveExpression&gt; &lt;EOF&gt;
+
+            表达式 = 加法表达式 EOF  （终结符 end of file）
+
+            加法表达式 = 乘法表达式 | 加法表达式 + 乘法表达式 | 加法表达式 - 乘法表达式 
+
+            乘法表达式 = 数字 | 乘法表达式 * 数字 | 乘法表达式 / 数字 
+            
+            加法表达式 = 数字 | 乘法表达式  * 数字 | 乘法表达式 / 数字 | 加法表达式 + 乘法表达式 | 加法表达式 - 乘法表达式
+
+        </pre
+      >
+    </div>
+    <script>
+      var regExp = /([0-9\.]+)|([ \t]+)|([\r\t]+)|(\*)|(\/)|(\+)|(\-) /g; //匹配 表达式的每个单元
+      let dictionary = [
+        "Number",
+        "WhiteSpace",
+        "LineTerminator",
+        "*",
+        "/",
+        "+",
+        "-",
+      ]; //匹配对应的类型
+
+      function* tokenize(source) {
+        var result = null;
+        let res = [];
+        let lastIndex = 0;
+        while (true) {
+          /**
+                //正则 exec()方法  
+                多次匹配正则的某个单元（每匹配到一个单元就返回一个数组 所以 这里 分为13个单元 返回13次数组 详情见下res数组） 根据正则规则匹配的单元 每次返回一个数组
+                 数组的长度等于正则表达式中 匹配的单元数 （以|分割符为单位）
+                 第一次匹配 第0项是当前匹配的第一个最小单元 ，第一项才是匹配的值 index表示当前匹配的次数 input表示匹配的原字符串 
+                */
+          lastIndex = regExp.lastIndex; //比较每次取的长度 防止超出匹配的范围
+          result = regExp.exec(source);
+
+          if (!result) {
+            break;
+          }
+
+          if (regExp.lastIndex - lastIndex > result[0].length) {
+            break; //此处应该抛出错误
+          }
+
+          let token = {
+            type: null,
+            value: null,
+          };
+
+          for (let i = 1; i <= dictionary.length; i++) {
+            if (result[i]) {
+              // console.log(dictionary[i-1])
+              res.push({ type: dictionary[i - 1], value: result[i] });
+              token.type = dictionary[i - 1];
+            }
+          }
+
+          token.value = result[0];
+          yield token;
+          // console.log(result)
+        }
+        yield {
+          type: "EOF", //最后一个yield表示终结符
+        };
+        console.log(res);
+        /*
+
+                0: {type: "Number", value: "10"}
+                1: {type: "WhiteSpace", value: " "}
+                2: {type: "*", value: "*"}
+                3: {type: "WhiteSpace", value: " "}
+                4: {type: "Number", value: "5"}
+                5: {type: "WhiteSpace", value: " "}
+                6: {type: "+", value: "+"}
+                7: {type: "WhiteSpace", value: " "}
+                8: {type: "Number", value: "1024"}
+                9: {type: "WhiteSpace", value: " "}
+                10: {type: "+", value: "+"}
+                11: {type: "WhiteSpace", value: " "}
+                12: {type: "Number", value: "6"}
+
+            */
+      }
+      for (let token of tokenize("10 * 5 + 1024 + 6")) {
+        console.log(token);
+      }
+
+      //以上就是一个简单的词法分析器 到这里基本上写完了 我们处理简单的词法 一般用正则表达式就能够完成；
+    </script>
+  </body>
+</html>
