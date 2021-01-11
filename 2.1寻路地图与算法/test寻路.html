@@ -94,34 +94,44 @@
                 this.data.length;
             }
         }
+
+        findPath(map,[0,0],[80,90])
         async function findPath(map, start, end) {
             let table = Object.create(map)
-            let queue = [start]
+            let queue =  new Sorted([start],(a,b)=>distance(a)-distance(b))//[start]
 
+
+            function distance(point){
+                return( point[0]-end[0] )**2 + (point[1] - end[1])**2
+            }
             async function insert(x, y, pre) {
                 if (x < 0 || x >= 100 || y < 0 || y >= 100) {
                     return
                 }
-                if (table[y * 100 + x]) return;
-                table[y * 100 + x] = pre;
-                await sleep(4)
+                if (table[x*100 +y]) return;
+                table[x*100 +y] = pre;
+                await sleep(0)
                 container.children[x * 100 + y].style.backgroundColor = 'lightgreen'
-                queue.push([x, y])
+                queue.give([x, y])
             }
             while (queue.length) {
-                let [x, y] = queue.shift()
+                let [x, y] = queue.take()
                 if (x == end[0] && y == end[1]) {
                     console.log('zhaodaolujing')
                     let path = []
                     while (x != start[0] || y != start[1]) {
-                        path.push(map[y * 100 + x]); //存入路径
-                        [x, y] = table[y * 100 + x]; //存入该点
+                        path.push(map[x*100 +y]); //存入路径
+                        [x, y] = table[x*100 +y]; //存入该点
                         await sleep(5);
-                        container.children[y * 100 + x].style.backgroundColor = "purple";
+                        container.children[x*100 +y].style.backgroundColor = "purple";
                     }
                     return path;
                 }
                 await insert(x - 1, y, [x, y])
+                await insert(x - 1, y-1, [x, y])
+                await insert(x + 1, y-1, [x, y])
+                await insert(x - 1, y+1, [x, y])
+                await insert(x + 1, y+1, [x, y])
                 await insert(x + 1, y, [x, y])
                 await insert(x, y - 1, [x, y])
                 await insert(x, y + 1, [x, y])
