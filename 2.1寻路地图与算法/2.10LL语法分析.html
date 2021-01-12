@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <div>
+      <h1>何为LL算法</h1>
+      <p>编译原理的语法分析中一个入门的算法就是LL</p>
+      <p>通过一个四则运算来解析js的编译原理</p>
+      <pre>
+            tokenNumber:0,1,2,3,4,5,6,7,8,9,0的组合
+            operator：+ - * /
+            whiteSpace:&lt;SP&gt;
+            LineTerminator:&lt;LR&gt;  &lt;CR&gt;
+        </pre
+      >
+
+      <h2>四则运算表达式的组成</h2>
+      <pre>
+            expression = &lt;AdditiveExpression&gt; &lt;EOF&gt;
+
+            表达式 = 加法表达式 EOF  （终结符 end of file）
+
+            加法表达式 = 乘法表达式 | 加法表达式 + 乘法表达式 | 加法表达式 - 乘法表达式 
+
+            乘法表达式 = 数字 | 乘法表达式 * 数字 | 乘法表达式 / 数字 
+            
+            加法表达式 = 数字 | 乘法表达式  * 数字 | 乘法表达式 / 数字 | 加法表达式 + 乘法表达式 | 加法表达式 - 乘法表达式
+
+        </pre
+      >
+    </div>
+    <script>
+      var regExp = /([0-9\.]+)|([ \t]+)|([\r\t]+)|(\*)|(\/)|(\+)|(\-) /g; //匹配 表达式的每个单元
+      let dictionary = [
+        "Number",
+        "WhiteSpace",
+        "LineTerminator",
+        "*",
+        "/",
+        "+",
+        "-",
+      ]; //匹配对应的类型
+
+      function* tokenize(source) {
+        var result = null;
+        // let res = [];
+        let lastIndex = 0;
+        while (true) {
+          /**
+                //正则 exec()方法  
+                多次匹配正则的某个单元（每匹配到一个单元就返回一个数组 所以 这里 分为13个单元 返回13次数组 详情见下res数组） 根据正则规则匹配的单元 每次返回一个数组
+                 数组的长度等于正则表达式中 匹配的单元数 （以|分割符为单位）
+                 第一次匹配 第0项是当前匹配的第一个最小单元 ，第一项才是匹配的值 index表示当前匹配的次数 input表示匹配的原字符串 
+                */
+          lastIndex = regExp.lastIndex; //比较每次取的长度 防止超出匹配的范围
+          result = regExp.exec(source);
+
+          if (!result) {
+            break;
+          }
+
+          if (regExp.lastIndex - lastIndex > result[0].length) {
+            break; //此处应该抛出错误
+          }
+
+          let token = {
+            type: null,
+            value: null,
+          };
+
+          for (let i = 1; i <= dictionary.length; i++) {
+            if (result[i]) {
+              // console.log(dictionary[i-1])
+              //   res.push({ type: dictionary[i - 1], value: result[i] });
+              token.type = dictionary[i - 1];
+            }
+          }
+
+          token.value = result[0];
+          yield token;
+          // console.log(result)
+        }
+        yield {
+          type: "EOF", //最后一个yield表示终结符
+        };
+      }
+      let source = [];
+      for (let token of tokenize("10 * 5 /2 + 4 - 3")) {
+        // console.log(token);
+        if (token.type != "WhiteSpace" && token.type != "LineTerminator") {
+          source.push(token);
+        }
+      }
+      //   console.log(source);
+
+      console.log(AdditiveExpression(source));
+      //第一步 解析为最小单元 乘法表达式
+      function MultiplicativeExpression(source) {
+        //首先判断source的第一项是不是Number的情况
+        if (source[0].type === "Number") {
+          let node = {
+            type: "MultiplicativeExpression",
+            children: [source[0]],
+          };
+          source[0] = node;
+          return MultiplicativeExpression(source);
+        }
+        //第二种情况判断是不是一个乘法表达式类型（1） 后面跟的是乘号
+        if (
+          source[0].type === "MultiplicativeExpression" &&
+          source[1] &&
+          source[1].type === "*"
+        ) {
+          let node = {
+            type: "MultiplicativeExpression",
+            operator: "*",
+            children: [], //
+          };
+          node.children.push(source.shift());
+          node.children.push(source.shift());
+          node.children.push(source.shift());
+          //然后把整个node加入替换为source[0]
+          source.unshift(node); //
+          return MultiplicativeExpression(source);
+        }
+        //第三种情况判断是不是一个乘法表达式类型（2） 后面跟的是除号
+        if (
+          source[0].type === "MultiplicativeExpression" &&
+          source[1] &&
+          source[1].type === "/"
+        ) {
+          let node = {
+            type: "MultiplicativeExpression",
+            operator: "/",
+            children: [], //重置空数组
+          };
+          //取出前三项放入children
+          node.children.push(source.shift());
+          node.children.push(source.shift());
+          node.children.push(source.shift());
+          //然后把整个node加入替换为source[0]
+          source.unshift(node); //
+          return MultiplicativeExpression(source);
+        }
+        if (source[0].type === "MultiplicativeExpression") {
+          return source[0];
+        }
+        // return MultiplicativeExpression(source);
+      }
+      function Expression(tokens) {}
+
+      function AdditiveExpression(source) {
+        if (source[0].type === "MultiplicativeExpression") {
+          let node = {
+            type: "AdditiveExpression",
+            children: [source[0]],
+          };
+          source[0] = node;
+          return AdditiveExpression(source);
+        }
+        if (
+          source[0].type == "AdditiveExpression" &&
+          source[1] &&
+          source[1].type === "+"
+        ) {
+          let node = {
+            type: "AdditiveExpression",
+            operator: "+",
+            children: [],
+          };
+          node.children.push(source.shift());
+          node.children.push(source.shift());
+          MultiplicativeExpression(source); //第三个单元一般是Number 所以要调用 MultiplicativeExpression
+          node.children.push(source.shift());
+          source.unshift(node);
+          return AdditiveExpression(source);
+        }
+        if (
+          source[0].type == "AdditiveExpression" &&
+          source[1] &&
+          source[1].type === "-"
+        ) {
+          let node = {
+            type: "AdditiveExpression",
+            operator: "-",
+            children: [],
+          };
+          node.children.push(source.shift());
+          node.children.push(source.shift());
+          MultiplicativeExpression(source); //判断第三个单元是否已经全部变为 MultiplicativeExpression
+          node.children.push(source.shift());
+          source.unshift(node);
+          return AdditiveExpression(source);
+        }
+
+        if (source[0].type === "AdditiveExpression") {
+          return source[0];
+        }
+        //第一次进来调用一次  比如是Number的时候
+        MultiplicativeExpression(source);
+        return AdditiveExpression(source);
+      }
+    </script>
+  </body>
+</html>
