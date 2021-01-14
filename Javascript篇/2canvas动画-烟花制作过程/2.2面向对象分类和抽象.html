@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #canvas {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      /**
+       * 1. Scene 场景 对象
+       *  控制canvas内容
+       * 多个FireWorks 状态位置  进程
+       * 整体更新
+       *
+       * 2. Particle 粒子 大小 颜色 速度 加速度。。。
+       *
+       * 3.FireWorks
+       *
+       * */
+
+      class Scene {
+        constructor(name) {
+          // canvas 大小 调整
+          //生成多个可控的FireWorks 改变状态
+          this.canvas = document.querySelector(name);
+          this.ctx = this.canvas.getContext("2d");
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+          this.fireworksLength = 30; //烟花的个数
+          this.fireworksList = [];
+
+          this.init();
+        }
+
+        init() {
+          this.register();
+          for (let i = 0; i < this.fireworksLength; i++) {
+            this.fireworksList.push(new FireWorks());
+          }
+          this.render();
+        }
+
+        render() {
+          //多个烟花的状态
+          this.ctx.beginPath();
+          this.ctx.fillStyle = "rgba(255,192,203,.1)";
+          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+          this.fireworksList.forEach((item) => {
+            item.draw(this.ctx); //
+            item.update(); //绘制后更新
+          });
+          requestAnimationFrame(this.render.bind(this)); //因为requestAnimationFrame在调用的过程中会指向window;
+        }
+
+        update() {
+          //状态改变
+        }
+        register() {
+          window.onresize = function () {
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+          };
+        }
+      }
+
+      class FireWorks {
+        constructor() {
+          //位置 速度 加速度 颜色 状态（上升，爆炸）
+          //控制每个烟花的粒子改变
+          this.color = "#" + Math.random().toString().slice(-6);
+          this.px = window.innerWidth * (0.5 + Math.random() - 0.5); //屏幕的一半
+          this.py = window.innerHeight;
+          this.v = -15;
+          this.r = 5;
+          this.particle = new Particle(
+            this.px,
+            this.py,
+            this.r,
+            this.color,
+            this.v
+          );
+        }
+        init() {}
+        draw(ctx) {
+          this.particle.draw(ctx);
+        }
+        update() {
+          this.particle.update();
+        }
+      }
+
+      class Particle {
+        constructor(px, py, r, color, v) {
+          // 颜色 位置 消失
+          this.px = px;
+          this.py = py;
+          this.r = r;
+          this.color = color;
+          this.v = v;
+        }
+        kill() {}
+        draw(ctx) {
+          ctx.beginPath();
+          ctx.arc(this.px, this.py, this.r, 0, Math.PI * 2, false);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        }
+        update() {
+          this.py += this.v * .5 +2;
+        }
+      }
+      let screen = new Scene("#canvas");
+    </script>
+  </body>
+</html>

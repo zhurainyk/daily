@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #canvas {
+        width: 100%;
+        height: 100%;
+      }
+      html{
+          height:100%;
+      }
+      body{
+          height: 100%;
+          position: relative;
+      }
+      h1{
+          position: absolute;
+          top:0;
+          left:0;
+          right:0;
+          bottom:0;
+          margin:auto;
+          text-align: center;
+          line-height: 200px;
+          font-size: 100px;
+          color:red;
+          animation: blink 1s infinite linear;
+      }
+      @keyframes blink{
+          0%{
+              color:red;
+              opacity: 1;
+          }
+          50%{
+              color:firebrick;
+              opacity: .5;
+          }
+          50%{
+              color:deeppink;
+              opacity: .5;
+          }
+          100%{
+              color:red;
+              opacity: 0;
+          }
+          
+      }
+    </style>
+  </head>
+  <body>
+      <h1>12</h1>
+    <canvas id="canvas"></canvas>
+    <script>
+        function run(){
+            let h1 = document.querySelector('h1')
+            if(h1.innerHTML == 0){
+                h1.innerHTML = '情人节快乐'
+            }else{
+                h1.innerHTML = h1.innerHTML - 1
+               setTimeout(()=>{
+                   run()
+               },1000)
+            }
+        }
+        run()
+      /**
+       * 1. Scene 场景 对象
+       *  控制canvas内容
+       * 多个FireWorks 状态位置  进程
+       * 整体更新
+       *
+       * 2. Particle 粒子 大小 颜色 速度 加速度。。。
+       *
+       * 3.FireWorks
+       *
+       * */
+
+      class Scene {
+        constructor(name) {
+          // canvas 大小 调整
+          //生成多个可控的FireWorks 改变状态
+          this.canvas = document.querySelector(name);
+          this.ctx = this.canvas.getContext("2d");
+          this.canvas.width = window.innerWidth;
+          this.canvas.height = window.innerHeight;
+          this.fireworksLength = 30; //烟花的个数
+          this.fireworksList = [];
+
+          this.init();
+        }
+
+        init() {
+          this.register();
+          for (let i = 0; i < this.fireworksLength; i++) {
+            setTimeout(()=>{
+                this.fireworksList.push(new FireWorks()); //控制烟花的发射顺序 
+            },250*i)
+          }
+          this.render();
+        }
+
+        render() {
+          //多个烟花的状态
+          this.ctx.beginPath();
+          this.ctx.fillStyle = "rgba(255,192,203,.1)";
+          this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+
+          this.fireworksList.forEach((item) => {
+            item.draw(this.ctx); //
+            item.update(); //绘制后更新
+          });
+          requestAnimationFrame(this.render.bind(this)); //因为requestAnimationFrame在调用的过程中会指向window;
+        }
+
+        update() {
+          //状态改变
+        }
+        register() {
+          window.onresize = function () {
+            this.canvas.width = window.innerWidth;
+            this.canvas.height = window.innerHeight;
+          };
+        }
+      }
+
+      class FireWorks {
+        constructor() {
+          //位置 速度 加速度 颜色 状态（上升，爆炸）
+          //控制每个烟花的粒子改变
+          this.initFireWorks();
+        }
+        initFireWorks() {
+          this.color = "#" + Math.random().toString().slice(-6);
+          this.px = window.innerWidth * (0.5 + Math.random() - 0.5); //屏幕的一半
+          this.py = window.innerHeight;
+          this.vx = (Math.random() - 0.5) * 10;
+          this.vy = -20;
+          this.r = 5;
+          this.g = 0.25; //重力加速度 烟花达到最高点的时候落下
+          this.state = 0; //0表示上升 1爆炸 2 重置
+          this.particle = new Particle(
+            this.px,
+            this.py,
+            this.r,
+            this.color,
+            this.vx,
+            this.vy
+          );
+          this.particlLength = 100; //存储烟花粒子的数量
+          this.particleList = [];
+        }
+
+        initParticalList() {
+          console.log("爆开的数量");
+          for (let i = 0; i < this.particlLength; i++) {
+            let temp = Math.random();
+            this.particleList.push(
+              //绘制粒子爆炸
+              new Particle(
+                this.particle.px,
+                this.particle.py,
+                this.r,
+                this.color,
+                Math.cos(temp * Math.PI * 2) * 5,
+                Math.sin(temp * Math.PI * 2) * 5
+              )
+            );
+          }
+          setTimeout(() => {
+            this.state = 2;
+          }, 500);
+        }
+        draw(ctx) {
+          if (this.state === 0) {
+            //上升
+            this.particle.draw(ctx);
+          } else if (this.state === 1) {
+            //   console.log('爆炸')//下降 爆炸
+            if (this.particleList.length == 0) {
+              this.initParticalList();
+            } else {
+              this.particleList.forEach((item) => {
+                item.draw(ctx);
+                item.update();
+              });
+            }
+          }
+          if (this.state === 2) {
+            //重置了 绘制
+            this.initFireWorks();
+          }
+        }
+        update() {
+          if (this.state == 0) {
+            if (this.particle.vy < 0) {
+              //判断y方向
+              this.particle.update(this.g);
+            } else {
+              this.state = 1; //下降
+            }
+          }
+        }
+      }
+
+      class Particle {
+        constructor(px, py, r, color, vx, vy) {
+          // 颜色 位置 消失
+          this.px = px;
+          this.py = py;
+          this.r = r;
+          this.color = color;
+          this.vx = vx;
+          this.vy = vy;
+        }
+        kill() {}
+        draw(ctx) {
+          ctx.beginPath();
+          ctx.arc(this.px, this.py, this.r, 0, Math.PI * 2, false);
+          ctx.fillStyle = this.color;
+          ctx.fill();
+        }
+        update(g = 0) {
+          //重力加速度
+          this.vy += g;
+          this.py += this.vy;
+          this.px += this.vx;
+        }
+      }
+      let screen = new Scene("#canvas");
+    </script>
+  </body>
+</html>

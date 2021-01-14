@@ -1,0 +1,49 @@
+   let canvas = document.querySelector("#canvas");
+      canvas.width = innerWidth;
+      canvas.height = innerWidth;
+      let ctx = canvas.getContext("2d");
+
+      window.onresize = function () {
+        ctx.width = innerWidth;
+        ctx.height = innerWidth;
+      };
+
+      ctx.rect(200, 100, 150, 80); //矩形 (坐标xy 长宽 a b  )
+      ctx.fillStyle = " red "; //填充颜色
+      ctx.fill(); //绘制
+
+      // 画圆
+      ctx.arc(400, 400, 60, 0, 2 * Math.PI, false); //圆心坐标xy 半径r  弧度大小 0-2Π  顺时针逆时针
+      ctx.fill();
+
+      //画一个移动的⚪ 思路就是移动坐标
+
+      let x = 5,
+        y = 400;
+
+      var mark = true;
+      moveBar();
+      function moveBar() {
+        ctx.beginPath(); //每次绘制在新的画布上
+        // ctx.clearRect(0,0,canvas.width,canvas.height) //绘制前清
+
+        //移动速度
+        if (x > canvas.width) {//来回滚动
+          mark = false;
+        } else if (x <= 0) {
+          mark = true;
+        }
+        if (mark) {
+          x += x*.02 +2;
+        } else {
+          x -= x*.02+2
+        }
+         //fillStyle 绘制的时候留下一个小尾巴
+        ctx.fillStyle = "rgba(255,192,203,.1)";
+
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.arc(x, y, 5, 0, 2 * Math.PI, false);
+        ctx.fillStyle = "red"; //每次绘制都要添加填充颜色
+        ctx.fill(); //然后调用绘制方法
+        requestAnimationFrame(moveBar);
+      }
