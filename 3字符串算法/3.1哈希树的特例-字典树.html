@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      //最适合保存字典树的结构就算Object 或者 map
+      let $ = Symbol("$");
+      class Trie {
+        constructor() {
+          this.root = Object.create(null);
+        }
+        insert(word) {
+          let node = this.root;
+          for (let s of word) {
+            if (!node[s]) {
+              //判断是否已经出现过
+              node[s] = Object.create(null);
+            }
+            node = node[s];
+          }
+          //插入完成 给个终结符
+          if (!node[$]) {
+            //判断相同插入的时候  会在原来的基础上+1
+            node[$] = 0;
+          }
+          node[$]++;
+        }
+
+        getMost() { //得到最后单个出现最多的字符串 
+          let max = 0;
+          let maxWord = "";
+        //   let maxArr = []
+        //   let maxWordArr = []
+          function visit2(node, word) {
+            if (node[$] && node[$] >= max) {
+              max = node[$];
+              maxWord = word;
+            //   maxArr.push(max)
+            //   maxWordArr.push(maxWord)
+              
+            }
+            for (let p in node) {
+              visit2(node[p], word + p);
+            }
+          }
+          visit2(this.root, "");
+          console.log(max,maxWord)
+        }
+
+        getAllMost(){ //获得整个树中出现最多的集合 
+            let max = 0;
+            let maxWord = ''
+            let numArr = []
+            let wordArr = []
+            let visit = (node ,word)=>{
+                if(node[$] && node[$] >= max){
+                    max = node[$]
+                    maxWord = word
+                    numArr.push(max)
+                    wordArr.push(maxWord)
+                }
+                for(let p in node){
+                    visit(node[p],word + p)
+                }
+            }
+            visit(this.root,'')
+            console.log(max,maxWord,numArr,wordArr)
+
+            let MaxNum = Math.max(...numArr)
+      
+            let MaxNums = numArr.filter(item=>{
+                return item === MaxNum;
+            })
+            let MaxWords = wordArr.splice(wordArr.length-MaxNums.length)
+            console.log(MaxNums,MaxWords)
+            
+        }
+      }
+      let Tries = new Trie();
+
+      function ramdomWord(length) {
+        let s = "";
+        for (let i = 0; i < length; i++) {
+          //string.charCodeAt(index) 获取字符的Unicode编码   string代表字符串 index表示string中某个字符的序号
+          s += String.fromCharCode(
+            Math.floor(Math.random() * 26 + "a".charCodeAt())
+          );
+        }
+        return s;
+      }
+      for (let i = 0; i < 10000; i++) {
+        Tries.insert(ramdomWord(4));
+      }
+      console.log(Tries.root);
+      Tries.getAllMost();
+    </script>
+  </body>
+</html>
