@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+   <pre>
+        kmp模式匹配算法 主要是为了解决字符串查找问题 两个字符串 一个原串source
+
+        一个pattern串用于去匹配
+         //pattern : abcdabce
+      //source: abcdabcdabcex
+
+      //这个是自身有重复的情况
+      //关注字符串自重复行为
+      /*
+        逐位截断 寻找自重复的最长部分 找到abc 
+        a b c d a b c e 
+        b c d a b c e
+        c d a b c e
+        d a b c e
+        a b c e //这里的重复部分是abc 和原串后面的abc是重复的 
+        b c e
+        c e
+        e
+
+        用一个表格来表示 数组来表示 如果前面已经匹配到了重复的就标记1 依次类推
+        a b c d a b c e  //
+        0 0 0 0 0 1 2 3 //到当前位置的时候 前面有几个字符是重复的 就写几 比如 到第二个a的时候 前面abcd 没有一个重复 所以下标为0
+        到第二个b的时候 前面abcda有一个重复的 就是1 ，到第二个c的时候，前面abcdab 有两个重复的就是2 到e的时候 前面abcdabc有三个重复的 就是3
+
+        如果当匹配到e的时候发现不匹配 那么会回退到不匹配的前一个下标3 ，下标3是数组的第四项 ，我们又会去看第四项的
+        d匹不匹配，如果d匹配，那么就从这里开始，如果不匹配则回到最初状态
+
+        //kmp回退表格
+        a b a b a b c 
+        0 0 0 1 2 3 4 
+
+        KMP算法 首先写出这个表格
+        然后 写出匹配算法
+        */
+   </pre>
+    <script>
+     
+
+      function kmp(source, pattern) {
+        //计算table
+        let table = new Array(pattern.length).fill(0); //填0
+        //查有没有自重复
+        //abcdabce
+        {
+          //为了局部代码
+          let i = 1, //从1开始 如果是0开始那就整个串都是重复的了
+            j = 0;
+          while (i < pattern.length) {
+            if (pattern[i] == pattern[j]) {
+              //如果匹配上了 自增 修改table的值
+              ++i, ++j;
+              table[i] = j;
+            } else {
+              //没有匹配上
+              if (j > 0) {
+                //  j = 0;//这里不能是j=0 因为有可能是有自重复的情况
+                j = table[j];
+              } else {
+                //什么都没匹配上
+                i++; //j=0的时候就不用管了
+              }
+            }
+          }
+        }
+        console.log(table);
+
+        //匹配算法
+        {
+          let i = 0,
+            j = 0; //j是pattern的索引 i是source的索引
+          while (i < source.length) {
+            if (pattern[j] === source[i]) {
+              ++i, ++j;
+            } else {
+              if (j > 0) {
+                j = table[j];
+              } else {
+                ++i;
+              }
+            }
+            if (j === pattern.length) {
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+      //    kmp('','abcdabce') // [0, 0, 0, 0, 0, 1, 2, 3]
+      //    kmp('','abababc') // [0, 0, 0, 1, 2, 3, 4]
+      //  kmp('','aabaaac') //  [0, 0, 1, 0, 1, 2, 2]
+
+      console.log(kmp("helxlo", "ll"));
+      console.log(kmp("av", "av"));
+    </script>
+  </body>
+</html>
