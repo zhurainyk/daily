@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    如何查看没有被释放的闭包 f12
+    通过memory 
+    <script>
+      function fn() {
+        var a = 1;
+        return function () {
+          return a;
+        };
+      }
+      var b = fn();
+
+      var name = "window";
+      var p = {
+        name: "Ken",
+        getName: function () {
+          var self = this;
+          // 内部函数对变量 this 的引用
+          return function () {
+            return self.name;
+          };
+        },
+      };
+      var getName = p.getName();
+      var _name = getName.call(p);
+      console.log(_name);
+    </script>
+  </body>
+</html>
