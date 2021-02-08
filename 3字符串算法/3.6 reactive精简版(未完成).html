@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<script>
+    let callbacks = new Map( )
+    let usedReactivties = []
+    let obj = {
+        a:1,
+        b:2
+    }
+
+    let po = reactive(obj)
+
+    effect(()=>{
+        console.log(po.a)
+
+    })
+
+    function effect(callback){
+        // callbacks.push(callback)
+        usedReactivties= []
+        callback()
+        console.log(usedReactivties)
+    }
+
+    function reactive(object){
+        return new Proxy(object,{
+            set(obj,prop,val){
+                obj[prop] = val;
+                for(let callback of callbacks){
+                    callback()
+                }
+                return obj[prop]
+            },
+            get(obj,prop,val){
+                usedReactivties.push([obj,prop])
+                return obj[prop]
+            }
+        })
+    }
+</script>
+</body>
+</html>
