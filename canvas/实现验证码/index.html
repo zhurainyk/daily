@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      function Gcode(el, option = {}) {
+        this.el =
+          typeof el === "string" ? document.querySelector("#" + el) : el;
+        this.option = option;
+        console.log(this);
+        this.init();
+      }
+      Gcode.prototype = {
+        constructor: Gcode,
+        init: function () {
+          if (this.el.getContext) {
+            isSupportCanvas = true;
+            var ctx = this.el.getContext("2d"),
+              // 设置画布宽高
+              cw = (this.el.width = this.option.width || 140),
+              ch = (this.el.height = this.option.height || 40),
+              lineNum = 4,
+              textNum = 4;
+
+            this.drawLine(cw, ch, lineNum, ctx);
+            this.drawText(cw, ch, textNum, ctx);
+            this.onClick(cw, ch, lineNum, textNum, ctx);
+          }
+        },
+        onClick: function (cw, ch, lineNum, textNum, ctx) {
+          this.el.addEventListener("click", () => {
+            ctx.clearRect(0, 0, cw, ch);
+            this.drawLine(cw, ch, lineNum, ctx);
+            this.drawText(cw, ch, textNum, ctx);
+          });
+        },
+        getStr:function(){
+            return this.str;
+        },
+        drawText: function (cw, ch, textNum, ctx) {
+          let str = "";
+          for (let i = 0; i < textNum; i++) {
+            str += this.randomText(str);
+          }
+          this.str = str;
+          for (var i = 0; i < textNum; i++) {
+            var dx = 20 * Math.random() + 30 * i;
+            var dy = Math.random() * 5 + ch / 2;
+            ctx.fillStyle =
+              "rgb(" +
+              255 * Math.random() +
+              "," +
+              255 * Math.random() +
+              "," +
+              255 * Math.random() +
+              ")";
+            ctx.font = "30px Helvetica";
+            ctx.textBaseline = "middle";
+            ctx.fillText(str[i], dx, dy);
+          }
+        },
+        drawLine: function (cw, ch, lineNum, ctx) {
+          for (let i = 0; i < lineNum; i++) {
+            let dx1 = (Math.random() * cw) / 2;
+            let dy1 = (Math.random() * ch) / 2;
+            let dx2 = Math.random() * cw;
+            let dy2 = Math.random() * ch;
+            ctx.beginPath();
+            ctx.strokeStyle = "#" + (Math.random() * 16).toString(16).slice(-6);
+            ctx.moveTo(dx1, dy1);
+            ctx.lineTo(dx2, dy2);
+            ctx.stroke();
+          }
+        },
+        randomText(str) {
+          var str = str;
+          var s = String.fromCharCode(Math.floor(65 + Math.random() * 26));
+          if (str.indexOf(s) != -1) {
+            return this.randomText(str);
+          } else {
+            return s;
+          }
+        },
+      };
+      let a = new Gcode("canvas");
+    </script>
+  </body>
+</html>
