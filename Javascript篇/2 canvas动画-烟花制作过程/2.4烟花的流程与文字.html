@@ -57,7 +57,7 @@
         function run(){
             let h1 = document.querySelector('h1')
             if(h1.innerHTML == 0){
-                h1.innerHTML = '情人节快乐'
+                h1.innerHTML = '新春快乐'
             }else{
                 h1.innerHTML = h1.innerHTML - 1
                setTimeout(()=>{
@@ -97,7 +97,7 @@
           for (let i = 0; i < this.fireworksLength; i++) {
             setTimeout(()=>{
                 this.fireworksList.push(new FireWorks()); //控制烟花的发射顺序 
-            },250*i)
+            },100*i)
           }
           this.render();
         }
@@ -133,7 +133,7 @@
           this.initFireWorks();
         }
         initFireWorks() {
-          this.color = "#" + Math.random().toString().slice(-6);
+          this.color = "#" + Math.random().toString(16).slice(-6);
           this.px = window.innerWidth * (0.5 + Math.random() - 0.5); //屏幕的一半
           this.py = window.innerHeight;
           this.vx = (Math.random() - 0.5) * 10;
@@ -164,7 +164,7 @@
                 this.particle.py,
                 this.r,
                 this.color,
-                Math.cos(temp * Math.PI * 2) * 5,
+                Math.cos(temp * Math.PI * 2) * 8,
                 Math.sin(temp * Math.PI * 2) * 5
               )
             );
