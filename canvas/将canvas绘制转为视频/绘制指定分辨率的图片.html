@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <canvas></canvas>
+    <script>
+        let canvas = document.querySelector('canvas')
+         canvas.height= 200 //指定分辨率
+         canvas.width = 150
+        let ctx = canvas.getContext('2d')
+        let img = new Image()
+        img.src='./test.jpg' //图片的地址
+        img.onload = function(){
+            ctx.drawImage(this,0,0,canvas.width, canvas.height)
+        }
+    </script>
+</body>
+</html>
