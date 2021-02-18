@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+    <style>
+        body{
+            background-color: #fff;
+        }
+      #canvas {
+        display: inline-block;
+        margin: 50px auto;
+      }
+      #videoContainer {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <div id="videoContainer">
+      <video
+        width="300"
+        height="300"
+        controls="true"
+        autoplay="true"
+        id="video"
+
+      ></video>
+    </div>
+    <script>
+      let canvas = document.querySelector("#canvas");
+
+      const ctx = canvas.getContext("2d");
+      const width = (canvas.width = 500);
+      const height = (canvas.height = 500);
+      ctx.fillStyle = "red";
+
+      function draw(rotation = 0) {
+        ctx.clearRect(0, 0, 500, 500);
+        ctx.fillStyle = 'red'
+        ctx.save();
+        ctx.translate(width / 2, height / 2);
+        ctx.rotate(rotation);
+        ctx.translate(-width / 2, -height / 2);
+        ctx.beginPath();
+        ctx.rect(150, 150, 200, 200);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function update(t) {
+        draw(t / 500);
+        requestAnimationFrame(update);
+      }
+      update(5);
+
+      const stream = canvas.captureStream(60);
+      const recorder = new MediaRecorder(stream, {
+        mimeType: "video/webm",
+      });
+      const data = [];
+      recorder.ondataavailable = function (event) {
+        if (event.data && event.data.size) {
+          data.push(event.data);
+        }
+      };
+      recorder.onstop = () => {
+        const url = URL.createObjectURL(new Blob(data, { type: "video/webm" }));
+        document.querySelector("#videoContainer").style.display = "inline-block";
+        document.querySelector("#video").src = url;
+      };
+      recorder.start();
+      setTimeout(() => {
+        recorder.stop();
+      }, 2000);
+    </script>
+  </body>
+</html>

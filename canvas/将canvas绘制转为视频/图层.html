@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      canvas {
+        border: 1px solid pink;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="canvas"></canvas>
+    <script>
+      let canvas = document.querySelector("canvas");
+      let ctx = canvas.getContext("2d");
+      canvas.width = canvas.height = 500;
+      let x = 200;
+      let mark = true;
+      function draw() {
+    
+        x++
+        ctx.beginPath();
+        ctx.fillStyle = "red";
+        ctx.arc(200, 200, 50, 0, 2 * Math.PI);
+        ctx.fill();
+        ctx.globalCompositeOperation = "source-atop";
+
+        ctx.beginPath();
+        ctx.fillStyle = "#fff";
+        ctx.arc(x, 200, 50, 0, 2 * Math.PI);
+        
+        ctx.fill();
+        requestAnimationFrame(draw)
+      }
+      draw()
+    </script>
+  </body>
+</html>
