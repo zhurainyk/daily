@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./libs/ol.css" />
+    <script src="./libs/ol.js"></script>
+    <style>
+        #map{
+            width:100%;
+            height:500px;
+        }
+    </style>
+  </head>
+  <body>
+      <div id="map"></div>
+      <div id="maker">
+          <div id="point"></div>
+          <div id="txt"></div>
+      </div>
+      <div id="popup">
+          <div id="title"></div>
+          <div id="content"></div>
+      </div>
+    <script>
+        let layer = new ol.layer.Tile({
+            source:new ol.source.OSM()
+        })
+        let map = new ol.Map({
+            layers:[layer],
+            view:new ol.View({
+                center:[0,0],
+                zoom:2
+            }),
+            target:'map'
+        })
+        const Pos = ol.proj.formLonLat([16.3725, 48.208889]);
+        let marker = new ol.Overlay({
+            position:Pos,
+            positioning:'center-center',
+            element:document.getElementById('marker'),
+            stopEvent:false
+        })
+        map.addOverlay(marker);
+    </script>
+  </body>
+</html>
