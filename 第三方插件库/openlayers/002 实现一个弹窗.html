@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./libs/ol.css" />
+    <script src="./libs/ol.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"
+      type="text/css"
+    />
+
+    <style>
+      #map {
+        width: 100%;
+        height: 500px;
+      }
+      .ol-popup {
+        position: absolute;
+        background-color: white;
+        -webkit-filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+        filter: drop-shadow(0 1px 4px rgba(0, 0, 0, 0.2));
+        padding: 15px;
+        border-radius: 10px;
+        border: 1px solid #cccccc;
+        bottom: 12px;
+        left: -50px;
+        min-width: 280px;
+      }
+
+      .ol-popup:after,
+      .ol-popup:before {
+        top: 100%;
+        border: solid transparent;
+        content: " ";
+        height: 0;
+        width: 0;
+        position: absolute;
+        pointer-events: none;
+      }
+
+      .ol-popup:after {
+        border-top-color: white;
+        border-width: 10px;
+        left: 48px;
+        margin-left: -10px;
+      }
+
+      .ol-popup:before {
+        border-top-color: #cccccc;
+        border-width: 11px;
+        left: 48px;
+        margin-left: -11px;
+      }
+
+      .ol-popup-closer {
+        text-decoration: none;
+        position: absolute;
+        top: 2px;
+        right: 8px;
+      }
+
+      .ol-popup-closer:after {
+        content: "✖";
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <div id="popup" class="ol-popup">
+      <a href="#" id="popup-closer" class="ol-popup-closer"></a>
+      <div id="popup-content"></div>
+    </div>
+    <script>
+      /*
+         ol.layer.Tile -> 下面包含了 ol.source.Tile JSON()
+         ol.view -> 包含了 ol.view.options
+         ol.Overlay 叠加层 容器盒子 ->  <div id='popup' class='ol-popup'></div
+         target:map
+         其他参数
+
+        */
+
+      // 获取弹窗dom
+      var container = document.querySelector("#popup");
+      let content = document.querySelector("#popup-content");
+      let closer = document.querySelector("#popup-closer");
+
+      // 创建一个Overlay叠加层对象 作为弹窗
+      let overlay = new ol.Overlay({
+        element: container, //dom节点
+        autoPan: true, //autoPan 当弹窗在浏览器边缘的时候自动移动地图适应
+        autoPanAnimation: {
+          //配置地图移动的动画
+          duration: 250,
+        },
+      });
+
+      //弹窗关闭函数
+
+      closer.onclick = function () {
+        overlay.setPosition(undefined);
+        closer.blur();
+        return false;
+      };
+
+      //创建地图
+      let map = new ol.Map({
+        layers: [
+          //可以是单个图层，也可以是一个数组
+          new ol.layer.Tile({
+            //每一个Tile对应一个数据源 source
+            source: new ol.source.TileJSON({
+              //以前是OSM ol自带的数据源 这里是第三方的
+              url:
+                "https://api.tiles.mapbox.com/v4/mapbox.natural-earth-hypso-bathy.json?secure&access_token=pk.eyJ1IjoiYWhvY2V2YXIiLCJhIjoiY2pzbmg0Nmk5MGF5NzQzbzRnbDNoeHJrbiJ9.7_-_gL8ur7ZtEiNwRfCy7Q",
+              crossOrigin: "anonymous", //防止跨域
+            }),
+          }),
+        ],
+        overlays: [overlay], //叠加层 这里是弹窗
+        target: "map",
+        view: new ol.View({
+          center: [0, 0],
+          zoom: 2,
+        }),
+      });
+      map.on("singleclick", function (evt) {
+        //singleclick 是左键单击 和click
+        var coordinate = evt.coordinate; // 默认坐标系统：EPSG:3857。 openlayers使用的是3857坐标系 得到的不是经纬度 而是米
+        console.log(ol.proj.toLonLat(coordinate)); //ol.proj.toLonLat 将坐标转为经纬度 然后用ol.coordinate.toStringHDMS格式化
+        console.log(mercatorTolonlat({ x: coordinate[0], y: coordinate[1] }));
+        var hdms = ol.coordinate.toStringHDMS(ol.proj.toLonLat(coordinate));
+        content.innerHTML = "<p>你点击了这里:</p><code>" + hdms + "</code>";
+        console.log({ coordinate });
+        overlay.setPosition(coordinate); //设置弹窗的位置 使用的是3857坐标
+      });
+
+      //3857坐标系得到的坐标米 转为经纬度函数 //转换出来有误差 慎用
+      function mercatorTolonlat(mercator) {
+        var lonlat = { x: 0, y: 0 };
+        var x = (mercator.x / 20037508.34) * 180;
+        var y = (mercator.y / 20037508.34) * 180;
+        y =
+          (180 / Math.PI) *
+          (2 * Math.atan(Math.exp((y * Math.PI) / 180)) - Math.PI / 2);
+        lonlat.x = x;
+        lonlat.y = y;
+        return lonlat;
+      }
+    </script>
+  </body>
+</html>
