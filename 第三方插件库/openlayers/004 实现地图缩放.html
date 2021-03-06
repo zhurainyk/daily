@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./libs/ol.js"></script>
+    <link rel="stylesheet" href="./libs/ol.css" />
+    <link rel="stylesheet" href="./libs/style.css" />
+  </head>
+  <body>
+    <div id="map" class="map"></div>
+    <script>
+      let layer = new ol.layer.Tile({
+        source: new ol.source.OSM(),
+      });
+
+      let view = new ol.View({
+          center:[0,0],
+          zoom:5,
+          minZoom:0,
+          maxZoom:12
+      })
+      var map = new ol.Map({
+        target: 'map',
+			layers: [
+			new ol.layer.Tile({
+				source: new ol.source.BingMaps({
+				key: 'Ar9_dLlK3jm0yur138RMXPX_ueFGjkBfmBUeDYwUHxaUl8YwvzGqO3_5_GwVECA4',
+				imagerySet: 'Aerial',
+                hidpi:true
+				})
+			})
+			],
+			view: new ol.View({
+			center: [-13553864, 5918250],
+			zoom: 11,
+			minZoom: 9,
+			maxZoom: 20
+			})
+
+      });
+    </script>
+  </body>
+</html>
