@@ -16,29 +16,29 @@
       });
 
       let view = new ol.View({
-          center:[0,0],
-          zoom:5,
-          minZoom:0,
-          maxZoom:12
-      })
+        center: [0, 0],
+        zoom: 5,
+        minZoom: 0,
+        maxZoom: 12,
+      });
       var map = new ol.Map({
-        target: 'map',
-			layers: [
-			new ol.layer.Tile({
-				source: new ol.source.BingMaps({
-				key: 'Ar9_dLlK3jm0yur138RMXPX_ueFGjkBfmBUeDYwUHxaUl8YwvzGqO3_5_GwVECA4',
-				imagerySet: 'Aerial',
-                hidpi:true
-				})
-			})
-			],
-			view: new ol.View({
-			center: [-13553864, 5918250],
-			zoom: 11,
-			minZoom: 9,
-			maxZoom: 20
-			})
-
+        target: "map",
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.BingMaps({
+              key:
+                "Ar9_dLlK3jm0yur138RMXPX_ueFGjkBfmBUeDYwUHxaUl8YwvzGqO3_5_GwVECA4",
+              imagerySet: "Aerial",
+              hidpi: true,
+            }),
+          }),
+        ],
+        view: new ol.View({
+          center: [-13553864, 5918250],
+          zoom: 11,
+          minZoom: 9,
+          maxZoom: 20,
+        }),
       });
     </script>
   </body>
