@@ -22,6 +22,11 @@ const routes = [
     //     component: () => import("../views/maps/map2.vue"),
     //   },
     // ],
+  },
+  {
+    path:'/flowchart',
+    name:'flowchart',
+    component:()=>import('../views/vue-flowchart-editor/index.vue')
   }
 ];
 

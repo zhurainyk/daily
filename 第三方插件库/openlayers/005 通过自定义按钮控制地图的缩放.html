@@ -9,8 +9,15 @@
     <link rel="stylesheet" href="./libs/style.css" />
   </head>
   <body>
+    <div id="list">
+      <button class='big'>放大</button>
+      <button class='small'>缩小</button>
+    </div>
     <div id="map" ></div>
     <script>
+
+      const big = document.querySelector('.big');
+      const small = document.querySe
       const map = new ol.Map({
         layers:[new ol.layer.Tile({
           source:new ol.source.OSM()
