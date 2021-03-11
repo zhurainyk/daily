@@ -1,47 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./libs/style.css">
-    <link rel="stylesheet" href="./libs/ol.css">
+    <link rel="stylesheet" href="./libs/style.css" />
+    <link rel="stylesheet" href="./libs/ol.css" />
     <script src="./libs/ol.js"></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="map"></div>
     <script>
-        let m = new ol.Map({
-            view:new ol.View({
-                zoom:7,
-                center:[11861569.896179514,3450206.590530292] 
-            }),
-            target:'map',
-            layers:[
-                new ol.layer.Tile({
-                    source:new ol.source.OSM()
-                })
-            ],
-            interactions:ol.interaction.defaults({
-                onFocusOnly:true,//是否响应交互
-                doubleClickZoom:true,//双击变大
-                altShiftDragRotate:true , //alshift旋转，
-                constrainResolution:false,//缩放level等级取整，
-                keyboard:true ,//键盘交互开启
-                mouseWhellZoom:true,//滚轮交互
-                shiftDragZoom:true,
-                dragPan:true,//地图移动根据弹窗
-                pinchRotate:true
-            })
-        })
-        m.on('click',(e)=>{
-            // console.log(e)
-            const [x,y] = e.coordinate;
-        
-        })
-        m.on('moveend',()=>{
-            console.log(m.getView().getZoom())
-        })
+      let m = new ol.Map({
+        view: new ol.View({
+          zoom: 7,
+          center: [11861569.896179514, 3450206.590530292],
+        }),
+        target: "map",
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.OSM(),
+          }),
+        ],
+        interactions: ol.interaction.defaults({
+          onFocusOnly: true, //是否响应交互
+          doubleClickZoom: true, //双击变大
+          altShiftDragRotate: true, //alshift旋转，
+          constrainResolution: false, //缩放level等级取整，
+          keyboard: true, //键盘交互开启
+          mouseWhellZoom: true, //滚轮交互
+          shiftDragZoom: true,
+          dragPan: true, //地图移动根据弹窗
+          pinchRotate: true,
+        }),
+      });
+      m.on("click", (e) => {
+        // console.log(e)
+        const [x, y] = e.coordinate;
+      });
+      m.on("moveend", () => {
+        console.log(m.getView().getZoom());
+      });
+
+
     </script>
-</body>
+  </body>
 </html>

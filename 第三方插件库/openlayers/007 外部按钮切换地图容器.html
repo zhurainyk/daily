@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./libs/ol.css">
+    <link rel="stylesheet" href="./libs/style.css">
+    <script src="./libs/ol.js"></script>
+</head>
+<body>
+
+    <div id="map"></div>
+    <div id="map2"></div>
+    <button onclick="m.getTarget()==='map'?m.setTarget('map2'):m.setTarget('map')" style='position:fixed;top:0;left:0;z-index: 9999;'>切换</button>
+    <script>
+        let m = new ol.Map({
+            view:new ol.View({
+                zoom:7,
+                center: [11861569.896179514, 3450206.590530292],
+            }),
+            target:'map',
+            layers:[new ol.layer.Tile({
+                source:new ol.source.OSM()
+            })],
+            interactions:new ol.interaction.defaults({
+                onFocusOnly:true
+            })
+        })
+
+        
+        console.log(2)
+    </script>
+</body>
+</html>
