@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./libs/ol.css" />
+    <link rel="stylesheet" href="./libs/style.css" />
+    <script src="./libs/ol.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <div id="map2"></div>
+    <script>
+      let view = new ol.View({
+        zoom: 3,
+        center: [11861569.896179514, 3450206.590530292],
+      });
+      let layer1 = new ol.layer.Tile({
+        preload: Infinity,
+        source: new ol.source.BingMaps({
+          key:
+            "Ar9_dLlK3jm0yur138RMXPX_ueFGjkBfmBUeDYwUHxaUl8YwvzGqO3_5_GwVECA4",
+          imagerySet: "AerialWithLabels",//卫星标签地图 -> 带有文字
+        }),
+      });
+      let layer2 = new ol.layer.Tile({
+        preload: 0,
+        source: new ol.source.BingMaps({
+          key:
+            "Ar9_dLlK3jm0yur138RMXPX_ueFGjkBfmBUeDYwUHxaUl8YwvzGqO3_5_GwVECA4",
+          imagerySet: "Aerial", //卫星地图
+        }),
+      });
+
+      let map1 = new ol.Map({
+        target: "map",
+        view,
+        layers: [layer1],
+      });
+      let map2 = new ol.Map({
+        target: "map2",
+        view,
+        layers: [layer2],
+      });
+    </script>
+  </body>
+</html>
