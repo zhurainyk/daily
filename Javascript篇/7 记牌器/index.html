@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>记牌器</title>
+    <style>
+      #box {
+        display: flex;
+        justify-content: center;
+        align-items: stretch;
+        user-select: none;
+      }
+
+      .card {
+        position: relative;
+        border-radius: 10px;
+        width: 60px;
+        margin-top: 20px;
+        height: 100px;
+        background-color: #f5f5f5;
+        margin-right: 10px;
+        box-shadow: 0 5px 5px 0 #c9c9c9;
+        font-size: 28px;
+        padding-left: 10px;
+      }
+
+      .card--empty {
+        color: #c3c3c3;
+        opacity: 0.8;
+      }
+
+      .card--chosen {
+        margin-top: 0;
+      }
+
+      .card::after {
+        content: attr(count);
+        position: absolute;
+        bottom: 2px;
+        right: 5px;
+        color: #999;
+        font-size: 18px;
+      }
+
+      .card--warning::after {
+        color: red;
+        font-weight: bold;
+      }
+
+      #btn-box {
+        text-align: center;
+        margin-top: 30px;
+      }
+
+      button {
+        padding: 10px 30px;
+        border-radius: 60px;
+        background-color: orangered;
+        color: #fff;
+        font-size: 32px;
+        border: 0;
+        cursor: pointer;
+        transition: all ease 0.3s;
+        margin-right: 20px;
+        outline: none;
+      }
+
+      button:hover {
+        background-color: red;
+        transform: scale(1.1);
+      }
+
+      .info {
+        font-size: 14px;
+        margin-top: 70px;
+        color: #999;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div id="box"></div>
+    <div class="info">
+      <!-- <p>作者: <a href="http://www.leelei.info">leelei</a></p> -->
+      <p>
+        用法:
+        鼠标【点击】直接出牌，或者【点击滑动】出牌，右键单击某张牌可以增加牌数(用于防止点错)
+      </p>
+      <p>
+        适用于:
+        斗地主新手，并且没有钱买记牌器，并且经常开着电脑的时候顺便手机玩斗地主
+      </p>
+    </div>
+  </body>
+  <script>
+    //常量
+    const arr = [3, 4, 5, 6, 7, 8, 9, 10, "J", "Q", "K", "A", 2, "👻"];
+    const nums = [4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 2];
+    const TYPE_CHOSEN = " card--chosen";
+    const TYPE_WARNING = " card--warning";
+    const TYPE_EMPTY = " card--empty";
+    //储存已经选择
+    let chosenArr = [];
+
+    //添加类名
+    function addClass(e, name) {
+      if (e.className.indexOf(name) == -1) {
+        e.className += name;
+      }
+    }
+    //移除类名
+    function removeClass(e, name) {
+      e.className = e.className.replace(name, "");
+    }
+    //初始化卡片
+    function initCards() {
+      let box = document.getElementById("box");
+      let frag = document.createDocumentFragment();
+      for (let i = 0; i < 14; i++) {
+        let ele = document.createElement("div");
+        ele.className = "card" + TYPE_WARNING;
+        ele.innerText = arr[i];
+        ele.setAttribute("count", nums[i]);
+        ele.setAttribute("index", i);
+        frag.append(ele);
+      }
+      box.append(frag);
+    }
+
+    //初始化输入
+    function initSlideInput() {
+      let cards = document.getElementsByClassName("card");
+      //鼠标按下时注册
+      box.addEventListener("mousedown", installSlideInput);
+      //鼠标抬起卸载
+      box.addEventListener("mouseup", uninstallSlideInput);
+      box.addEventListener("mouseleave", uninstallSlideInput);
+      //注册滑动输入
+      function installSlideInput() {
+        Array.from(cards).forEach((e) => {
+          e.addEventListener("mouseenter", slideSelect);
+          e.addEventListener("mouseleave", slideSelect);
+        });
+      }
+      //卸载滑动输入
+      function uninstallSlideInput() {
+        Array.from(cards).forEach((e) => {
+          e.removeEventListener("mouseenter", slideSelect);
+          e.removeEventListener("mouseleave", slideSelect);
+        });
+        submit();
+      }
+      //点击输入,一直有效
+      Array.from(cards).forEach((e) => {
+        e.addEventListener("click", function (event) {
+          slideSelect(event);
+          submit();
+        });
+      });
+      //滑动输入
+      function slideSelect(event) {
+        let idx = event.currentTarget.getAttribute("index");
+        if (event.currentTarget.className.indexOf(TYPE_CHOSEN) == -1) {
+          addClass(event.currentTarget, TYPE_CHOSEN);
+          chosenArr.push(idx);
+        }
+      }
+    }
+
+    //重置全部牌的状态，凸起->对齐
+    function reset() {
+      chosenArr = [];
+      let cards = document.getElementsByClassName("card");
+      Array.from(cards).forEach((v, i) => {
+        removeClass(v, TYPE_CHOSEN);
+      });
+    }
+
+    //出牌
+    function submit() {
+      let cards = document.getElementsByClassName("card");
+      chosenArr.forEach((v, i) => {
+        cards[v].setAttribute("count", cards[v].getAttribute("count") - 1);
+        removeClass(cards[v], TYPE_WARNING);
+        if (cards[v].getAttribute("count") < 1) {
+          //最小为0,设置为空状态
+          cards[v].setAttribute("count", 0);
+          addClass(cards[v], TYPE_EMPTY);
+        }
+      });
+      //重置状态
+      reset();
+    }
+    //右键加牌，防止出错牌
+    function addCardCount(e) {
+      if (e.getAttribute("count") != undefined) {
+        e.setAttribute("count", e.getAttribute("count") - 0 + 1);
+      }
+      if (e.getAttribute("count") >= nums[e.getAttribute("index")]) {
+        e.setAttribute("count", nums[e.getAttribute("index")]);
+        addClass(e, TYPE_WARNING);
+      } else if (e.getAttribute("count") > 0) {
+        removeClass(e, TYPE_EMPTY);
+      }
+    }
+
+    window.onload = function () {
+      document.oncontextmenu = function (event) {
+        event.preventDefault();
+        if (event.button == 2) {
+          addCardCount(event.target);
+        }
+      };
+      initCards();
+      initSlideInput();
+    };
+  </script>
+</html>
