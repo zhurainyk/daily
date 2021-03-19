@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="./libs/ol.css" />
+    <link rel="stylesheet" href="./libs/style.css" />
+    <script src="./libs/ol.js"></script>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script>
+      let map = new ol.Map({
+        target: "map",
+        layers: [
+          new ol.layer.Tile({
+            source: new ol.source.BingMaps({
+              key:
+                "Ar9_dLlK3jm0yur138RMXPX_ueFGjkBfmBUeDYwUHxaUl8YwvzGqO3_5_GwVECA4",
+              imagerySet: "Aerial",
+              hidpi: true,
+            }),
+          }),
+        ],
+        view: new ol.View({
+          zoom: 5,
+          center: ol.proj.fromLonLat([4.8, 47.75]),
+        }),
+      });
+      var graticule = new ol.layer.Graticule({ //新版得Graticule在ol.layer.graticule下面
+        strokeStyle: new ol.style.Stroke({
+          color: "rgba(255,120,0,0.9)",
+          width: 12,
+          lineDash: [20], //虚线段得长度
+        }),
+
+        showLabels: true,
+      });
+
+      graticule.setMap(map);
+    </script>
+  </body>
+</html>
