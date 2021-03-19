@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./libs/ol.css">
+    <link rel="stylesheet" href="./libs/style.css">
+    <script src="./libs/ol.js"></script>
+
+</head>
+<body>
+    <div id="map"></div>
+    <script>
+        let map = new ol.Map({
+            layers:[
+                new ol.layer.Tile({
+                    source:new ol.source.OSM()
+                })
+            ],
+            target:'map',
+            view:new ol.View({
+                center:[14200000,4130000],
+                zoom:10,
+                rotation:Math.PI/6
+            })
+        })
+
+        function sleep(t){
+            return new Promise(res=>{
+                setTimeout(res,t)
+            })
+        }
+        sleep(6000).then(()=>{
+          map.getView().setRotation(Math.PI)
+          alert(1)
+        })
+
+    </script>
+</body>
+</html>
