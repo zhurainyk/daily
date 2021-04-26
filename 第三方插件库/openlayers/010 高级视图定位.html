@@ -148,6 +148,7 @@
         function () {
           var feature = source.getFeatures()[0];
           var polygon = feature.getGeometry();
+          console.log({polygon})
           view.fit(polygon, {
             padding: [170, 50, 30, 150],
             constrainResolution: false,
