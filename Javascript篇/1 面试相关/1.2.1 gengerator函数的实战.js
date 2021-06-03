@@ -9,7 +9,7 @@ function* test(i){
     }
 }
 
-let t = test(0)
+let t = test(0)                                          
  t.next()
 // {value: 1, done: false}
 
@@ -19,7 +19,7 @@ let t = test(0)
  t.next()
 // {value: 3, done: false}
 
- t.next()
+ t.next() 
 // {value: 4, done: false}
 
  t.next()

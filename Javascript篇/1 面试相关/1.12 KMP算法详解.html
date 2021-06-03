@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      function kmp(source, parttern) {
+        let table = new Array(parttern.length).fill(0);
+        {
+          let i = 1,
+            j = 0;
+          while (parttern.length > i) {
+            if (parttern[i] == parttern[j]) {
+              ++i, ++j;
+              table[i] = j;
+            } else {
+              if (j > 0) {
+                j = table[i];
+              } else ++i;
+            }
+          }
+          console.log(table);
+        }
+        {
+          let i = 0,
+            j = 0;
+          while (i < source.length) {
+            if (source[i] == parttern[j]) {
+              ++i, ++j;
+            } else {
+              if (j > 0) {
+                j = table[j];
+              } else {
+                ++i;
+              }
+            }
+            if (j == parttern.length) {
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+
+      function kmp2(source, parttern) {
+        let table = new Array(parttern.length).fill(0);
+        {
+          let i = 1,
+            j = 0; //先查找自重复
+          while (i < parttern.length) {
+            if (parttern[i] == parttern[j]) {
+              ++i, ++j;
+              table[i] = j;
+            } else {
+              if (j > 0) {
+                j = table[i];
+              } else {
+                ++i;
+              }
+            }
+          }
+        }
+        {
+          let i = 0;
+          j = 0;
+          while (i < source.length) {
+            if (source[i] == parttern[j]) {
+              ++i;
+            } else {
+              if (j > 0) {
+                j = table[j];
+              } else {
+                ++i;
+              }
+            }
+            if (j === parttern.length) {
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+
+      function kmp3(source,parttern){
+        let table = new Array(parttern.length).fill(0)
+        {
+          let i = 1,j=0;
+          while(i<parttern.length){
+            if(parttern[i] == parttern[j]){
+              ++i,++j;
+              table[i] = j
+            }else{
+              if(j>0){
+                j = table[i]
+              }else{
+                j =0;
+              }
+            }
+          }
+          console.log(table)
+        }
+        {
+          let i = 0,j = 0;
+          while(i<source.length){
+            if(source[i] == parttern[j]){
+               ++i,++j;
+            }else{
+              if(j>0){
+                j = table[j]
+              }else{
+                ++i
+              }
+            }
+            if(j === parttern.length){
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+    </script>
+  </body>
+</html>
