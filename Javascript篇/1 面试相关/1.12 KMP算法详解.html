@@ -84,29 +84,108 @@
         }
       }
 
-      function kmp3(source,parttern){
+      function kmp3(source, parttern) {
+        let table = new Array(parttern.length).fill(0);
+        {
+          let i = 1,
+            j = 0;
+          while (i < parttern.length) {
+            if (parttern[i] == parttern[j]) {
+              ++i, ++j;
+              table[i] = j;
+            } else {
+              if (j > 0) {
+                j = table[i];
+              } else {
+                j = 0;
+              }
+            }
+          }
+          console.log(table);
+        }
+        {
+          let i = 0,
+            j = 0;
+          while (i < source.length) {
+            if (source[i] == parttern[j]) {
+              ++i, ++j;
+            } else {
+              if (j > 0) {
+                j = table[j];
+              } else {
+                ++i;
+              }
+            }
+            if (j === parttern.length) {
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+      function kmp4(source, parttern) {
+        let table = new Array(parttern.length).fill(0);
+        {
+          let i = 1,
+            j = 0;
+          while (i < parttern.length) {
+            if (parttern[i] == parttern[j]) {
+              ++i, ++j;
+              table[i] = j;
+            } else {
+              if (j > 0) {
+                j = table[i];
+              } else {
+                ++i;
+              }
+            }
+          }
+          console.log({table})
+        }
+        {
+          let i = 0,
+            j = 0;
+          while (i < source.length) {
+            if (source[i] == parttern[j]) {
+              ++i, ++j;
+            } else {
+              if (j > 0) {
+                j = table[j];
+              } else {
+                ++i;
+              }
+            }
+            if (j == parttern.length) {
+              return true;
+            }
+          }
+          return false;
+        }
+      }
+
+      function kmp5(source,parttern){
         let table = new Array(parttern.length).fill(0)
         {
-          let i = 1,j=0;
+          let i = 1,j = 0;
           while(i<parttern.length){
             if(parttern[i] == parttern[j]){
               ++i,++j;
-              table[i] = j
+              table[i] = j;
             }else{
               if(j>0){
                 j = table[i]
               }else{
-                j =0;
+                ++i;
               }
             }
           }
           console.log(table)
         }
         {
-          let i = 0,j = 0;
+          let i = 0;j=0;
           while(i<source.length){
             if(source[i] == parttern[j]){
-               ++i,++j;
+              ++i,++j;
             }else{
               if(j>0){
                 j = table[j]
@@ -114,12 +193,13 @@
                 ++i
               }
             }
-            if(j === parttern.length){
-              return true;
+            if(j == parttern.length){
+              return true
             }
           }
-          return false;
+           return false
         }
+       
       }
     </script>
   </body>
