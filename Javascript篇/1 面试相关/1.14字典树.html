@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        let $ = Symbol('$') //终结符
+        class Trie{
+            constructor(){
+                this.root = Object.create(null)
+            }
+            insert(word){
+                let node = this.root;
+                for(let c of word){
+                    if(!node[c]){
+                         node[c] = Object.create(null);
+                        //  console.log('1 node[c]:',node[c])
+                    }
+                    node = node[c]
+                    // console.log('2 node[c]:',node)
+
+                }
+                // console.log('node结束',node)
+            }
+        }
+
+        class Trie2{
+            constructor(){
+                this.root = Object.create(null)
+            }
+            insert(word){
+                let node = this.root
+                for(let c of word){
+                    if(!node[c]){
+                        node[c] = Object.create(null)
+                    }
+                    node = node[c]
+                }
+                if( !($ in node)){
+                    node[$] = 0;
+                }else{
+                    node[$] ++ ;
+                }
+            }
+            most(){
+                let max = 0;
+                let i = 0;
+                let maxWord = null
+                let visit = (node,word) =>{
+                    i++
+                    if(node[$] && node[$]>max){
+                        max = node[$];
+                        maxWord = word;
+                    }
+                    for(let p in node){
+                        visit(node[p],word + p)
+                    }
+                }
+                visit(this.root,'');
+                console.log({max,maxWord,i})
+            }
+        }
+
+        function randomWord(length){
+            let str = '';
+            for(let i = 0; i<length;i++){
+                str += String.fromCharCode(Math.random()* 26  + 'a'.charCodeAt(0))
+            }
+            // console.log(str)
+            return str
+        }
+
+        let trie = new Trie2()
+        for(let i = 0 ;i< 100000;i++){
+            trie.insert(randomWord(4))
+        }
+
+
+
+    </script>
+    
+</body>
+</html>
