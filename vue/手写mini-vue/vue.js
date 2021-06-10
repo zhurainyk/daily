@@ -19,8 +19,11 @@ export default class Vue{
     initRootElement(options){
         if(typeof options.el ==='string'){
             this.$el = document.querySelector(options.el)
-        }else if(options.el instanceof HTMLElement){
-            
+        }else if(options.el instanceof HTMLElement){//判断是不是一个node 节点  
+            this.$el = options.el;
+        }
+        if(!this.$el){//防止以上情况都不对 
+            throw new Error('传入el参数不合法,请传入css selector 或者HTMLElement ')
         }
     }
 }
