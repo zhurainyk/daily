@@ -1,9 +1,16 @@
-import Vue from './vue.js'
+import Vue from './myvue/vue.js'
 let vm = new Vue({
-    el:'#app2',
+    el:'#app',
     data:{
         msg:'hello world',
-        name:'zhurainyk'
+        name:'zhurainyk',
+        obj:{
+            width:111,
+            height:222,
+            child:{
+                name:333
+            }
+        }
     },
     methods:{
         handle(){
@@ -11,4 +18,4 @@ let vm = new Vue({
         }
     }
 })
-console.log('1')
+console.log('运行成功',vm)

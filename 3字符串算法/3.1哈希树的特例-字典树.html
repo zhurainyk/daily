@@ -21,27 +21,19 @@
               node[s] = Object.create(null);
             }
             node = node[s];
-          }
-          //插入完成 给个终结符
-          if (!node[$]) {
-            //判断相同插入的时候  会在原来的基础上+1
+          } //插入完成 给个终结符
+          if (!node[$]) { //判断相同插入的时候  会在原来的基础上+1
             node[$] = 0;
           }
           node[$]++;
         }
-
         getMost() { //得到最后单个出现最多的字符串 
           let max = 0;
           let maxWord = "";
-        //   let maxArr = []
-        //   let maxWordArr = []
           function visit2(node, word) {
             if (node[$] && node[$] >= max) {
               max = node[$];
               maxWord = word;
-            //   maxArr.push(max)
-            //   maxWordArr.push(maxWord)
-              
             }
             for (let p in node) {
               visit2(node[p], word + p);
