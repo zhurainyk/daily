@@ -1,17 +1,22 @@
 <!DOCTYPE html>
-<html lang='cn'>
-    <head>
-        <title>My Vue</title>
-    </head>
-    <body>
-        <div id="app"> </div>
-    </body>
-    <!-- 必须使用module才能使用 -->
-    <script src="./index.js" type='module'></script>
-    <script>
-        let s = 1
-    </script>
-    <script>
-        console.log(s,2)
-    </script>
+<html lang="cn">
+  <head>
+    <title>My Vue</title>
+  </head>
+  <body>
+    <div id="app">
+      <h2>你好</h2>
+      <p>{{msg}}</p>
+      <input type="text" v-model="name" />
+      <button @click="handle2">你好2</button>
+    </div>
+  </body>
+  <!-- 必须使用module才能使用 -->
+  <script src="./index.js" type="module"></script>
+  <script>
+    let s = 1;
+  </script>
+  <script>
+    console.log(s, 2);
+  </script>
 </html>

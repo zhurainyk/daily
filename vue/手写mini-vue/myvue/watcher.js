@@ -8,7 +8,7 @@
  * cb 负责视图更新的回调函数
  */
 
-import Dep from './dep'
+import Dep from './dep.js'
 export default class Watcher{
     constructor(vm,key,cb){ //CB执行更新视图的回调
         this.vm = vm;
@@ -17,7 +17,7 @@ export default class Watcher{
 
         Dep.target = this; ////....???
         //会触发get方法 在get方法里会做一些操作
-        this.oldValue = vm[key]
+        this.oldValue = vm[key] //触发getter 
 
         Dep.target = null;
     }

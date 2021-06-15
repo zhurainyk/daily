@@ -15,7 +15,10 @@ let vm = new Vue({
     methods:{
         handle(){
             console.log('1111')
-        }
+        },
+         handle2(){
+            console.log('222a')
+        },
     }
 })
 console.log('运行成功',vm)
