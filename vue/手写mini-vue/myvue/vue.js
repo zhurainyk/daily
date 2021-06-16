@@ -36,10 +36,12 @@ export default class Vue{
     }
     _proxyData(data){//这一步只需要把data挂在到实例上 
         Object.keys(data).forEach(key=>{
+           
             Object.defineProperty(this,key,{
                 enumerable:true,
                 configurable:true,
                 get(){
+                     console.log(key)
                     return data[key]
                 },
                 set(newValue){
