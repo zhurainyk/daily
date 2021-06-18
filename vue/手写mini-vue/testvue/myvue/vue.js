@@ -1,4 +1,4 @@
-
+import Compiler from './compiler.js'
 
 export default class Vue{
     constructor(options={}){
@@ -8,6 +8,8 @@ export default class Vue{
         this.$methods = options.methods;
         this.initRootElement(options.el)
         this._proxyData(options.data)
+
+        new Compiler(this)
     }
     initRootElement(el){
         if(typeof el ==='string'){
@@ -21,6 +23,7 @@ export default class Vue{
     }
     _proxyData(data){
         Object.keys(data).forEach(key=>{// 将data属性注入到vue中
+         console.log({key})
             Object.defineProperty(this,key,{
                 enumerabel:true,
                 configurable:true,

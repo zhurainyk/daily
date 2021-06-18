@@ -6,7 +6,16 @@
     <title>test vue</title>
 </head>
 <body>
-    <div id="app"></div>
+    <div id="app">
+        <div>
+            {{msg}}
+        </div>
+        <div>
+            <p>hello world</p>
+            <input type="text" v-model='msg'>
+            <button @click='handleClick'>{{name}}</button>
+        </div>
+    </div>
     <script src='./index.js' type='module'></script>
 </body>
 </html>
