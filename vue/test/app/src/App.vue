@@ -4,26 +4,28 @@
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div> -->
-    <router-view />
+    <keep-alive>
+      <router-view />
+    </keep-alive>
   </div>
 </template>
 <script>
 export default {
   data() {
     return {
-      navs: [1,2,3]
+      navs: [1, 2, 3]
     };
   },
-  methods:{
-    goto(index){
-      console.log(index)
-      this.$router.push('/map'+ index)
+  methods: {
+    goto(index) {
+      console.log(index);
+      this.$router.push("/map" + index);
     }
   }
 };
 </script>
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -42,5 +44,5 @@ export default {
 
 #nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>

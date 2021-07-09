@@ -5,6 +5,12 @@ import VueRouter from "vue-router";
 Vue.use(VueRouter);
 
 const routes = [
+
+  {
+    path:'/index',
+    name:'index',
+    component:()=>import('../views/scroll/index.vue')
+  },
   {
     path: "/",
     name: "Home",

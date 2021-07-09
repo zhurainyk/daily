@@ -3,10 +3,11 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 
-import singleSpa from 'single-spa-vue'
+// import singleSpa from 'single-spa-vue'
 Vue.config.productionTip = false
 // 导出bootstrap mount unmount 
-
+import plugin from './plugins'
+Vue.use(plugin)
 new Vue({
   router,
   store,
