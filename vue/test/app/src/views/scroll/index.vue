@@ -16,11 +16,25 @@
       </virtual-scroll>
     </div>
     <router-link to="/"><button>按钮</button></router-link>
+
+    <button v-test="{width: 800, height: msg}">自定义指令1</button>
   </div>
 </template>
 
 <script>
 export default {
+  directives:{
+    test:{
+      bind(el,binding,vnode){
+        el.addEventListener('click',()=>{
+          console.log('bind----',binding,vnode)
+        })
+      },
+      inserted(el,binding,vnode){
+         console.log('inserted---',el,binding,vnode.context.msg)
+      }
+    }
+  },
   data() {
     return {
       msg: "加载中1",

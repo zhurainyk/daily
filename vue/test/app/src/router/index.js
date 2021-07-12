@@ -12,6 +12,11 @@ const routes = [
     component:()=>import('../views/scroll/index.vue')
   },
   {
+    path:'/myscroll',
+    name:'myscroll',
+    component:()=>import('../views/myScroll/index.vue')
+  },
+  {
     path: "/",
     name: "Home",
     component: () => import("../views/maps/map1.vue"),
