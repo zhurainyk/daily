@@ -17,7 +17,7 @@
     </div>
     <router-link to="/"><button>按钮</button></router-link>
 
-    <button v-test="{width: 800, height: msg}">自定义指令1</button>
+    <button v-test="{width: 800, height: msg}" ref='test' @click='cons'>自定义指令1</button>
   </div>
 </template>
 
@@ -43,6 +43,14 @@ export default {
       requestNum: 20,
       moreRequestNum: 20
     };
+  },
+  mounted(){
+  this.$refs.test.click()
+  },
+  methods:{
+    cons(){
+      console.log(222)
+    }
   }
 };
 </script>
