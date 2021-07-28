@@ -248,3 +248,65 @@ const t:T0 = 'b'
 type T1 = Extract<'a'|'b'|'c','a'|'c'>
 const t1:T1 = 'a'
 const t2:T1 = 'c'
+
+interface User{
+  age:string,
+  sex:string
+}
+
+type Name2 = {
+  name:string
+}
+
+interface User2 extends Name2{
+  sex:string
+}
+
+const tt : User2 = {
+  name:'sss',
+  sex:'222'
+}
+
+type User3 = User2 & {
+  age:number
+}
+
+//Pick
+
+type User4 = Pick<User3,'age'>
+const Tos :User4 = {
+  age:44
+}
+
+//Omit 
+
+type User5 = Omit<User3,'sex'>
+
+const Z5 :User5 = {
+  name:'ss',
+  age:3
+}
+
+//泛型
+
+interface S<T,TT>{
+  name:T,
+  age:TT
+}
+
+type SS = S<string,number>
+
+const t23:SS = {
+  age:22,
+  name:'ss'
+}
+
+import {measure} from './装饰器'
+
+measure(test,test,test)
+test()
+function test(){
+  console.log('test')
+}
+
+
