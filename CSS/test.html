@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .border {
+        width: 100px;
+        height: 100px;
+        background-color: blueviolet;
+        position: relative;
+      }
+      .border::before {
+        content: "";
+        position: absolute;
+        bottom: 9px;
+        left: 44px;
+        width: 14px;
+        height: 6px;
+        display: inline-block;
+        border: 1px solid #23b8ff;
+        border-width: 0 0 2px 2px;
+        transform: rotate(-45deg);
+        z-index:20;
+      }
+      .border::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;    
+        width: 100%;
+        height: 20px;
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="border"></div>
+  </body>
+</html>
