@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .list {
+        width: 60vw;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="list"></ul>
+    <script>
+    //   const list = document.getElementsByClassName("list")[0];
+      function gen(task) {
+        requestIdleCallback((deadline) => {
+          let next = task.next();
+          while (!next.down) {
+              if(deadline.timeRemaining()<=0){
+                  gen(task)
+                  return;
+              }
+              next = task.next()
+          }
+        });
+      }
+
+      const list =document.querySelector('.list')
+      let total = 10000
+      function*loop(){
+          for(let i=0;i<total;++i){
+              let item = document.createElement('li')
+              item.innerText = `我是${i}`
+              list.appendChild(item)
+              yield
+          }
+      }
+      gen(loop())
+    </script>
+  </body>
+</html>

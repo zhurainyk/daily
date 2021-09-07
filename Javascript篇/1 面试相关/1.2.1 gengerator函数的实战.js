@@ -27,3 +27,35 @@ let t = test(0)
 
  t.next()
 // {value: undefined, done: true}
+
+
+
+
+function* loop(total){
+    for(let i =0;i<total;i++){
+        console.log(`我是${i}`)
+        yield i;
+    }
+}
+
+
+let i = 0;
+function task(fn){
+   let n =  fn.next()
+   console.log(n)
+   while(!n.down){
+       i++;
+       if(i>3)
+            break;
+       task(fn)
+       
+   }
+   console.log('结束')
+  
+   
+  
+
+}
+
+task(loop(5))
+

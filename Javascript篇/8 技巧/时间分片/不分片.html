@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+      }
+      .list {
+        width: 60vw;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+      }
+    </style>
+  </head>
+  <body>
+    <ul class="list"></ul>
+    <script>
+      const list = document.getElementsByClassName("list")[0];
+      const total = 10000;
+      let index = 0;
+      console.log("开始");
+      const date1 = Date.now();
+      const render = (total) => {
+        let fragment = document.createDocumentFragment();
+        
+        for (let i = 0; i < total; ++i) {
+          const item = document.createElement("li");
+          item.innerText = `我是${i}`;
+          fragment.appendChild(item);
+        }
+        list.appendChild(fragment);
+      };
+      render(total);
+      console.log(Date.now() - date1)
+      document.ready
+    </script>
+  </body>
+</html>
