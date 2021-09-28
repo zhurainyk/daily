@@ -2,9 +2,11 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
 // import singleSpa from 'single-spa-vue'
 Vue.config.productionTip = false
+Vue.use(ElementUI);
 // 导出bootstrap mount unmount 
 import plugin from './plugins'
 Vue.use(plugin)

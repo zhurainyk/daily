@@ -12,9 +12,19 @@ const routes = [
     component:()=>import('../views/scroll/index.vue')
   },
   {
+   path:'/elementui',
+    name:'elementui',
+    component:()=>import('../views/elementui.vue')
+  },
+  {
     path:'/myscroll',
     name:'myscroll',
     component:()=>import('../views/myScroll/index.vue')
+  },
+    {
+    path:'/vscroll',
+    name:'vscroll',
+    component:()=>import('../views/virturlScroll/index.vue')
   },
   {
     path: "/",

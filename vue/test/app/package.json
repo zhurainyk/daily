@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "element-ui": "^2.15.6",
     "ol": "^6.5.0",
     "vue": "^2.6.11",
     "vue-flowchart-editor": "^1.0.2",

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="syncTask()">同步</button>
+    <button onclick="clickTime()">异步</button>
+
+    <script>
+      function syncTask() {
+        let start = performance.now();
+        let count = 0;
+        let end = performance.now();
+        while (performance.now() - start < 500) {
+          count++;
+
+        }
+        console.log("task down!", performance.now() - start, count);
+      }
+
+      function* generatorTask() {
+        let start = performance.now()
+        let count = 0; 
+        while(performance.now() - start < 500){
+            count ++ ;
+   
+            yield
+        }
+        console.log('task donw',performance.now() - start , count)
+      }
+
+    
+
+   
+
+      function timeSlice(generatorFun, duration = 30) {
+        if (typeof generatorFun !== "function") return;
+        const fun = generatorFun();
+        if (!fun || typeof fun.next !== "function") return;
+        const next = () => {
+            const start = performance.now();
+            do {
+            const res = fun.next();
+            if (res.done) return;
+            } while (performance.now() - start < duration);
+            setTimeout(next, 10);
+        };
+        return setTimeout(next, 10);
+     }
+
+       function clickTime(){
+             timeSlice(generatorTask)
+      }
+    </script>
+  </body>
+</html>

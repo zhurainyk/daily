@@ -15,7 +15,7 @@ function debounce(fn, delay = 300) {
 
 window.addEventListener(
   "scroll",
-  debounce(() => {
+  debounce((e) => {
     console.log(111);
   }, 1000)
 );

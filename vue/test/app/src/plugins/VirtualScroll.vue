@@ -10,7 +10,7 @@
       <div v-for="(item, index) in showDataList" class="news-list" :key="index">
         <!-- <div class="title">{{ item.title }}</div>
         <div class="content">{{ item.body }}</div> -->
-         <slot  :thisItem='item'></slot>
+         <slot  :thisItem='item' :index ='index'></slot>
        
       </div>
       <div class="msg" v-if="isRequestStatus">
@@ -33,6 +33,10 @@ export default {
     oneHeight: {
       default: () => 121,
       type: Number
+    },
+    initData:{
+      default:()=>[],
+      type:Array
     },
     requestUrl: {
       default: () =>{
@@ -64,6 +68,7 @@ export default {
   },
   async created() {
     let newsList = await this.getList(this.requestNum);
+    console.log(newsList)
     if (!newsList) return;
     this.allDataList = newsList;
   },
@@ -75,11 +80,13 @@ export default {
     endIndex() {
       // let endIndex = this.startIndex + this.containerSize;
       let endIndex = this.startIndex + this.containerSize * 2; //预加载
-
+       console.log(endIndex)
       if (!this.allDataList[endIndex]) {
         //如果最后一个不存在
-        endIndex = this.allDataList.length - 1;
+        
+        endIndex = this.allDataList.length ;
       }
+      console.log(endIndex)
       return endIndex;
     },
     showDataList() {
@@ -91,6 +98,7 @@ export default {
       } else {
         startIndex = this.startIndex - this.containerSize;
       }
+      console.log(startIndex,this.endIndex)
       // return this.allDataList.slice(this.startIndex, this.endIndex);
       return this.allDataList.slice(startIndex, this.endIndex);
     },
@@ -117,8 +125,7 @@ export default {
       };
     }
   },
-  activated() {
-    console.log("jihuo");
+  activated() {   
     this.$nextTick(() => {
       this.$refs.srcollContainer.scrollTop = this.currentScrollTop;
     });
@@ -126,6 +133,17 @@ export default {
   methods: {
     getList(num) {
       this.isRequestStatus = true;
+      if(this.initData.length){
+        return new Promise((res=>{
+          setTimeout(()=>{
+             
+            res(this.initData)
+          },1000)
+        })).then(res=>{
+          this.isRequestStatus = false;
+          return res
+        })
+      }
       return axios
         .get(this.requestUrl + num)
         .then(res => {
@@ -192,6 +210,7 @@ export default {
         !this.isRequestStatus
       ) {
         console.log("滚动到底了 追加请求");
+        if(this.initData.length) return;
         let newsList = await this.getList(this.moreRequestNum);
         if (!newsList) return;
         this.allDataList.push(...newsList);
@@ -206,14 +225,14 @@ export default {
   height: 100%;
   overflow-y: auto;
 }
-.news-list {
+/* .news-list {
   height: 100px;
   overflow: hidden;
   padding-bottom: 20px;
   border-bottom: 1px solid rgb(20, 10, 10);
-}
-.msg h2 {
+} */
+/* .msg h2 {
   text-align: center;
-}
+} */
 </style>
 </style>

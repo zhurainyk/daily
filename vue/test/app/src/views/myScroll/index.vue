@@ -8,11 +8,12 @@
         </div>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import axios from "axios";
 export default {
   data() {
     return {
@@ -24,19 +25,22 @@ export default {
         { title: "12323232", body: "fsdfsfsdfs" },
         { title: "12323232", body: "fsdfsfsdfs" }
       ],
-      oneHeight: 100
+      oneHeight: 100,
+      value:false
     };
   },
-  created(){
-    this.getList(15)
+  created() {
+    this.getList(15);
   },
-  methods:{
-    getList(num){
-      axios.get('http://jsonplaceholder.typicode.com/posts?_page=1&_limit=' + num).then(res=>{
-        if(res.status == 200){
-          this.allDataList = [...this.allDataList,...res.data]
-        }
-      })
+  methods: {
+    getList(num) {
+      axios
+        .get("http://jsonplaceholder.typicode.com/posts?_page=1&_limit=" + num)
+        .then(res => {
+          if (res.status == 200) {
+            this.allDataList = [...this.allDataList, ...res.data];
+          }
+        });
     }
   }
 };
@@ -44,27 +48,26 @@ export default {
 
 <style>
 .scroll-container {
-  margin:20px auto;
+  margin: 20px auto;
   width: 300px;
   height: 400px;
   overflow: hidden;
   border: 1px solid black;
 }
-.newslist{
-  height:100%;
-  overflow-y:auto;
+.newslist {
+  height: 100%;
+  overflow-y: auto;
 }
 
-.news{
-  height:100px;
+.news {
+  height: 100px;
   box-sizing: border-box;
   border-bottom: 1px solid;
 }
-h2,p{
+h2,
+p {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
-
-
 </style>

@@ -28,7 +28,6 @@
       const date1 = Date.now();
       const render = (total, index) => {
         if (total <= 0) {
-          console.log(Date.now() - date1);
           return;
         }
         let currentPage = Math.min(total, size);
