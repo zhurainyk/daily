@@ -37,9 +37,16 @@
         height: 20px;
         background-color: yellow;
       }
+      .boo input::-webkit-inner-spin-button{
+        -webkit-appearance: none;
+      }
     </style>
   </head>
   <body>
     <div class="border"></div>
+    <div class="boo">
+      <span>隐藏输入框里面的箭头</span>
+      <input type="number">
+    </div>
   </body>
 </html>
