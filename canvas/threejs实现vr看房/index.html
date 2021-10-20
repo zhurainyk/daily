@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- https://cdn.bootcdn.net/ajax/libs/three.js/100/three.min.js 3D引擎 -->
+    <script src="./three.js"></script>
+    <!-- https://82mou.github.io/threejs/js/OrbitControls.js  轨道控制-->
+        <script src="./OrebitControls.js"></script>
+    <style>
+       html,body {
+            width:100%;
+            height:100%;
+        }
+        #container{
+            width:400px;
+            height:400px;
+        }
+    </style>
+  </head>
+  <body>
+    <div id='container'></div>
+    <script>
+      window.onload = init;
+
+      var scene, renderer, camera;
+
+      function init() {
+        scene = new THREE.Scene();
+        // camera = new THREE.PerspectiveCamera(
+        //   90,
+        //   document.body.clientWidth / document.body.clientHeight,
+        //   0.1,
+        //   100
+        // );
+       camera =  new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000)
+        renderer = new THREE.WebGLRenderer();
+        document.getElementById("container").appendChild(renderer.domElement);
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        useBox();
+        loop();
+      }
+
+      function loop() {
+        requestAnimationFrame(loop);
+        renderer.render(scene, camera);
+      }
+
+      function useBox() {
+        var materials = [];
+        //根据左右上下前后的顺序构建六个面的材质集
+        var texture_left = new THREE.TextureLoader().load(
+          "./images/left.png"
+        );
+        materials.push(new THREE.MeshBasicMaterial({ map: texture_left }));
+
+        var texture_right = new THREE.TextureLoader().load(
+          "./images/right.png"
+        );
+        materials.push(new THREE.MeshBasicMaterial({ map: texture_right }));
+
+        var texture_top = new THREE.TextureLoader().load(
+          "./images/top.png"
+        );
+        materials.push(new THREE.MeshBasicMaterial({ map: texture_top }));
+
+        var texture_bottom = new THREE.TextureLoader().load(
+          "./images/bottom.png"
+        );
+        materials.push(new THREE.MeshBasicMaterial({ map: texture_bottom }));
+
+        var texture_front = new THREE.TextureLoader().load(
+          "./images/front.png"
+        );
+        materials.push(new THREE.MeshBasicMaterial({ map: texture_front }));
+
+        var texture_back = new THREE.TextureLoader().load(
+          "./images/back.png"
+        );
+        materials.push(new THREE.MeshBasicMaterial({ map: texture_back }));
+
+        var box = new THREE.Mesh(new THREE.BoxGeometry(1, 1, 1), materials);
+      
+        box.material.wireframe = true;
+
+        scene.add(box);
+        
+        box.geometry.scale(1,1,-1) //反转
+
+        //改变摄像机视角
+        camera.position.set(0, 0, 0.5);
+      }
+    </script>
+  </body>
+</html>
