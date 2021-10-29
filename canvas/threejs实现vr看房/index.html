@@ -38,13 +38,81 @@
         renderer = new THREE.WebGLRenderer();
         document.getElementById("container").appendChild(renderer.domElement);
         var controls = new THREE.OrbitControls(camera, renderer.domElement);
-        useBox();
+        // useBox();//正方 形
+        useSphere() //球体
+
+        initPoints()
         loop();
       }
 
       function loop() {
         requestAnimationFrame(loop);
         renderer.render(scene, camera);
+      }
+
+      function initPoints(){
+          const hotPoints = [{
+              position:{
+                  x:0,
+                  y:0,
+                  z:-0.2
+              },
+              detail:{
+                  title:'信息点1'
+              }
+          },
+          {
+              position:{
+                  x:-0.2,
+                  y:-0.05,
+                  z:0.2
+              },
+              detail:{
+                  title:'信息点2'
+              }
+          }]
+        var pointTexture  = new THREE.TextureLoader().load('./images/point.png')
+        var material = new THREE.SpriteMaterial({map:pointTexture})
+
+        let poiObjects = []
+
+        for(let i=0;i<hotPoints.length;i++){
+            const sprite  = new THREE.Sprite(material)
+            sprite.scale.set(0.1,0.1,0.1);
+            sprite.position.set(hotPoints[i].position.x,hotPoints[i].position.y,hotPoints[i].position.z)
+            scene.add(sprite)
+            sprite.detail = hotPoints[i].detail;
+            poiObjects.push(sprite)
+        }
+        document.getElementById('container').addEventListener('click',(e)=>{
+            e.preventDefault()//射线追踪
+            const raycaster = new THREE.Raycaster()
+            const mouse = new THREE.Vector2()
+            mouse.x = (e.clientX/document.body.clientWidth)
+            mouse.y = (e.clientX/document.body.clientHeight)
+            raycaster.setFromCamera(mouse,camera )
+            const intersects = raycaster.intersectObjects(poiObjects)
+            if(intersects.length){//出现弹窗
+            
+                alert(intersects[0].object.detail.title)
+            }
+        })
+
+      }
+
+      function useSphere(){
+          var sphereGeometry = new THREE.SphereGeometry(1,50,50)
+
+          var texture = new THREE.TextureLoader().load('./images/sphere.png')
+          var sphereMaterial = new THREE.MeshBasicMaterial({map:texture})
+
+
+          var sphere = new THREE.Mesh(sphereGeometry,sphereMaterial);
+        //   sphere.material.wireframe = true;//没有图片的时候使用默认模型
+          scene.add(sphere);
+
+          sphere.geometry.scale(1,1,-1)//反转
+          camera.position.set(0,0,0.01)//移动摄像机到里面
       }
 
       function useBox() {

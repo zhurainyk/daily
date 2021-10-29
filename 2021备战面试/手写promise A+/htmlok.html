@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="./promise ok.js"></script>
+  </head>
+  <body>
+    <script>
+        /*
+      const PENDING = "pending";
+      const FULFILLED = "fulfilled";
+      const REJECTED = "rejected";
+      class MPromise {
+        FULFILLED_CALLBACK_LIST = [];
+        REJECTED_CALLBACK_LIST = [];
+        constructor(fn) {
+          this.value = null;
+          this.reason = null;
+          this.status = PENDING;
+          try {
+            fn(this.resolve.bind(this), this.reject.bind(this));
+          } catch (e) {
+            this.reject(e);
+          }
+        }
+
+        resolve(value) {
+          if (this.status === PENDING) {
+            this.value = value;
+            this.status = FULFILLED;
+          }
+        }
+
+        reject(reason) {
+          if (this.status === PENDING) {
+            this.reason = reason;
+            this.status = REJECTED;
+          }
+        }
+
+        then(onFulfilled, onRejected) {
+          const fulFilledFn = this.isFunction(onFulfilled)
+            ? onFulfilled
+            : (value) => value;
+          const rejectedFn = this.isFunction(onRejected)
+            ? onRejected
+            : (reason) => {
+                throw reason;
+              };
+
+          const fulFilledWithCatch = (resolve, reject, newPromise) => {
+            queueMicrotask(() => {
+              try {
+                if (!this.isFunction(onFulfilled)) {
+                  resolve(this.value);
+                } else {
+                  const x = fulFilledFn(this.value);
+                  this.resolvePromise(newPromise, x, resolve, reject);
+                }
+              } catch (e) {
+                reject(e);
+              }
+            });
+          };
+
+          const rejectedWithCatch = (resolve, reject, newPromise) => {
+            queueMicrotask(() => {
+              try {
+                if (!this.isFunction(onRejected)) {
+                  reject(this.reason);
+                } else {
+                  const x = rejectedFn(this.reason);
+                  this.resolvePromise(newPromise, x, resolve, reject);
+                }
+              } catch (e) {
+                reject(e);
+              }
+            });
+          };
+
+          switch (this.status) {
+            case FULFILLED: {
+              const newPromise = new MPromise((resolve, reject) =>
+                fulFilledWithCatch(resolve, reject, newPromise)
+              );
+              return newPromise;
+              break;
+            }
+            case REJECTED: {
+              const newPromise = new MPromise((resolve, reject) =>
+                rejectedWithCatch(resolve, reject, newPromise)
+              );
+              return newPromise;
+              break;
+            }
+            case PENDING: {
+              const newPromise = new MPromise((resolve, reject) => {
+                this.FULFILLED_CALLBACK_LIST.push(
+                  fulFilledWithCatch(resolve, reject, newPromise)
+                );
+                this.REJECTED_CALLBACK_LIST.push(
+                  rejectedWithCatch(resolve, reject, newPromise)
+                );
+              });
+              return newPromise;
+              break;
+            }
+          }
+        }
+
+        resolvePromise(newPromise, x, resolve, reject) {
+          if (x === newPromise) {
+            return reject(new TypeError("xxxx"));
+          }
+          if (x instanceof MPromise) {
+            let then = x.then;
+            then(
+              (y) => {
+                this.resolvePromise(newPromise, y, resolve, reject);
+              },
+              (r) => {
+                reject(r);
+              }
+            );
+          } else if (typeof x === "object" || this.isFunction(x)) {
+            if (x === null) {
+              return resolve(x);
+            }
+            let then = null;
+            then = x.then;
+            if (this.isFunction(then)) {
+              let called = false;
+              try {
+                then.call(
+                  x,
+                  (y) => {
+                    if (called) return;
+                    called = true;
+                    this.resolvePromise(newPromise, x, resolve, reject);
+                  },
+                  (r) => {
+                    if (called) return;
+                    called = true;
+                    reject(r);
+                  }
+                );
+              } catch (e) {
+                if (called) return;
+                called = true;
+                reject(e);
+              }
+            } else {
+              resolve(x);
+            }
+          } else {
+            resolve(x);
+          }
+        }
+
+        isFunction(param) {
+          return typeof param === "function";
+        }
+      }
+
+      */
+
+      let p = new MPromise((resolve, reject) => {
+        console.log(1);
+       
+        setTimeout(() => {
+           resolve(2);
+        });
+        console.log(3);
+      });
+      p.then((r) => {
+        console.log(r);
+      });
+    </script>
+  </body>
+</html>
