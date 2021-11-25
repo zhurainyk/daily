@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../../第三方插件库/vue/vue.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+      //minxin用法
+
+    // const empty_mixin = {
+    //     filters:{
+    //         empty:value=>{
+    //             return value || '--'
+    //         }
+    //     },
+    //     data:{
+    //         user:111
+    //     }
+    // }
+
+    // new Vue({
+    //     el:document.querySelector('#app'),
+    //     mixins:[empty_mixin],
+    //     data:{
+    //         user:''
+    //     },
+    //     template:`<h2>hello,{{user|empty}}</h2>`
+    // })
+
+    // 实现一个生命周期
+    /**
+     * 1. 自定义的生命周期需要挂载在哪里  比如exit 挂载在created上
+     * 2. 合并生命周期 notify函数 先拿到自定义的生命周期 再执行 
+     * 3. 定义 触发生命周期函数的条件 
+     * 4. 在组件中自定义已经挂载的生命周期
+     * 5. 绑定到vue上
+     * 
+     * */
+    
+   console.log(Vue.config.optionMergeStrategies) //1. 默认的合并策略 
+   // 2.用户自行拓展  3 全局/局部合并策略 
+   console.log(Vue.config)
+   //保留原来的合并策略
+   const originalOptionMergeStrategies = Vue.config.optionMergeStrategies
+   console.log(originalOptionMergeStrategies)
+   //自定义生命周期
+
+   //exit 和created的执行相同  如果同一个声明周期多次执行会收集在一个数组里 
+   originalOptionMergeStrategies.exit = originalOptionMergeStrategies.created;
+
+   
+   const notify = (name,vm)=>{ //生命周期合并后 遍历执行 
+       const lifeCycles = vm.$options[name]; //拿到所有的生命周期
+       console.log(lifeCycles) //拿到exit 生命周期 是一个数组
+       if(lifeCycles && lifeCycles.length){
+           lifeCycles.forEach(lc=>lc.call(vm))
+       }
+       const children = vm.$children;
+       if(children &&children.length){
+           children.forEach(child=>notify(name,child))
+       }
+   }
+
+   const bind = vm=>{ //绑定事件 页面切换的时候触发生命周期  
+       window.addEventListener('visibilitychange',()=>{
+           if(document.visibilityState === 'hidden'){
+               notify('exit',vm) //触发 
+           }
+       })
+   }
+
+   const vm = new Vue({
+       el:document.querySelector('#app'),
+       template:`<h1>hello world2</h1>`,
+       exit(){
+           alert('那我走')
+       },
+    //    hipy(){
+    //        console.log('hipy')
+    //    }
+   })
+   bind(vm)
+    </script>
+</body>
+</html>
