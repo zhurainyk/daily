@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <pre>
+        1. attr()
+        2. calc()
+        3. var()
+        4. counter()
+        5. circle()
+  </pre
+    >
+    attr 函数用于获取被选元素的属性值。 它接受三个参数，属性名称、类型和默认值。
+    一个示例用法是用纯CSS实现tooltip功能。
+
+    <p data-text="the attr function" data-tooltip="Hi from attr!" class="attr">
+      This text is combined with
+    </p>
+
+    <style>
+      p::after {
+        content: " " attr(data-text);
+      }
+
+      p.attr:hover::after {
+        content: " " attr(data-tooltip);
+        background-color: orange;
+        color: white;
+      }
+    </style>
+
+    counter()很早之前，计数器仅存在于ul，ol等元素中，如何想给其他元素增加计数，就只能通过list-style-image，或者background-image来实现。不过现在css3增加了counter函数，可以实现任何元素的计数作用。该函数与counter-reset以及counter-increment一起完成功能。
+
+    <div class="counter">
+      <span>Mars</span>
+      <span>Bounty</span>
+      <span>Snickers</span>
+    </div>
+
+    <style>
+      div.counter {
+        counter-reset: count;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+
+      div.counter > span {
+        counter-increment: count;
+      }
+
+      div.counter > span::before {
+        content: counter(count, decimal) ". ";
+        color: orange;
+      }
+    </style>
+
+    circle()此函数使用一个已知的图形来创造一个圆形。 您可以指定其半径和位置。
+    通常与图像一起使用以创建圆形。 此函数的结果往往用做clip-path属性的值。
+
+    <img
+      class="circle"
+      src="https://devinduct.com/Uploads/PostImages/1122dcb9-954a-4641-9ca6-c38e9472698f.png"
+    />
+    <div class="box"></div>
+    <style>
+      img.circle {
+        clip-path: circle(30%);
+      }
+      .box{
+          width:200px;
+          height:200px;
+          background-color: red;
+          clip-path: circle(30%);
+      }
+    </style>
+  </body>
+</html>
