@@ -1,0 +1,208 @@
+{
+  "code": 200,
+  "message": "成功",
+  "messageEn": "success",
+  "result": {
+    "accList": [
+      {
+        "acc": "闽BV3DPE",
+        "accType": "PLATE",
+        "realNameInfoList": [
+          {
+            "rid": "d23cbb267673d84e",
+            "realName": "周春梅",
+            "birthday": "1983-10-16",
+            "gender": "女",
+            "nation": "满族",
+            "nativePlace": "广西 崇左 天等县",
+            "identityCard": "451425198310167544",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "451425198310167544", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "闽E7AVT6",
+        "accType": "PLATE",
+        "realNameInfoList": [
+          {
+            "rid": "587c90bffa536473",
+            "realName": "莫欣",
+            "birthday": "1952-06-21",
+            "gender": "男",
+            "nation": "京族",
+            "nativePlace": "山东 青岛 莱西市",
+            "identityCard": "370285195206212393",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "370285195206212393", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "闽G2EUNK",
+        "accType": "PLATE",
+        "realNameInfoList": [
+          {
+            "rid": "56b95e80e1a05149",
+            "realName": "李凤兰",
+            "birthday": "1959-07-23",
+            "gender": "女",
+            "nation": "畲族",
+            "nativePlace": "湖南 株洲 荷塘区",
+            "identityCard": "430202195907237468",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "430202195907237468", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "闽HUQ4RT",
+        "accType": "PLATE",
+        "realNameInfoList": [
+          {
+            "rid": "396e30e9046fa03c",
+            "realName": "李桂荣",
+            "birthday": "1973-04-12",
+            "gender": "男",
+            "nation": "赫哲族",
+            "nativePlace": "云南 大理 漾濞彝族自治县",
+            "identityCard": "53292219730412629X",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "53292219730412629X", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "闽H27HLC",
+        "accType": "PLATE",
+        "realNameInfoList": [
+          {
+            "rid": "0edb08a1ea338c07",
+            "realName": "杜桂珍",
+            "birthday": "1983-06-26",
+            "gender": "女",
+            "nation": "纳西族",
+            "nativePlace": "新疆 巴音郭楞 和静县",
+            "identityCard": "652827198306268660",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "652827198306268660", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "闽C4UKER",
+        "accType": "PLATE",
+        "realNameInfoList": [
+          {
+            "rid": "26db20af1dfea191",
+            "realName": "邱欢",
+            "birthday": "1960-03-09",
+            "gender": "男",
+            "nation": "瑶族",
+            "nativePlace": "四川 宜宾 兴文县",
+            "identityCard": "511528196003093698",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "511528196003093698", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "success": true
+}

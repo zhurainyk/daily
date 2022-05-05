@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <pre>
+     Git 全局设置
+        git config --global user.name "Admin"
+        git config --global user.email "zhurainyk@163.com"
+    创建 git 仓库:
+        mkdir lingyi-dianmian-web
+        cd lingyi-dianmian-web
+        git init 
+        touch README.md
+        git add README.md
+        git commit -m "first commit"
+        git remote add origin https://gitee.com/chenliang_main/lingyi-dianmian-web.git
+        git push -u origin "master"
+
+    已有仓库?
+        先删除远程 Git 仓库
+        git remote rm origin
+        git remote add origin https://gitee.com/chenliang_main/lingyi-dianmian-web.git
+        git push -u origin "master"
+    </pre>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      div {
+          display:inline-block;
+        width: 200px;
+      }
+      input {
+        width: 100%;
+        font-size: 2rem;
+        line-height: 2;
+        border: 0;
+        outline: 0;
+        text-decoration: 4px solid underline; /* 暂时老版本的不支持*/
+        text-underline-offset: 10px; /* 暂时老版本的不支持*/
+        text-align: center;
+        background: linear-gradient(currentColor, currentColor) center bottom
+          6px no-repeat;
+        background-size: 10rem 4px;
+      }
+      input:focus {
+        text-decoration-color: dodgerblue;
+        background-image: linear-gradient(dodgerblue, dodgerblue);
+      }
+    </style>
+  </head>
+  <body>
+    <div>
+      <input type="text" placeholder="请输入" />
+    </div>
+  </body>
+</html>

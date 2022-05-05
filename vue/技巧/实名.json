@@ -1,0 +1,175 @@
+{
+  "code": 200,
+  "message": "成功",
+  "messageEn": "success",
+  "result": {
+    "accList": [
+      {
+        "acc": "460018404608973",
+        "accType": "IMSI",
+        "realNameInfoList": [
+          {
+            "rid": "3e1f4cecf6fdb038",
+            "realName": "马英",
+            "birthday": "1998-02-21",
+            "gender": "女",
+            "nation": "布朗族",
+            "nativePlace": "贵州 铜仁 石阡县",
+            "identityCard": "52062319980221938X",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "52062319980221938X", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "460014536879038",
+        "accType": "IMSI",
+        "realNameInfoList": [
+          {
+            "rid": "16b1f8e31a7f20c7",
+            "realName": "何亮",
+            "birthday": "1986-11-10",
+            "gender": "女",
+            "nation": "京族",
+            "nativePlace": "河北 沧州 任丘市",
+            "identityCard": "130982198611106402",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "130982198611106402", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "460015065424001",
+        "accType": "IMSI",
+        "realNameInfoList": [
+          {
+            "rid": "9dd09b4c8de73d5f",
+            "realName": "李雷",
+            "birthday": "1958-04-16",
+            "gender": "女",
+            "nation": "怒族",
+            "nativePlace": "云南 曲靖 市辖区",
+            "identityCard": "530301195804167906",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "530301195804167906", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "460017846486699",
+        "accType": "IMSI",
+        "realNameInfoList": [
+          {
+            "rid": "64917db2faaf5645",
+            "realName": "沈梅",
+            "birthday": "1965-12-31",
+            "gender": "男",
+            "nation": "珞巴族",
+            "nativePlace": "广东 云浮 云安区",
+            "identityCard": "445303196512315778",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "445303196512315778", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      },
+      {
+        "acc": "460013704940942",
+        "accType": "IMSI",
+        "realNameInfoList": [
+          {
+            "rid": "013007f63b3819fc",
+            "realName": "张金凤",
+            "birthday": "1955-11-18",
+            "gender": "男",
+            "nation": "达斡尔族",
+            "nativePlace": "江西 南昌 南昌市",
+            "identityCard": "36010019551118069X",
+            "picAddr": "",
+            "picAddrBase64": null,
+            "carType": "",
+            "carPicAddr": "",
+            "carPicAddrBase64": null,
+            "labels": [
+              "涉毒人员",
+              "在逃人员",
+              "精神病人员",
+              "涉恐人员",
+              "重点上访人员",
+              "犯罪前科人员",
+              "涉稳人员"
+            ],
+            "relatedOtherFactor": [
+              { "val": "36010019551118069X", "type": "IDCARD" }
+            ],
+            "similarity": null
+          }
+        ]
+      }
+    ]
+  },
+  "success": true
+}

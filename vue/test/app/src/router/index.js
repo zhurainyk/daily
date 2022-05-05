@@ -12,6 +12,11 @@ const routes = [
     component:()=>import('../views/scroll/index.vue')
   },
   {
+    path:'/formdata',
+    name:'formdata',
+    component:()=>import('@/views/form')
+  },
+  {
    path:'/elementui',
     name:'elementui',
     component:()=>import('../views/elementui.vue')
@@ -25,6 +30,21 @@ const routes = [
     path:'/vscroll',
     name:'vscroll',
     component:()=>import('../views/virturlScroll/index.vue')
+  },
+  {
+    path:'/drawer',
+    name:'drawer',
+    component:()=>import('../views/drawer/index.vue')
+  },
+    {
+    path:'/decorator',
+    name:'decorator',
+    component:()=>import('../views/decorator/index.vue')
+  },
+    {
+    path:'/test',
+    name:'test',
+    component:()=>import('../views/test/index.vue')
   },
   {
     path: "/",

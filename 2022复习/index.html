@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- <script src="./手写面试题.js"></script> -->
+    <script>
+      let total = 100000;
+      let once = 2000;
+      let ul = document.createElement("ul");
+      const time = Date.now();
+      // for (let i = 0; i < total; i++) {
+      //   let li = document.createElement("div");
+      //   li.innerHTML = ~~(Math.random() * total);
+      //   ul.appendChild(li);
+      // }
+      // document.body.appendChild(ul);
+      // console.log(Date.now() - time);
+      // setTimeout(()=>{
+      //   console.log(Date.now() - time);
+      // })
+      document.body.appendChild(ul);
+
+      function loop(currentTotal, currentIndex) {
+        if (currentTotal <= 0) {
+          console.log('结束')
+          console.log(Date.now() - time);
+
+          return;
+        }
+        const pageCount = Math.min(currentTotal, once);
+        setTimeout(() => {
+          for (let i = 0; i < pageCount; i++) {
+            let li = document.createElement("div");
+            li.innerHTML = ~~(Math.random() * total);
+            ul.appendChild(li);
+          }
+          loop(currentTotal - pageCount, currentIndex + pageCount);
+        });
+      }
+      loop(total, once);
+
+      // const ul = document.createElement('ul')
+      //     document.appendChild(ul)
+      // const total = 100000;
+      // const once = 20;
+      function loop(currentTotal, currentIndex) {
+        if (currentTotal <= 0) return;
+        const pageCount = Math.min(currentTotal, once);
+        // setTimeout(() => {
+        window.requestAnimationFrame(() => {
+          let documentFragment = document.createDocumentFragment()
+          for (let i = 0; i < pageCount; i++) {
+            const li = document.createElement("li");
+            li.innerText = ~~(Math.random() * total);
+            documentFragment.appendChild(li);
+          }
+          ul.appendChild(documentFragment)
+          loop(currentTotal - pageCount, currentIndex + pageCount);
+        });
+
+        // });
+      }
+    </script>
+  </body>
+</html>
