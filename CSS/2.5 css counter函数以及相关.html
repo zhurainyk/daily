@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div.counter {
+            counter-reset: count;
+            list-style: none;
+            padding: 0;
+            margin: 0
+        }
+
+        div.counter>div {
+            counter-increment: count;
+        }
+
+        div.counter>div::before {
+            content: counter(count, decimal) ' _ ';
+            color: orange;
+            margin-right:20px;
+        }
+    </style>
+</head>
+
+<body>
+    <pre>
+        counter()函数返回指定计数器的当前值，需要与counter-reset和counter-increment配合使用。它只能用在伪元素的content的值里。
+
+        它在CSS里属于稍复杂的玩意。
+    
+        首先给父元素设counter-reset，它的值可以随便写，只是一个标记，写成abcxxx都行，但是最好写成有意义的单词，比如count。
+    
+        给子元素统一设上counter-increment: count;，count就是父元素设的那个单词。
+    
+        子元素的::before，设上content: counter(count, lower-roman) '. ';，这里counter(count, decimal) '. '前面的counter函数和后面的'.
+        '是拼接字符串关系，中间敲个空格。
+    
+        counter(count, lower-roman)这种2参数写法是高级用法，第一个参数就是上文提到的标记，没啥可说的，第二个参数lower-roman是计数器样式，也就是说，并不一定只显示12345，还可以显示abcde以及更奇怪的样式，比如小写罗马数字等，这个decimal并不是随便写的，是有规定的（例如：
+        disc
+        | circle | square | decimal | lower-roman | upper-roman  | lower-alpha | upper-alpha | none | armenian |
+        cjk-ideographic | georgian | lower-greek | hebrew | hiragana | hiragana-iroha | katakana | katakana-iroha |
+        lower-latin | upper-latin），这块知识就需要查更多资料，我就不说了。
+    </pre>
+    <div class="counter">
+        <div>张三</div>
+        <div>李四</div>
+        <div>王五</div>
+    </div>
+</body>
+
+</html>

@@ -68,6 +68,11 @@ const routes = [
     path:'/flowchart',
     name:'flowchart',
     component:()=>import('../views/vue-flowchart-editor/index.vue')
+  },
+  {
+   path:'/video',
+   name:'video',
+   component:()=>import('../views/videoplayer/index2.vue') 
   }
 ];
 

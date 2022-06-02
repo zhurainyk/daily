@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        div {
+
+
+            color: #fff;
+            /* border-radius: 5px; */
+            width: 200px;
+            height: 200px;
+            /* padding:20px; */
+            background-clip: content-box;
+            background-color: pink;
+            position: relative;
+        }
+
+        div::after {
+            content: '';
+            position: absolute;
+            border: 10px solid rebeccapurple;
+            /* clip-path:inset(0% 0% 70%,0%); */
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            clip-path: inset(0% 0% 90% 0%);
+            animation: border 2s infinite linear ;
+        }
+        div::after {
+            content: '';
+            position: absolute;
+            border: 10px solid rebeccapurple;
+            /* clip-path:inset(0% 0% 70%,0%); */
+            top: -10px;
+            left: -10px;
+            right: -10px;
+            bottom: -10px;
+            clip-path: inset(0% 0% 90% 0%);
+            animation: border 2s 2s  infinite linear ;
+        }
+
+        @keyframes border {
+
+            0%,
+            100% {
+                clip-path: inset(96% 0 0 0);
+              
+            }
+
+            25% {
+                clip-path: inset(0 0 0 96%);
+            }
+
+            50% {
+                clip-path: inset(0 0 96% 0);
+            }
+
+            75% {
+                clip-path: inset(0 96% 0 0);
+                
+            }
+
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+
+</body>
+
+</html>

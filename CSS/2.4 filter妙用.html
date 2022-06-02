@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .container {
+            width: 100px;
+            height: 100px;
+            border: 4px solid aquamarine;
+            background-color: #222;
+            overflow: hidden;
+            border-radius: 50%;
+            font-size: 36px;
+            filter: blur(6px) contrast(5); 
+            /* 主要靠这行代码 高斯模糊+ 对比度  */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .box {
+            width: 1em;
+            height: 1em;
+            transform: translate(0px, 0px);
+            background-color: aquamarine;
+            animation: move 2s linear infinite;
+        }
+
+        @keyframes move {
+            from {
+                transform: translateX(-100px);
+            }
+
+            to {
+                transform: translateX(100px);
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <pre>
+        下面这些属性可以单独使用 也可以组合使用 
+        filter: brightness(1.2) contrast(1.7);
+
+        filter: blur(5px); 主要是做高斯模糊 想要效果好的毛玻璃，可以用 backdrop-filter 实现
+        filter: brightness(0.4);是用来修改亮度的。值可以是百分比，也可以是数值（0.5 = 50%），默认值是 1，但不能是负数。当值越接近 0，画面越黑，当等于 0 时，整个画面几乎就成纯黑的了；值理论上可以趋于无限大，当大到一定值时，画面就几乎成纯白了
+        filter: contrast(200%);调整图像的对比度 对比度 = 图像中 最白的色值 / 最黑的色值
+        filter: drop-shadow(16px 16px 20px blue);  给图像设置阴影效果，使用方式其实跟 box-shadow 一样，区别就是：drop-shadow 能够识别图像中的透明元素，给图像内容的每个边打上引用
+        filter: grayscale(50%);页面置灰 一般用来给页面加上哀悼的效果
+        filter: hue-rotate(90deg); 色环 
+        filter: invert(75%); 颜色翻转
+        filter: opacity(25%);透明度
+        filter: saturate(30%); 可用于提高或降低元素颜色的饱和度。
+        filter: sepia(60%); 它将图像转换为棕褐色
+    </pre>
+    <div class="container">
+        <div class="box"></div>
+    </div>
+</body>
+
+</html>
