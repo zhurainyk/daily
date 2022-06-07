@@ -73,6 +73,11 @@ const routes = [
    path:'/video',
    name:'video',
    component:()=>import('../views/videoplayer/index2.vue') 
+  },
+  {
+   path:'/swiper',
+   name:'swiper',
+   component:()=>import('../views/swiper/index.vue') 
   }
 ];
 
