@@ -19,7 +19,7 @@ export default {
 
     data() {
         return {
-            showVideo: false,
+    
             playerOptions: {
                 autoplay: true, // 如果为true,浏览器准备好时开始回放。
                 muted: true,  // 默认情况下将会消除任何音频。
@@ -46,7 +46,7 @@ export default {
 
     methods: {
         async getAiCameraUrl() {
-            this.playerOptions.sources = [{ src: 'https://aicam.tlzn-cq.com/live/34020000001110000017.m3u8?auth_key=1654152067-0-0-7e485645d081708087080d1c9fffc77c', type: 'application/x-mpegURL' }]
+            this.playerOptions.sources = [{ src: 'http://aicam.tlzn-cq.com/live/34020000001110000020.m3u8?auth_key=1655267263-0-0-c357f8d87bba1a7450952f8629112ba0', type: 'application/x-mpegURL' }]
         },
         // 播放回调
         onPlayerPlay() {
