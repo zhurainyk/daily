@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .marquee {
+            width: 150px;
+            height: 50px;
+            background-color: pink;
+            overflow: hidden;
+        }
+
+        .marquee .marquee-wrap {
+            width: 100%;
+            background-color: black;
+            animation: marquee-wrap 8s infinite linear;
+        }
+
+        .marquee .marquee-content {
+            float: left;
+            white-space: nowrap;
+            min-width: 100%;
+            animation: marquee-content 8s infinite linear;
+        }
+
+        @keyframes marquee-wrap {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+            50% {
+                transform: translateX(100%);
+            }
+        }
+
+        @keyframes marquee-content {
+
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+
+
+            50% {
+                transform: translateX(-100%);
+            }
+        }
+    </style>
+</head>
+
+<body>
+ 
+    <div class="item marquee">
+        <div class="marquee-wrap">
+            <div class="marquee-content ">
+                哟波一波接踵而来大家看着我摇摆  
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
