@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <style>
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+    </style>
+    <script src="./three.js"></script>
+</head>
+
+<body>
+    <canvas id="canvas-frame" style="width:500px;height:500px;"></canvas>
+    <script>
+        var renderer;
+        // initThree 函数用来初始化 Three.js 运行所需的环境
+        function initThree() {
+            // 同原生 WebGL 环境搭建过程一样，Three.js 也需要先设置画布 canvas 元素的大小
+            width = document.getElementById('canvas-frame').clientWidth; // 设置宽度属性为浏览器窗口宽度
+            height = document.getElementById('canvas-frame').clientHeight; // 设置高度属性为浏览器窗口高度
+            // 新建一个 WebGL 渲染器并赋值给 renderer 变量
+            renderer = new THREE.WebGLRenderer({
+                antialias: true
+            });
+            // 设置画布大小为浏览器窗口大小
+            renderer.setSize(width, height);
+            // 将画布元素挂载到页面
+            document.getElementById('canvas-frame').appendChild(renderer.domElement);
+            // 设置清空画布的颜色为白色
+            renderer.setClearColor(0xFFFFFF, 1.0);
+        }
+        initThree()
+
+ 
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<style>
+  
+</style>
+<script src="https://cdn.jsdelivr.net/hls.js/latest/hls.min.js"></script>
+
+<body>
+    <video id="video" style="width:390px;height:235px" autoplay muted></video>
+    <script>
+        window.onload = function () {
+            if (Hls.isSupported()) {
+                var video = document.getElementById('video');
+                var hls = new Hls();
+                hls.loadSource('https://aicam.tlzn-cq.com/live/34020000001110000002.m3u8?auth_key=1656906578-0-0-f91f16c613076a2ca3e4740844251b5d');
+                hls.attachMedia(video);
+                hls.on(Hls.Events.MANIFEST_PARSED, function () {
+                    video.play();
+                });
+            }
+        }
+    </script>
+</body>
+
+</html>

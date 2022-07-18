@@ -78,6 +78,11 @@ const routes = [
    path:'/swiper',
    name:'swiper',
    component:()=>import('../views/swiper/index.vue') 
+  },
+  {
+   path:'/vjiexi',
+   name:'vjiexi',
+   component:()=>import('../views/video/index.vue') 
   }
 ];
 

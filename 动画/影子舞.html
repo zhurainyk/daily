@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background: #000;
+        }
+
+        .person {
+            width: 500px;
+            word-break: break-all;
+            margin: 0 auto;
+            font-size: 15px;
+            text-align: justify;
+            font-weight: bold;
+            font-family: sans-serif;
+            min-height: 100vh;
+            max-width: 800px;
+            margin: 0 auto;
+            color: transparent;
+            /* background: url(https://media.giphy.com/media/Ju7l5y9osyymQ/giphy.gif) center/cover; */
+            background:url('./yingzi.gif') center/cover;
+            -webkit-background-clip: text;
+            background-clip: text;
+            word-spacing: 0px;
+            letter-spacing: -1px;
+            /* filter: grayscale(1); */
+            filter: grayscale(.2) invert(1) hue-rotate(220deg);
+       
+            /* filter:brightness(50%); */
+            mix-blend-mode: hard-light;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="person">
+
+    </div>
+    <script>
+        document.getElementsByClassName('person')[0].innerText = new Array(2000).fill(0).map(item => (item = String.fromCharCode('A'.charCodeAt() + Math.floor(Math.random() * 26)))).toString()
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!--
+        //SCSS
+        $circles: ();
+$move: ();
+$n: 8;
+
+@function randomNum($max, $min: 0, $u: 1) {
+    @return ($min + random($max)) * $u;
+}
+
+@for $i from 0 through $n {
+    $start-x: randomNum(100, 1) * 1vw;
+    $start-y: randomNum(100, 1) * 1vh;
+
+    $end-x: randomNum(150, -50) * 1vw;
+    $end-y: randomNum(150, -50) * 1vh;
+
+    $circles: append(
+        $circles,
+        radial-gradient(
+                randomNum(75, 25) * 1vw,
+                #ddd 0%,
+                #666 10%,
+                #fff,
+                #000,
+                #999
+            )
+            $start-x $start-y,
+        comma
+    );
+
+    $move: append($move, $end-x $end-y, comma);
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow:hidden;
+}
+
+div {
+    position: absolute;
+    top:0;
+    left: 0;
+    right: 0;
+    bottom :0;
+    background: $circles;
+    animation: waveMove 15s infinite linear alternate;
+    background-blend-mode: difference;
+    filter: blur(2px) hue-rotate(0);
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background: #03a9f4;
+        mix-blend-mode: color-burn;
+    }
+}
+
+@keyframes waveMove {
+    100% {
+        background-position: $move;
+        filter: blur(5px) hue-rotate(30deg);
+    }
+}
+    -->
+    <style>
+        div {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(46vw, #ddd 0%, #666 10%, #fff, #000, #999) 96vw 33vh, radial-gradient(79vw, #ddd 0%, #666 10%, #fff, #000, #999) 21vw 54vh, radial-gradient(84vw, #ddd 0%, #666 10%, #fff, #000, #999) 27vw 87vh, radial-gradient(70vw, #ddd 0%, #666 10%, #fff, #000, #999) 22vw 77vh, radial-gradient(54vw, #ddd 0%, #666 10%, #fff, #000, #999) 56vw 68vh, radial-gradient(100vw, #ddd 0%, #666 10%, #fff, #000, #999) 18vw 40vh, radial-gradient(64vw, #ddd 0%, #666 10%, #fff, #000, #999) 64vw 64vh, radial-gradient(93vw, #ddd 0%, #666 10%, #fff, #000, #999) 68vw 26vh, radial-gradient(87vw, #ddd 0%, #666 10%, #fff, #000, #999) 63vw 36vh;
+            -webkit-animation: waveMove 15s infinite linear alternate;
+            animation: waveMove 15s infinite linear alternate;
+            background-blend-mode: difference;
+            filter: blur(2px) hue-rotate(0);
+        }
+
+        div::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            background: #03a9f4;
+            mix-blend-mode: color-burn;
+        }
+
+        @keyframes waveMove {
+            100% {
+                background-position: 82vw -26vh, 54vw 39vh, -25vw -22vh, 89vw -45vh, 12vw 9vh, 57vw 95vh, 34vw 93vh, -37vw -45vh, 61vw 1vh;
+                filter: blur(5px) hue-rotate(30deg);
+            }
+
+
+        }
+    </style>
+</head>
+
+<body>
+    <div></div>
+</body>
+
+</html>

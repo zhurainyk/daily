@@ -7,21 +7,38 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <style>
-        div.counter {
+        .counter {
             counter-reset: count;
             list-style: none;
             padding: 0;
             margin: 0
         }
 
-        div.counter>div {
+        .counter .item {
             counter-increment: count;
         }
 
-        div.counter>div::before {
+        .counter .item::before {
             content: counter(count, decimal) ' _ ';
             color: orange;
-            margin-right:20px;
+            margin-right: 20px;
+        }
+
+        .xbox {
+            counter-reset: count;
+            list-style: none;
+            padding: 0;
+            margin: 0
+        }
+
+        .xbox .list {
+            counter-increment: count;
+        }
+
+        .xbox .list ::before {
+            content: counter(count, decimal) ' _ ';
+            color: orange;
+            margin-right: 20px;
         }
     </style>
 </head>
@@ -46,9 +63,24 @@
         lower-latin | upper-latin），这块知识就需要查更多资料，我就不说了。
     </pre>
     <div class="counter">
-        <div>张三</div>
-        <div>李四</div>
-        <div>王五</div>
+        <div class="item">张三</div>
+        <div class="item">李四</div>
+        <div>
+            <div class="item">王五</div>
+            <span class="item">ddd </span>
+            <span class="item">ddd </span>
+        </div>
+    </div>
+    <div class="xbox">
+        <div class="list">
+            <span class="box">xx</span>
+        </div>
+        <div class="list">
+            <span class="box">dd</span>
+        </div>
+        <div class="list">
+            <span class="box">ff</span>
+        </div>
     </div>
 </body>
 
