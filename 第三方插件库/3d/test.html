@@ -1,61 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <script src="./lib/three.js"></script>
+    <script src="./lib/OrbitControls.js"></script>
 </head>
 
 <body>
-    
+
     <div class="mianban">
         <!-- <button class="btn1">旋转</button> -->
     </div>
     <div id="Stats-output"></div>
     <script>
         var scene = new THREE.Scene();
- 
+
         // 点光源
         // 添加光源
         // 创建立方体
-        var cubeGeometry = new THREE.BoxGeometry(40, 40, 40);
+        var cubeGeometry = new THREE.BoxGeometry(4, 4, 4);
         var cubeMaterial = new THREE.MeshLambertMaterial({
             color: 0xffff00
         });
         var cube = new THREE.Mesh(cubeGeometry, cubeMaterial);
-        cube.position.x = 0;
-        cube.position.y = 40;
+        cube.position.x = 10;
+        cube.position.y = 10;
         cube.position.z = 0;
         cube.castShadow = true;
         scene.add(cube); //点物体添加到场景中
- 
- 
+
+
         // 创建平面
         //环境光
-        var ambient = new THREE.AmbientLight(0x444444);
+        var ambient = new THREE.AmbientLight('red');
         scene.add(ambient);
- 
+
         var width = window.innerWidth; //窗口宽度
         var height = window.innerHeight; //窗口高度
         var k = width / height; //窗口宽高比
-        var s = 300; //三维场景显示范围控制系数，系数越大，显示的范围越大
-        var camera = new THREE.PerspectiveCamera(45, width / height, 1, 1000);
+        var s = 1000; //三维场景显示范围控制系数，系数越大，显示的范围越大
+        var camera = new THREE.PerspectiveCamera(45, width / height, 1, s);
         // var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
-        camera.position.set(300, 500, 300); //设置相机位置
+        camera.position.set(60, 50, 30); //设置相机位置
         camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
-        // 添加光源
-        var spotLight = new THREE.SpotLight(0xffffff);
-        spotLight.position.set(0, 250, 110);
-        spotLight.castShadow = true;
-        //设置阴影分辨率
-        spotLight.shadow.mapSize.width = 2048;
-        spotLight.shadow.mapSize.height = 2048;
-        scene.add(spotLight);
- 
+
+
         // 创建平面
-        var planeGeometry = new THREE.PlaneGeometry(400, 400);
+        var planeGeometry = new THREE.PlaneGeometry(60, 40);
         var planeMaterial = new THREE.MeshLambertMaterial({
             color: 0xeeeeee
         });
@@ -64,41 +59,80 @@
         plane.receiveShadow = true;
         plane.rotation.x = -Math.PI / 2;
         scene.add(plane); //点添加到场景中
-        var renderer = new THREE.WebGLRenderer();
+
+
+
+
+        //插入球体
+        var geometry = new THREE.SphereGeometry(5, 32, 32);
+        var material = new THREE.MeshBasicMaterial({ color: 'blue' });
+        var sphere = new THREE.Mesh(geometry, material);
+        sphere.position.x = -10;
+        sphere.position.y = 10;
+        sphere.position.z = 10;
+        sphere.castShadow = true; //开启阴影
+        // sphere.receiveShadow = true; //default
+        scene.add(sphere);
+        /**
+         * 
+         * 
+         *         
+        //插入球体
+        var geometry = new THREE.SphereBufferGeometry(5, 32, 32);
+        var material = new THREE.MeshStandardMaterial({ color: 0xff0000 });
+        var sphere = new THREE.Mesh(geometry, material);
+        sphere.position.x = -10;
+        sphere.position.y = 10;
+        sphere.position.z = 10;
+
+        sphere.castShadow = true; //开启阴影
+        sphere.receiveShadow = false; //default
+        scene.add(sphere);
+         * */
+
+        // 添加光源
+        var spotLight = new THREE.SpotLight(0xffffff);
+        spotLight.position.set(0, 150, 200);
+        spotLight.castShadow = true;
+        //设置阴影分辨率
+        spotLight.shadow.mapSize.width = 2048;
+        spotLight.shadow.mapSize.height = 2048;
+
+        //设置阴影属性
+        spotLight.shadow.camera.near = 0.5;
+        spotLight.shadow.camera.far = 500
+        scene.add(spotLight);
+        function render() {
+            renderer.render(scene, camera); //执行渲染操作
+        }
+
+        const renderer = new THREE.WebGLRenderer({antialias:true})//抗锯齿
         renderer.setSize(width, height); //设置渲染区域尺寸
         renderer.setClearColor(0xb9d3ff, 1); //设置背景颜色
         //开启阴影效果
         renderer.shadowMap.enabled = true;
         renderer.shadowMap.type = THREE.PCFSoftShadowMap;
- 
+
         document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
-        let x1 = 0,
-            y1 = 0,
-            z1 = 300;
- 
-        function render() {
-            renderer.render(scene, camera); //执行渲染操作
-        }
-        // setInterval(() => {
-        //     spotLight.position.set(x1++, 0, z1++);
-        // }, 10);
         // 坐标轴
         var axisHelper = new THREE.AxesHelper(250);
         scene.add(axisHelper);
         render();
- 
- 
-        window.onresize = function() {
+
+
+        window.onresize = function () {
             console.log(11);
             renderer.setSize(window.innerWidth, window.innerHeight);
             render();
         }
- 
- 
+
+
+
         var controls = new THREE.OrbitControls(camera, renderer.domElement);
         controls.addEventListener('change', render); //监听鼠标、键盘事件
     </script>
 
- 
+
 </body>
+
 </html>

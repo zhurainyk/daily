@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/three.js"></script>
+ <style>
+     *{
+         margin: 0;
+         padding: 0;
+     }
+ </style>
+</head>
+<body>
+    <div id="webgl-output"></div>
+    <script>
+        ~function(){
+            // 创建场景
+            const scene = new THREE.Scene()
+            // 创建摄像机
+            const camera = new THREE.PerspectiveCamera(75,window.innerWidth/window.innerHeight,0.1,2000)
+            //创建渲染器
+            const renderer = new THREE.WebGLRenderer({antialias:true})//抗锯齿
+            renderer.setSize(window.innerWidth,window.innerHeight)
+            //把渲染器添加到容器中
+            document.body.appendChild(renderer.domElement);
+            //创建几何模型
+            const geometry = new THREE.BoxGeometry(2,2,2)
+            //创建材质
+            // const material = new THREE.MeshBasicMaterial({color:0x00ff00})
+            //其他材质
+            const texture = new THREE.TextureLoader().load('./img/mm.webp')
+            const material = new THREE.MeshBasicMaterial({
+                map:texture
+            }) 
+            //创建网格对象
+            const cube = new THREE.Mesh(geometry,material)
+            scene.add(cube)
+            
+            //添加帧动画
+            function animate(){
+                requestAnimationFrame(animate)
+                cube.rotation.x += 0.01
+                cube.rotation.y += 0.01
+
+                renderer.render(scene,camera)
+            }
+            animate()
+            //把相机移动远一点 
+            camera.position.z = 5
+
+            window.addEventListener('resize',()=>{
+                camera.aspect = window.innerWidth/window.innerHeight;
+                camera.updateProjectionMatrix()
+                renderer.setSize(window.innerWidth,window.innerHeight)
+            })
+        }();
+    </script>
+</body>
+</html>
