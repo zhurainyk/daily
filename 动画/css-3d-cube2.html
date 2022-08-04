@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      /* background-color: rgb(5, 19, 59); */
+    }
+
+    .cube {
+      perspective: 2000px;
+      transform-style: preserve-3d;
+      width: 300px;
+      height: 800px;
+      /* background: #fff; */
+      margin: 200px auto;
+      position: relative;
+      transform: rotateY(1.4deg) rotateX(-2.2deg);
+    }
+
+    .front,
+    .behind,
+    .left,
+    .right {
+      width: 300px;
+      height: 800px;
+      text-align: center;
+      line-height: 800px;
+      font-size: 50px;
+      position: absolute;
+      /* border: 1px solid pink; */
+      background-color: rgba(6, 20, 58, .5);
+    }
+
+    .top,
+    .bottom {
+      width: 300px;
+      text-align: center;
+      line-height: 300px;
+      font-size: 50px;
+      height: 300px;
+      position: absolute;
+      border: 1px solid pink;
+    }
+
+    .front {
+      transform: translateZ(150px);
+      background-color: #070625b5;
+    }
+
+    .behind {
+      transform: translateZ(-150px);
+      background-color: #070625b5;
+    }
+
+    .left {
+      transform: rotateY(-90deg) translateZ(150px);
+      background-color: #07062575;
+    }
+
+    .right {
+      transform: rotateY(90deg) translateZ(150px);
+      background-color: #07062575;
+    }
+
+    .top {
+      transform: rotateX(90deg) translateZ(0) translateZ(150px);
+    }
+
+    .bottom {
+      transform: rotateX(-90deg) translateZ(0) translateZ(650px);
+    }
+
+    .line {
+      width: 2px;
+      height: 800px;
+      position: absolute;
+      background-color: rgb(23, 52, 94);
+      left: 149px;
+      transform: translateZ(0);
+    }
+
+    .smallcube {
+      perspective: 2000px;
+      transform-style: preserve-3d;
+      width: 100px;
+      height: 200px;
+      /* background: #fff; */
+      position: absolute;
+      left: 100px;
+      color: #fff;
+      /* transform: translateY(650px) translateZ(-50px); */
+      animation: smallcubeRun 10s infinite alternate ease-in-out;
+    }
+
+    @keyframes smallcubeRun {
+      from {
+        transform: translateY(650px) translateZ(0);
+      }
+
+      to {
+        transform: translateY(0px) translateZ(0);
+      }
+    }
+
+    .small-front,
+    .small-behind,
+    .small-left,
+    .small-right {
+      width: 100px;
+      height: 200px;
+      text-align: center;
+      line-height: 200px;
+      font-size: 20px;
+      position: absolute;
+      /* border: 1px solid yellow; */
+      background-color:  rgb(25,155,249)
+    }
+
+    .small-top,
+    .small-bottom {
+      width: 100px;
+      height: 100px;
+      text-align: center;
+      line-height: 100px;
+      font-size: 20px;
+      position: absolute;
+      /* border: 1px solid yellow; */
+      background-color:  rgb(25,155,249)
+    }
+
+    .small-front {
+      transform: translateZ(50px);
+    }
+
+    .small-behind {
+      transform: translateZ(-50px);
+    }
+
+    .small-left {
+      transform: rotateY(-90deg) translateZ(50px);
+    }
+
+    .small-right {
+      transform: rotateY(90deg) translateZ(50px);
+    }
+
+    .small-top {
+      transform: rotateX(-90deg) translateZ(-50px);
+    }
+
+    .small-bottom {
+      transform: rotateX(90deg) translateZ(-150px);
+    }
+
+    /* 电梯门 */
+    .small-front {
+      display: flex;
+      justify-content: space-between;
+      overflow: hidden;
+    }
+
+    .door-l,
+    .door-r {
+      width: 48px;
+      height: 200px;
+      background-color: rgb(25,155,249);
+      border-radius: 4px;
+      transition: 2s;
+    }
+
+    .cube:hover .door-l {
+      transform: translateX(-40px);
+    }
+
+    .cube:hover .door-r {
+      transform: translateX(40px);
+    }
+
+    .door-l {}
+  </style>
+</head>
+
+<body>
+  <div class="cube">
+    <div class="front"></div>
+    <div class="behind"></div>
+    <div class="left"></div>
+    <div class="right"></div>
+    <div class="top"></div>
+    <div class="bottom"></div>
+    <div class="smallcube">
+      <div class="small-front">
+        <div class="door-l"></div>
+        <div class="door-r"></div>
+      </div>
+      <div class="small-behind"></div>
+      <div class="small-left"></div>
+      <div class="small-right"></div>
+      <div class="small-top"></div>
+      <div class="small-bottom"></div>
+    </div>
+    <div class="line"></div>
+  </div>
+  <script>
+    const cube = document.getElementsByClassName("cube")[0];
+    const rotateObj = {
+      x: -35,
+      y: 35,
+      x: 0,
+    };
+    let initX = null;
+    let initY = null;
+    document.addEventListener("mousedown", (e) => {
+      const clientX = initX || e.clientX;
+      const clientY = initY || e.clientY;
+      console.log(clientX, clientY);
+      function move(e) {
+        const moveX = e.clientX;
+        const moveY = e.clientY;
+        const resultX = moveX - clientX;
+        const resultY = moveY - clientY;
+        console.log(resultX, resultY);
+        cube.style.transform = `rotateY(${-resultX / 5}deg) rotateX(-${resultY / 5}deg)`
+      }
+      document.addEventListener("mousemove", move);
+      document.addEventListener("mouseup", (e) => {
+        initX = e.clientX
+        initY = e.clientY
+        document.removeEventListener("mousemove", move);
+      });
+    });
+  </script>
+</body>
+
+</html>

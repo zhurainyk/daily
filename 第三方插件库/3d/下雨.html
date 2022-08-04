@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>第一个three.js文件_WebGL三维场景</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+
+        }
+    </style>
+
+    <script src="./lib/three.js"></script>
+    <script src="./lib/OrbitControls.js"></script>
+</head>
+
+<body>
+    <div id="webgl"></div>
+    <script>
+        /**
+         * 创建场景对象Scene
+         */
+        var scene = new THREE.Scene();
+        /**
+         * 创建草地
+         * 
+         */function createGrass() {
+            const geometry = new THREE.PlaneGeometry(1000, 1000);
+
+            const texture = new THREE.TextureLoader().load('./img/grass.webp');
+            texture.wrapS = THREE.RepeatWrapping;
+            texture.wrapT = THREE.RepeatWrapping;
+            texture.repeat.set(10, 10);
+
+            const grassMaterial = new THREE.MeshBasicMaterial({ map: texture });
+
+            const grass = new THREE.Mesh(geometry, grassMaterial);
+
+            grass.rotation.x = -0.5 * Math.PI;
+
+            scene.add(grass);
+            // scene.fog = new THREE.Fog(0xffffff, 1, 1000);
+            // 添加雾
+        }
+        createGrass()
+
+
+        /**
+        * 精灵创建下雨效果
+        */
+        // 加载雨滴理贴图
+        var textureTree = new THREE.TextureLoader().load("./img/rain.png");
+        // 批量创建表示雨滴的精灵模型
+        //创建渲染器
+        const renderer = new THREE.WebGLRenderer({ antialias: true })//抗锯齿
+        renderer.setSize(window.innerWidth, window.innerHeight)
+
+        const light = new THREE.AmbientLight(0xCCCCCC);
+        scene.add(light);
+        //把渲染器添加到容器中
+        document.body.appendChild(renderer.domElement);
+        // 创建一个组表示所有的雨滴
+        var group = new THREE.Group();
+        for (let i = 0; i < 800; i++) {
+            var spriteMaterial = new THREE.SpriteMaterial({
+                map: textureTree,//设置精灵纹理贴图
+            });
+            // 创建精灵模型对象
+            var sprite = new THREE.Sprite(spriteMaterial);
+            scene.add(sprite);
+            // 控制精灵大小,
+            sprite.scale.set(8, 10, 1); //// 只需要设置x、y两个分量就可以
+            var k1 = Math.random() - .5;
+            var k2 = Math.random() - .5;
+            var k3 = Math.random() - .5;
+            // 设置精灵模型位置，在整个空间上上随机分布
+            // sprite.position.set(200 * k1, 200 * k3, 200 * k2)
+            sprite.position.set(1000 * k1, 1000 * Math.random(), 1000 * k2)
+            group.add(sprite);
+        }
+        scene.add(group);//雨滴群组插入场景中
+
+        /**透视投影相机对象*/
+        var camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 2000);
+        camera.position.set(292, 109, 500);//设置相机位置
+
+        const axis = new THREE.AxesHelper(500) //老版本为AxisHelper 
+        //添加坐标系到场景
+        scene.add(axis)
+        // 渲染函数
+        render()
+
+        function render() {
+            // 每次渲染遍历雨滴群组，刷新频率30~60FPS，两帧时间间隔16.67ms~33.33ms
+            // 每次渲染都会更新雨滴的位置，进而产生动画效果
+            group.children.forEach(sprite => {
+                // 雨滴的y坐标每次减1
+                sprite.position.y -= 2;
+                if (sprite.position.y < 0) {
+                    // 如果雨滴落到地面，重置y，从新下落
+                    sprite.position.y = 1000;
+                }
+            });
+            renderer.render(scene, camera); //执行渲染操作
+            requestAnimationFrame(render);//请求再次执行渲染函数render，渲染下一帧
+        }
+        var controls = new THREE.OrbitControls(camera, renderer.domElement);
+        controls.addEventListener('change', () => renderer.render(scene, camera)); //监听鼠标、键盘事件
+
+
+        var geometry = new THREE.BoxGeometry(100, 100, 100);
+        // 控制台查看立方体数据
+        console.log(geometry);
+        // 控制台查看geometry.toJSON()结果
+        console.log(geometry.toJSON());
+        // JSON对象转化为字符串
+        console.log(JSON.stringify(geometry.toJSON()));
+        // JSON.stringify()方法内部会自动调用参数的toJSON()方法
+        console.log(JSON.stringify(geometry));
+
+        var material = new THREE.MeshLambertMaterial({
+            color: 0x0000ff,
+        }); //材质对象Material
+        console.log('材质对象,',material);
+        console.log(material.toJSON());
+        console.log(JSON.stringify(material));
+    </script>
+</body>
+
+</html>
