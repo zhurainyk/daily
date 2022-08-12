@@ -83,7 +83,12 @@ const routes = [
    path:'/vjiexi',
    name:'vjiexi',
    component:()=>import('../views/video/index.vue') 
-  }
+  },
+  {
+    path:'/threejs/demo',
+    name:'threejsdemo',
+    component:()=>import('../views/threejs/demo.vue') 
+   },
 ];
 
 const router = new VueRouter({

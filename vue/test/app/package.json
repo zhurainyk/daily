@@ -9,7 +9,8 @@
     "start:main": "vue-cli-service serve",
     "install-target": "npm install {1}",
     "install-t": "npm install {1}",
-    "install-all": "npm install"
+    "install-all": "npm install",
+    "dev":"vue-cli-service serve"
   },
   "dependencies": {
     "axios": "^0.21.4",
@@ -19,6 +20,7 @@
     "swiper": "^7.4.1",
     "videojs-contrib-hls": "^5.15.0",
     "vue": "^2.6.11",
+    "three": "^0.127.0",
     "vue-flowchart-editor": "^1.0.2",
     "vue-router": "^3.2.0",
     "vue-video-player": "^5.0.2",

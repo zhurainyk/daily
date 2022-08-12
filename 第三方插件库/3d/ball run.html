@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./lib/three.js"></script>
+    <script src="./lib/OrbitControls.js"></script>
+</head>
+
+<body>
+    <script>
+        var scene = new THREE.Scene();
+        var material = new THREE.LineBasicMaterial({ color: 0xffffff });
+
+        //这里用这个构造BufferGeometry
+        var geometry = new THREE.BufferGeometry()
+        //定义一个Array数组
+        var pointsArray = new Array()
+        //加入顶点
+        pointsArray.push(new THREE.Vector3(0, 14, 0));
+        pointsArray.push(new THREE.Vector3(-14, 14, 0));
+        pointsArray.push(new THREE.Vector3(-14, 13, 0));
+        pointsArray.push(new THREE.Vector3(-14, 13, -0.4));
+        pointsArray.push(new THREE.Vector3(-14, 13, 0));
+        pointsArray.push(new THREE.Vector3(-14, 10, 0));
+        pointsArray.push(new THREE.Vector3(-14, 10, -0.4));
+        pointsArray.push(new THREE.Vector3(-14, 10, 0));
+        pointsArray.push(new THREE.Vector3(-14, 7, 0));
+        pointsArray.push(new THREE.Vector3(-14, 7, -0.4));
+        pointsArray.push(new THREE.Vector3(-14, 7, 0));
+        pointsArray.push(new THREE.Vector3(-14, 4, 0));
+        pointsArray.push(new THREE.Vector3(-14, 4, -0.4));
+        pointsArray.push(new THREE.Vector3(-14, 4, 0));
+        pointsArray.push(new THREE.Vector3(-14, 1, 0));
+        pointsArray.push(new THREE.Vector3(-14, 1, -0.4));
+        pointsArray.push(new THREE.Vector3(-14, 1, 0));
+        pointsArray.push(new THREE.Vector3(-14, 0, 0));
+
+        pointsArray.push(new THREE.Vector3(-14, 0, 2));
+        pointsArray.push(new THREE.Vector3(-14, -0.4, 2));
+        pointsArray.push(new THREE.Vector3(-14, 0, 2));
+        pointsArray.push(new THREE.Vector3(-14, 0, 5));
+        pointsArray.push(new THREE.Vector3(-14, -0.4, 5));
+        pointsArray.push(new THREE.Vector3(-14, 0, 5));
+        pointsArray.push(new THREE.Vector3(-14, 0, 8));
+        pointsArray.push(new THREE.Vector3(-14, -0.4, 8));
+        pointsArray.push(new THREE.Vector3(-14, 0, 8));
+        pointsArray.push(new THREE.Vector3(-14, 0, 11));
+        pointsArray.push(new THREE.Vector3(-14, -0.4, 11));
+        pointsArray.push(new THREE.Vector3(-14, 0, 11));
+        pointsArray.push(new THREE.Vector3(-14, 0, 14));
+        pointsArray.push(new THREE.Vector3(-14, -0.4, 14));
+        pointsArray.push(new THREE.Vector3(-14, 0, 14));
+        pointsArray.push(new THREE.Vector3(-14, 0, 16));
+
+        pointsArray.push(new THREE.Vector3(-13, 0, 16));
+        pointsArray.push(new THREE.Vector3(-13, -0.4, 16));
+        pointsArray.push(new THREE.Vector3(-13, 0, 16));
+        pointsArray.push(new THREE.Vector3(-10, 0, 16));
+        pointsArray.push(new THREE.Vector3(-10, -0.4, 16));
+        pointsArray.push(new THREE.Vector3(-10, 0, 16));
+        pointsArray.push(new THREE.Vector3(-7, 0, 16));
+        pointsArray.push(new THREE.Vector3(-7, -0.4, 16));
+        pointsArray.push(new THREE.Vector3(-7, 0, 16));
+        pointsArray.push(new THREE.Vector3(-4, 0, 16));
+        pointsArray.push(new THREE.Vector3(-4, -0.4, 16));
+        pointsArray.push(new THREE.Vector3(-4, 0, 16));
+        pointsArray.push(new THREE.Vector3(-1, 0, 16));
+        pointsArray.push(new THREE.Vector3(-1, -0.4, 16));
+        pointsArray.push(new THREE.Vector3(-1, 0, 16));
+        pointsArray.push(new THREE.Vector3(-1, 0, 16));
+        pointsArray.push(new THREE.Vector3(0, 0, 16));
+
+        pointsArray.push(new THREE.Vector3(0, 14, 16));
+        pointsArray.push(new THREE.Vector3(0, 14, 0));
+        pointsArray.push(new THREE.Vector3(0, 0, 0));
+        pointsArray.push(new THREE.Vector3(-14, 0, 0));
+        pointsArray.push(new THREE.Vector3(0, 0, 0));
+        pointsArray.push(new THREE.Vector3(0, 0, 16));
+
+        //用这个api传入顶点数组setFromPoints是geometry
+        //通过该方法可以把数组points中顶点数据提取出来赋值给几何体的顶点位置属性 
+        //geometry.vertices，
+        geometry.setFromPoints(pointsArray)
+
+        var line1 = new THREE.Line(geometry, material);
+        scene.add(line1);
+        var lines = new THREE.BufferGeometry() //THREE.Geometry()废弃了
+        const linesArray = []
+
+        linesArray.push(new THREE.Vector3(0, 1, 0));
+        linesArray.push(new THREE.Vector3(-14, 1, 0));
+        linesArray.push(new THREE.Vector3(-14, 4, 0));
+        linesArray.push(new THREE.Vector3(0, 4, 0));
+        linesArray.push(new THREE.Vector3(0, 7, 0));
+        linesArray.push(new THREE.Vector3(-14, 7, 0));
+        linesArray.push(new THREE.Vector3(-14, 10, 0));
+        linesArray.push(new THREE.Vector3(0, 10, 0));
+        linesArray.push(new THREE.Vector3(0, 13, 0));
+        linesArray.push(new THREE.Vector3(-14, 13, 0));
+        linesArray.push(new THREE.Vector3(0, 13, 0));
+        linesArray.push(new THREE.Vector3(0, 13, 16));
+        linesArray.push(new THREE.Vector3(0, 10, 16));
+        linesArray.push(new THREE.Vector3(0, 10, 0));
+        linesArray.push(new THREE.Vector3(0, 7, 0));
+        linesArray.push(new THREE.Vector3(0, 7, 16));
+        linesArray.push(new THREE.Vector3(0, 4, 16));
+        linesArray.push(new THREE.Vector3(0, 4, 0));
+        linesArray.push(new THREE.Vector3(0, 1, 0));
+        linesArray.push(new THREE.Vector3(0, 1, 16));
+        linesArray.push(new THREE.Vector3(0, 0, 16));
+
+        linesArray.push(new THREE.Vector3(-1, 0, 16));
+        linesArray.push(new THREE.Vector3(-1, 0, 0));
+        linesArray.push(new THREE.Vector3(-1, 14, 0));
+        linesArray.push(new THREE.Vector3(-4, 14, 0));
+        linesArray.push(new THREE.Vector3(-4, 0, 0));
+        linesArray.push(new THREE.Vector3(-4, 0, 16));
+        linesArray.push(new THREE.Vector3(-7, 0, 16));
+        linesArray.push(new THREE.Vector3(-7, 0, 0));
+        linesArray.push(new THREE.Vector3(-7, 14, 0));
+        linesArray.push(new THREE.Vector3(-10, 14, 0));
+        linesArray.push(new THREE.Vector3(-10, 0, 0));
+        linesArray.push(new THREE.Vector3(-10, 0, 16));
+        linesArray.push(new THREE.Vector3(-13, 0, 16));
+        linesArray.push(new THREE.Vector3(-13, 0, 0));
+        linesArray.push(new THREE.Vector3(-13, 14, 0));
+        linesArray.push(new THREE.Vector3(-14, 14, 0));
+        linesArray.push(new THREE.Vector3(-14, 0, 0));
+        linesArray.push(new THREE.Vector3(-14, 0, 2));
+        linesArray.push(new THREE.Vector3(0, 0, 2));
+        linesArray.push(new THREE.Vector3(0, 14, 2));
+        linesArray.push(new THREE.Vector3(0, 14, 5));
+        linesArray.push(new THREE.Vector3(0, 0, 5));
+        linesArray.push(new THREE.Vector3(-14, 0, 5));
+        linesArray.push(new THREE.Vector3(-14, 0, 8));
+        linesArray.push(new THREE.Vector3(0, 0, 8));
+        linesArray.push(new THREE.Vector3(0, 14, 8));
+        linesArray.push(new THREE.Vector3(0, 14, 11));
+        linesArray.push(new THREE.Vector3(0, 0, 11));
+        linesArray.push(new THREE.Vector3(-14, 0, 11));
+        linesArray.push(new THREE.Vector3(-14, 0, 14));
+        linesArray.push(new THREE.Vector3(0, 0, 14));
+        linesArray.push(new THREE.Vector3(0, 14, 14));
+        lines.setFromPoints(linesArray)
+        var materials = new THREE.LineDashedMaterial({
+            color: 0xffffff,
+            dashSize: 0.15,   //定义间距以及虚线大小
+            gapSize: 0.3,
+
+        });
+        var line2 = new THREE.Line(lines, materials);
+        //必须添加识别为虚线
+        line2.computeLineDistances();
+        scene.add(line2);
+        let canvas = document.createElement("canvas");
+        canvas.width = 700;
+        canvas.height = 200;
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#ffffff";
+        ctx.font = "Bold 250px 宋体";
+        ctx.lineWidth = 10;
+        ctx.fillText("-400", 0, 204);
+        var canvasMap = new THREE.Texture(canvas);
+
+        canvasMap.needsUpdate = true;
+
+        var mat = new THREE.SpriteMaterial();
+        mat.map = canvasMap;
+        var text = new THREE.Sprite(mat);
+        text.scale.set(0.5 * 5, 0.25 * 2, 0.75 * 10);
+        //根据需要，自己设置位置即可
+        text.position.set(-14, -0.7, 3);
+        scene.add(text);
+        let clock, mixer
+        motion()
+        function motion() {
+            var geometry3 = new THREE.BufferGeometry(); //声明一个几何体对象Geometry
+            curve = new THREE.CatmullRomCurve3([
+                new THREE.Vector3(-3, 0, 0),
+                new THREE.Vector3(-3, 0, 16),
+                new THREE.Vector3(-10, 0, 16),
+                new THREE.Vector3(-3, 10, 16),
+                new THREE.Vector3(13, 15, 16),
+                new THREE.Vector3(-13, 12, -16),
+
+            ]);
+            points = curve.getPoints(100);
+
+            geometry3.setFromPoints(points);
+            //材质对象
+            var material3 = new THREE.LineBasicMaterial({
+                color: 0xffffff
+            });
+            //线条模型对象
+            line4 = new THREE.Line(geometry3, material3);
+            scene.add(line4);
+
+            var arr = [];
+            for (let i = 0; i < 101; i++) {
+                arr.push(i)
+            }
+            var times = new Float32Array(arr);
+
+            var posArr = []
+            points.forEach(elem => {
+                posArr.push(elem.x, elem.y, elem.z)
+            })
+            var values = new Float32Array(posArr);
+
+            var posTrack = new THREE.KeyframeTrack('.position', times, values);
+            let duration = 101;
+            let clip = new THREE.AnimationClip("default", duration, [posTrack]);
+            mixer = new THREE.AnimationMixer(line4);
+            let AnimationAction = mixer.clipAction(clip);
+            AnimationAction.timeScale = 20;
+            AnimationAction.play();
+            clock = new THREE.Clock();//声明一个时钟对象
+        }
+        var width = window.innerWidth; //窗口宽度
+        var height = window.innerHeight; //窗口高度
+        var renderer = new THREE.WebGLRenderer();
+        renderer.setSize(width, height);//设置渲染区域尺寸
+        renderer.setClearColor(0xb9d3ff, 1); //设置背景颜色
+        document.body.appendChild(renderer.domElement); //body元素中插入canvas对象
+ 
+        var k = width / height; //窗口宽高比
+        var s = 200; //三维场景显示范围控制系数，系数越大，显示的范围越大
+        //创建相机对象
+        var camera = new THREE.OrthographicCamera(-s * k, s * k, s, -s, 1, 1000);
+        camera.position.set(200, 300, 200); //设置相机位置
+        camera.lookAt(scene.position); //设置相机方向(指向的场景对象)
+        function render() {
+            renderer.render(scene, camera);
+            requestAnimationFrame(render);
+            // 更新帧动画的时间
+            mixer.update(clock.getDelta());
+        }
+        render();
+
+    </script>
+</body>
+
+</html>
