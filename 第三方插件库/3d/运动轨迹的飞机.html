@@ -49,34 +49,42 @@
         <input id='end' type="button" value="END">
         <input id='toggle' type="button" value="切换">
     </div>
-
+    <!-- 
     <script type="importmap">
 			{
 				"imports": {
 					"three": "./libs/three.module.js"
 				}
 			}
-		</script>
+		</script> -->
     <script type="module">
-      
+
 
 
         let scene = new THREE.Scene();
-        scene.background = new THREE.Color('gray');
+        scene.background = new THREE.Color('gray'); //设置背景颜色
 
-        let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
+        let camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000); //网络透视投影相机
         camera.position.set(250, 250, 250);
 
-        let renderer = new THREE.WebGLRenderer({
-            alpha: false
+        let renderer = new THREE.WebGLRenderer({ //渲染容器
+            alpha: false,
+            // antialias: true, // true/false表示是否开启反锯齿
+            // alpha: true, // true/false 表示是否可以设置背景色透明
+            // precision: 'highp', // highp/mediump/lowp 表示着色精度选择
+            // premultipliedAlpha: false, // true/false 表示是否可以设置像素深度（用来度量图像的分辨率）
+            // preserveDrawingBuffer: true, // true/false 表示是否保存绘图缓冲
+            // maxLights: 3, // 最大灯光数
+            // stencil: false // false/true 表示是否使用模板字体或图案
+
         });
         renderer.setSize(window.innerWidth, window.innerHeight);
         document.body.appendChild(renderer.domElement);
 
         let controls = new THREE.OrbitControls(camera, renderer.domElement);
 
-        {
-            let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+        { //添加光照
+            let directionalLight = new THREE.DirectionalLight(0xffffff, 0.5); //平行光
             directionalLight.position.set(1, 1, 1);
             scene.add(directionalLight);
 
@@ -88,23 +96,23 @@
         }
 
         {
-            let vertices = [];
+            let vertices = []; //生成随机坐标点的星星
 
             for (let i = 0; i < 10000; i++) {
 
-                let x = THREE.MathUtils.randFloatSpread(2000);
-                let y = THREE.MathUtils.randFloatSpread(2000);
-                let z = THREE.MathUtils.randFloatSpread(2000);
+                let x = THREE.MathUtils.randFloatSpread(12000); //随机数
+                let y = THREE.MathUtils.randFloatSpread(12000);
+                let z = THREE.MathUtils.randFloatSpread(12000);
 
                 vertices.push(x, y, z);
             }
 
             let geometry6 = new THREE.BufferGeometry();
-            geometry6.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3));
+            geometry6.setAttribute('position', new THREE.Float32BufferAttribute(vertices, 3)); //把坐标点按3个一组放进去
 
-            let material6 = new THREE.PointsMaterial({
-                color: 0xffffff,
-                size: 0.5
+            let material6 = new THREE.PointsMaterial({//材质
+                color: 0xffffff,//颗粒颜色
+                size: 0.5 //颗粒大小
             });
 
             let starPoints = new THREE.Points(geometry6, material6);
@@ -112,11 +120,21 @@
             scene.add(starPoints);
         }
 
-
+        //绘制飞机
         let material = new THREE.MeshBasicMaterial({
             color: 0xff0000
         });
-        let geometry = new THREE.CylinderBufferGeometry(0, 10, 50, 12);
+        let geometry = new THREE.CylinderBufferGeometry(0, 10, 50, 32); //圆柱体
+        /**CylinderBufferGeometry()
+        radiusTop - 顶部圆柱的半径。默认值为1。
+        radiusBottom - 底部圆柱的半径。默认值为1。
+        height - 圆柱体的高度。默认值为1。
+        radialSegments - 圆柱体圆周周围的分割面数。默认值为8。
+        heightSegments - 沿圆柱高度的面的行数。默认值为1。
+        openEnded - 一个布尔值，指示圆柱的末端是打开还是加盖。默认值为false，表示上限。
+        thetaStart - 第一段的起始角度，默认值为0（三点钟位置）。
+        thetaLength - 圆形扇区的中心角，通常称为theta。默认值为2 * Pi，这样可以获得完整的柱面。
+         */
         geometry.rotateX(Math.PI / 2);
         let cone = new THREE.Mesh(geometry, material);
         scene.add(cone);
@@ -138,11 +156,13 @@
 
                 //顶点位置三维向量数组
                 this.pointsArr = pointsArr;
+                console.log({ pointsArr })
 
                 //折线几何体
-                this.line = null; {
+                this.line = null;
+                {
                     let lineMaterial = new THREE.LineBasicMaterial({
-                        color: 0xff00ff
+                        color: 0xff00ff //路径颜色 画线段
                     });
                     let lineGeometry = new THREE.BufferGeometry().setFromPoints(pointsArr);
                     this.line = new THREE.Line(lineGeometry, lineMaterial);
@@ -150,11 +170,12 @@
 
 
                 //锚点几何体
-                this.points = null; {
-                    let pointsBufferGeometry = new THREE.BufferGeometry();
+                this.points = null;
+                {
+                    let pointsBufferGeometry = new THREE.BufferGeometry();//方块
                     pointsBufferGeometry.setAttribute('position', new THREE.Float32BufferAttribute(array, 3));
                     let pointsMaterial = new THREE.PointsMaterial({
-                        color: 0xffff00,
+                        color: 'pink',
                         size: 10
                     });
                     this.points = new THREE.Points(pointsBufferGeometry, pointsMaterial);
@@ -162,11 +183,12 @@
 
 
                 //计算每个锚点在整条折线上所占的百分比
-                this.pointPercentArr = []; {
+                this.pointPercentArr = [];
+                {
                     let distanceArr = []; //每段距离
                     let sumDistance = 0; //总距离
-                    for (let index = 0; index < pointsArr.length - 1; index++) {
-                        distanceArr.push(pointsArr[index].distanceTo(pointsArr[index + 1]));
+                    for (let index = 0; index < pointsArr.length - 1; index++) {  
+                        distanceArr.push(pointsArr[index].distanceTo(pointsArr[index + 1])); //THREE.Vector3()具有distanceTo方法 计算距离
                     }
                     sumDistance = distanceArr.reduce(function (tmp, item) {
                         return tmp + item;
@@ -342,6 +364,7 @@
             0, 0, 500,
             0, 500, 500,
             500, 750, 0,
+            500,0,200
         ]);
 
         scene.add(a.points);

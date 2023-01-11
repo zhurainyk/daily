@@ -265,17 +265,28 @@ export default {
             scene.add(wallMesh.mesh);
         },
         creatRing() {
-
-            this.RunRing1 = new RunRing({
-                img: "./img/clice.png",
-                scene: scene,
-                speed: 1,
-                radius: 400,
-                position: [
-                    [400, 30, 400],
-                    [100, 30, 1200],
-                ],
+            const textureLoader = new THREE.TextureLoader();
+            const texture = textureLoader.load("./img/clice.png");
+            const cubeGeometry = new THREE.BoxGeometry(224, 224, 224)
+            const cubeMaterial = new THREE.MeshStandardMaterial({
+                // color: 0x00ff00,
+                map: texture,
             })
+            var ambient1 = new THREE.AmbientLight('#ffffff'); //影响投影的颜色
+            scene.add(ambient1);
+            const cube = new THREE.Mesh(cubeGeometry, cubeMaterial)
+            scene.add(cube)
+
+            // this.RunRing1 = new RunRing({
+            //     img: "./img/clice.png",
+            //     scene: scene,
+            //     speed: 1,
+            //     radius: 500,
+            //     position: [
+            //         [400, 30, 400],
+            //         // [100, 30, 1200],
+            //     ],
+            // })
 
 
         },

@@ -89,6 +89,11 @@ const routes = [
     name:'threejsdemo',
     component:()=>import('../views/threejs/demo.vue') 
    },
+  {
+    path:'/threejs/city',
+    name:'city',
+    component:()=>import('../views/threejs/city/city.vue') 
+   },
 ];
 
 const router = new VueRouter({

@@ -1,0 +1,6 @@
+{
+  "navigationBarTitleText": "手账详情",
+  "usingComponents": {
+    "line": "/components/line"
+  }
+}

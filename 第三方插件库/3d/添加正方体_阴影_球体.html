@@ -41,8 +41,9 @@
 
             // 创建平面
             //环境光
-            var ambient = new THREE.AmbientLight('red');
+            var ambient = new THREE.AmbientLight('#aaaaaa'); //影响投影的颜色
             scene.add(ambient);
+
 
 
 
@@ -55,18 +56,18 @@
             //设置地面物体宽高
             const planeGeometry = new THREE.PlaneGeometry(60, 40)
             //地面物体上色
-            const planeMaterial = new THREE.MeshLambertMaterial({ color:  0xeeeeee })
+            const planeMaterial = new THREE.MeshLambertMaterial({ color: 0xeeeeee })
             //创建地面
             var plane = new THREE.Mesh(planeGeometry, planeMaterial);
- 
+
             plane.receiveShadow = true;
             plane.rotation.x = -Math.PI / 2;
             scene.add(plane)
 
-
             //添加球体
             var geometry = new THREE.SphereGeometry(5, 32, 32);
-            var material = new THREE.MeshBasicMaterial({ color: 'blue' });
+
+            var material = new THREE.MeshBasicMaterial({ color: 'blue', wireframe: true, }); //wireframe: true 球网格
             var sphere = new THREE.Mesh(geometry, material);
             sphere.position.x = -10;
             sphere.position.y = 10;
@@ -76,9 +77,9 @@
             scene.add(sphere);
 
 
-            //添加光源
-            const spotLight = new THREE.SpotLight(0xffff00)
-            spotLight.position.set(0, 150, 200);
+            //添加光源 
+            const spotLight = new THREE.SpotLight('red')
+            spotLight.position.set(0, 450, -200);
             spotLight.castShadow = true;
             //设置阴影分辨率
             spotLight.shadow.mapSize.width = 2048;
@@ -88,7 +89,18 @@
             spotLight.shadow.camera.near = 0.5;
             spotLight.shadow.camera.far = 500
             scene.add(spotLight);
-
+            const textureLoader = new THREE.TextureLoader();
+            const texture = textureLoader.load("./img/clice.png");
+            const cubeGeometry1 = new THREE.BoxGeometry(224, 224, 224)
+            const cubeMaterial1 = new THREE.MeshStandardMaterial({
+                // color: 0x00ff00,
+                map: texture,
+            })
+      
+            const cube2 = new THREE.Mesh(cubeGeometry, cubeMaterial1)
+            // cube2.position.x = 50 //(50,50,50)
+            // CUBE2.position.y = 50
+            scene.add(cube2)
             function render() {
                 renderer.render(scene, camera); //执行渲染操作
             }
@@ -99,7 +111,7 @@
             //设置输出canvas大小
             renderer.setSize(window.innerWidth, window.innerHeight)
             //设置渲染器的初始颜色
-            renderer.setClearColor(0xb9d3ff, 1); //设置背景颜色
+            renderer.setClearColor(0xb9d3ff, .51); //设置整个页面背景颜色
             renderer.shadowMap.enabled = true;
             renderer.shadowMap.type = THREE.PCFSoftShadowMap;
             //将渲染器输出添加到html

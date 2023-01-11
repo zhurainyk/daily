@@ -1,0 +1,9 @@
+@charset "UTF-8";
+/* 水平间距 */
+/* 水平间距 */
+.container {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10rpx;
+}
+

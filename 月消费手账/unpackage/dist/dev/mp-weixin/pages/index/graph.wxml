@@ -1,0 +1,1 @@
+<view class="container"><line vue-id="1486b49e-1" xData="{{xData}}" yData="{{yData}}" title="{{title}}" data-event-opts="{{[['^change',[['changeEvent']]]]}}" bind:change="__e" bind:__l="__l"></line></view>

@@ -30,7 +30,7 @@ class RunRing {
     const geometry = new THREE.RingGeometry(0, this.radius, 500);
     //创建材质 把读取到的图片赋给材质
     const material2 = new THREE.MeshBasicMaterial({
-      color: 0xffffff,
+      color: '0xffffff',
       side: THREE.DoubleSide,
       depthTest: true,
       blending: THREE.AdditiveBlending,

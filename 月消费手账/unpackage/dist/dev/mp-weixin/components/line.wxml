@@ -1,0 +1,1 @@
+<view style="height:750rpx;"><l-echart class="vue-ref" style="z-index:0;" vue-id="20202337-1" data-ref="chart" bind:__l="__l"></l-echart></view>
