@@ -4,9 +4,8 @@ import { OrbitControls } from './assets/js/OrbitControls'
 
 import gsap from 'gsap'
 
+//目标 自适应全屏 阻尼动画
 
-//++目标 用户界面修改变量
-import * as dat from 'dat.gui'
 
 
 //1. 创建场景 文档搜索scene
@@ -29,46 +28,6 @@ console.log(cube)
 //添加到场景
 scene.add(cube)
 
-//++初始化用户界面 
-const gui = new dat.GUI()
-//++ gui.add(对象，属性名) 修改物体的大小和方向
-// gui.add(cube.position,'x').min(-20).max(20) 
-// gui.add(cube.scale,'x').min(.5).max(5)
-// gui.add(cube.scale,'y').min(.5).max(5).name('y方向放大')
-// gui.add(cube.scale,'z').min(.5).max(5).step(.01).name('z方向放大')
-// gui.add(cube.position,'x').min(-20).max(20).name('x方向移动')
-// gui.add(cube.position,'y').min(-20).max(20).name('y方向移动').onChange((v)=>console.log('y方向移动的值：',v))
-// gui.add(cube.position,'z').min(-20).max(20).name('z方向移动').onChange((v)=>console.log('z方向移动的值：',v)).onFinishChange(v=>console.log('z方向移动结束：',v))
-//++修改物体的颜色
-let x = 2//旋转的弧度
-const params = {color:'#ffff00',fn:()=>{
-    console.log('点击了旋转')
-    rotate1(x * Math.PI)
-    x += 2
-}}
-gui.addColor(params,'color').onChange(v=>{
-    console.log('当前颜色：',v)
-    cube.material.color.set(v)
-}).onFinishChange(v=>console.log('颜色结束：',v)).name('修改颜色')
-
-//++设置按钮点击事件
-gui.add(params,'fn').name('点击立方体旋转') 
-
-
-//++控制物体显示隐藏
-gui.add(cube,'visible').name('是否显示')
-
-//添加下拉面板
-const folder = gui.addFolder('设置立方体位置大小')
-folder.add(cube.scale,'x').min(.5).max(5).name('x方向放大')
-folder.add(cube.scale,'y').min(.5).max(5).name('y方向放大')
-folder.add(cube.scale,'z').min(.5).max(5).step(.01).name('z方向放大')
-// folder.add(cube.position,'x').min(-20).max(20).name('x方向移动')
-folder.add(cube.position,'y').min(-20).max(20).name('y方向移动').onChange((v)=>console.log('y方向移动的值：',v))
-folder.add(cube.position,'z').min(-20).max(20).name('z方向移动').onChange((v)=>console.log('z方向移动的值：',v)).onFinishChange(v=>console.log('z方向移动结束：',v)) 
-
-//+设置线框属性
-folder.add(cube.material,'wireframe')
 //控制物体移动 cube上面有个position的属性 
 // cube.position.set(5,0,0)   //方法
 // cube.position.x = 5 //属性
@@ -118,12 +77,7 @@ window.addEventListener('resize',()=>{
 
 //直接使用gsap完成动画效果  官网  docs教程 https://greensock.com/docs/v3/Eases
 // gsap.to(cube.position,{x:10,duration:10,ease: "bounce.out"}) 
-const rotate1 = (deg=2*Math.PI)=>{
-    gsap.to(cube.rotation, { y: deg, duration: 10,delay:0.5, ease: "elastic.out(1, 0.3)",onComplete(){
-        
-    } } )
-}
-
+gsap.to(cube.rotation, { y: 2 * Math.PI, duration: 10,delay:5, ease: "elastic.out(1, 0.3)" })
 
 //动画属性配置 
 // gsap.to(cube.position, {
@@ -148,17 +102,17 @@ const animate1  = gsap.to(cube.position, {
         console.log('动画结束')
     },
     delay:0.5,//延迟5s执行动画
-    repeat:-1,//-1表示无限循环  3
+    repeat:3,//-1表示无限循环 
     yoyo:true,//往返运动
 })
-// document.addEventListener('click',()=>{//单击控制动画启停 
-//     console.log(animate1)
-//     if(animate1.isActive()){//获取动画的运动状态 
-//         animate1.pause()
-//     }else{
-//         animate1.resume()
-//     }
-// })
+document.addEventListener('click',()=>{//单击控制动画启停 
+    console.log(animate1)
+    if(animate1.isActive()){//获取动画的运动状态 
+        animate1.pause()
+    }else{
+        animate1.resume()
+    }
+})
 
 
 
