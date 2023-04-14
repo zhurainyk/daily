@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Aliplayer - hls demo</title>
+  <style>
+    #player-container {
+      width: 640px;
+      height: 360px;
+    }
+  </style>
+  <!-- <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script> -->
+  <script src="https://cdn.jsdelivr.net/npm/flv.js/dist/flv.min.js"></script>
+
+</head>
+<body>
+    <video id="video" controls></video>
+ 
+  <!-- <script>
+    var video = document.getElementById('video');
+    if (Hls.isSupported()) {
+      var hls = new Hls();
+      hls.loadSource('https://fsacam.tlzn-cq.com:10001/api/v1/stream/hls/060900020042d7e0d7ff_1_2.m3u8');
+      hls.attachMedia(video);
+      hls.on(Hls.Events.MANIFEST_PARSED, function() {
+        video.play();
+      });
+    }
+    else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+      video.src = 'https://fsacam.tlzn-cq.com:10001/api/v1/stream/hls/060900020042d7e0d7ff_1_2.m3u8';
+      video.addEventListener('loadedmetadata', function() {
+        video.play();
+      });
+    }
+  </script> -->
+  <script>
+    if (flvjs.isSupported()) {
+      var video = document.getElementById('video');
+      var flvPlayer = flvjs.createPlayer({
+        type: 'flv',
+        url: 'https://fsacam.tlzn-cq.com:10001/api/v1/stream/http-flv/060900020042d7e0d7ff_1_2.flv'
+      });
+      flvPlayer.attachMediaElement(video);
+      flvPlayer.load();
+      flvPlayer.play();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>VLC.js H.265 HLS Example</title>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="./node_modules/vlc.js/build/index.js"></script>
+    <style>
+        #vlc {
+            position: absolute;
+            display: block;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <div id="vlc-wrapper"></div>
+        <button @click="togglePlayback">Toggle Playback</button>
+    </div>
+    <script>
+       
+    </script>
+    <script  type="module">
+         import { Client } from './node_modules/vlc.js/build/index.js';
+        new Vue({
+            el: '#app',
+            data: {
+                client: null,
+                mediaPlayer: null,
+                playing: false
+            },
+            mounted() {
+
+                this.client = new Client({
+                    host: 'https://fsacam.tlzn-cq.com:10001/api/v1/stream/hls/060900020042d7e0d7ff_1_2.m3u8',
+                    port: 8080
+                });
+                // Create a new media player object
+                this.mediaPlayer = this.client.mediaPlayer;
+                // Set up the video output
+                this.mediaPlayer.video.output = '#vlc-wrapper';
+                this.mediaPlayer.events.on('MediaEndReached', () => {
+                    console.log('Media Ended');
+                    this.playing = false;
+                });
+
+            },
+            methods: {
+                togglePlayback() {
+                    if (this.playing) {
+                        this.mediaPlayer.stop();
+                    } else {
+                        this.mediaPlayer.play({
+                            options: ['--no-audio']
+                        });
+                    }
+                    this.playing = !this.playing;
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
