@@ -34,10 +34,9 @@
             texture.wrapT = THREE.RepeatWrapping;
             texture.repeat.set(10, 10);
 
-            const grassMaterial = new THREE.MeshBasicMaterial({ map: texture });
-
+            const grassMaterial = new THREE.MeshBasicMaterial({ map: texture,side:THREE.DoubleSide }); 
             const grass = new THREE.Mesh(geometry, grassMaterial);
-
+            
             grass.rotation.x = -0.5 * Math.PI;
 
             scene.add(grass);

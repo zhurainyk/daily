@@ -41,7 +41,7 @@
 
             // 创建平面
             //环境光
-            var ambient = new THREE.AmbientLight('#aaaaaa'); //影响投影的颜色
+            var ambient = new THREE.AmbientLight('#aaaaaa',.5); //影响投影的颜色
             scene.add(ambient);
 
 
@@ -60,14 +60,14 @@
             //创建地面
             var plane = new THREE.Mesh(planeGeometry, planeMaterial);
 
-            plane.receiveShadow = true;
+            plane.receiveShadow = true; //接受投影
             plane.rotation.x = -Math.PI / 2;
             scene.add(plane)
 
             //添加球体
             var geometry = new THREE.SphereGeometry(5, 32, 32);
 
-            var material = new THREE.MeshBasicMaterial({ color: 'blue', wireframe: true, }); //wireframe: true 球网格
+            var material = new THREE.MeshBasicMaterial({ color: 'blue'  }); //wireframe: true 球网格
             var sphere = new THREE.Mesh(geometry, material);
             sphere.position.x = -10;
             sphere.position.y = 10;
