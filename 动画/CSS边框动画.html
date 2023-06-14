@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+            display: flex;
+        }
+
+        :root {
+            --borderColor: #03A9F3;
+        }
+
+        div.border-radius {
+            position: relative;
+            width: 140px;
+            height: 64px;
+            margin: auto;
+            border: 1px solid #03A9F3;
+            cursor: pointer;
+
+            &::before,
+            &::after {
+                content: "";
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                transition: .3s ease-in-out;
+            }
+
+            &::before {
+                top: -5px;
+                left: -5px;
+                border-top: 1px solid var(--borderColor);
+                border-left: 1px solid var(--borderColor);
+            }
+
+            &::after {
+                right: -5px;
+                bottom: -5px;
+                border-bottom: 1px solid var(--borderColor);
+                border-right: 1px solid var(--borderColor);
+            }
+
+            &:hover::before,
+            &:hover::after {
+                width: calc(100% + 9px);
+                height: calc(100% + 9px);
+            }
+        }
+
+        .gradient {
+            background:
+                linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+                linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+                linear-gradient(0deg, #333 50%, transparent 0) repeat-y,
+                linear-gradient(0deg, #333 50%, transparent 0) repeat-y;
+            background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
+            background-position: 0 0, 0 100%, 0 0, 100% 0;
+            cursor: pointer;
+
+            &:hover {
+                animation: linearGradientMove .3s infinite linear;
+            }
+        }
+
+        .outline {
+            outline: 1px solid #333;
+            outline-offset: -1px;
+            transition: all .3s linear;
+            cursor: pointer;
+
+
+
+        }
+
+        .gradient,
+        .outline {
+            width: 140px;
+            height: 64px;
+        }
+
+        .outline:hover {
+            border: 1px solid transparent;
+            outline: 1px solid transparent;
+            background:
+                linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+                linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+                linear-gradient(0deg, #333 50%, transparent 0) repeat-y,
+                linear-gradient(0deg, #333 50%, transparent 0) repeat-y;
+            background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
+            background-position: 0 0, 0 100%, 0 0, 100% 0;
+            animation: linearGradientMove .3s infinite linear;
+        }
+
+        @keyframes linearGradientMove {
+            100% {
+                background-position: 4px 0, -4px 100%, 0 -4px, 100% 4px;
+            }
+        }
+
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(1turn);
+            }
+        }
+
+        .rainbow2 {
+            position: relative;
+            z-index: 0;
+            width: 400px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: sans-serif;
+            font-weight: bold;
+
+            &::before {
+                content: '';
+                position: absolute;
+                z-index: -2;
+                left: -50%;
+                top: -50%;
+                width: 200%;
+                height: 200%;
+                background-color: #399953;
+                background-repeat: no-repeat;
+                background-size: 50% 50%, 50% 50%;
+                background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+                background-image: linear-gradient(#399953, #399953), linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33), linear-gradient(#377af5, #377af5);
+                animation: rotate 4s linear infinite;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                left: 6px;
+                top: 6px;
+                width: calc(100% - 12px);
+                height: calc(100% - 12px);
+                background: white;
+                border-radius: 5px;
+            }
+        }
+
+        .rainbow {
+            position: relative;
+            z-index: 0;
+            width: 400px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 2rem;
+
+            &::before {
+                content: '';
+                position: absolute;
+                z-index: -2;
+                left: -50%;
+                top: -50%;
+                width: 200%;
+                height: 200%;
+                background-color: #399953;
+                background-repeat: no-repeat;
+                background-size: 50% 50%, 50% 50%;
+                background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+                background-image: linear-gradient(#399953, #399953), linear-gradient(#fbb300, #fbb300), linear-gradient(#d53e33, #d53e33), linear-gradient(#377af5, #377af5);
+                animation: rotate 4s linear infinite;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                left: 6px;
+                top: 6px;
+                width: calc(100% - 12px);
+                height: calc(100% - 12px);
+                background: white;
+                border-radius: 5px;
+                animation: opacityChange 3s infinite alternate;
+            }
+        }
+
+        @keyframes opacityChange {
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: .5;
+            }
+        }
+
+
+        @keyframes rotate2 {
+            100% {
+                transform: rotate(1turn);
+            }
+        }
+
+        .rainbow3 {
+            position: relative;
+            z-index: 0;
+            width: 400px;
+            height: 300px;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 2rem;
+
+            &::before {
+                content: '';
+                position: absolute;
+                z-index: -2;
+                left: -50%;
+                top: -50%;
+                width: 200%;
+                height: 200%;
+                background-color: #fff;
+                background-repeat: no-repeat;
+                background-size: 50% 50%;
+                background-position: 0 0;
+                background-image: conic-gradient(#399953, #399953);
+                animation: rotate2 4s linear infinite;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                left: 6px;
+                top: 6px;
+                width: calc(100% - 12px);
+                height: calc(100% - 12px);
+                background: white;
+                border-radius: 5px;
+                animation: opacityChange2 3s infinite alternate;
+            }
+        }
+
+        @keyframes opacityChange2 {
+            50% {
+                opacity: 1;
+            }
+
+            100% {
+                opacity: .5;
+            }
+        }
+
+
+        /* 夜光动画 */
+        @keyframes rotate3 {
+            100% {
+                transform: rotate(1turn);
+            }
+        }
+
+        .conic {
+            position: relative;
+            z-index: 0;
+            width: 400px;
+            height: 300px;
+            margin: 20px;
+            border-radius: 10px;
+            overflow: hidden;
+            padding: 2rem;
+
+            &::before {
+                content: '';
+                position: absolute;
+                z-index: -2;
+                left: -50%;
+                top: -50%;
+                width: 200%;
+                height: 200%;
+                background-color: #1a232a;
+                background-repeat: no-repeat;
+                background-position: 0 0;
+                background-image: conic-gradient(transparent, rgba(168, 239, 255, 1), transparent 30%);
+                animation: rotate3 4s linear infinite;
+            }
+
+            &::after {
+                content: '';
+                position: absolute;
+                z-index: -1;
+                left: 6px;
+                top: 6px;
+                width: calc(100% - 12px);
+                height: calc(100% - 12px);
+                background: #000;
+                border-radius: 5px;
+            }
+        }
+
+        .conic-demo::after {
+            animation: opacityChange3 5s infinite linear;
+        }
+
+        @keyframes opacityChange3 {
+            50% {
+                opacity: .5;
+            }
+
+            100% {
+                opacity: 1;
+            }
+        }
+
+       
+        .skulls {
+  position: relative;
+  width: 600px;
+  height: 200px;
+  margin: auto;
+  border: 24px solid;
+  border-image: url(https://skullctf.com/images/skull-border.svg);
+  border-image-slice: 32;
+  border-image-repeat: round;
+}
+
+.border-image-clip-path {
+    width: 200px;
+    height: 100px;
+    margin: auto;
+    border: 10px solid;
+    border-image: linear-gradient(45deg, gold, deeppink) 1;
+    clip-path: inset(0px round 10px);
+    animation: huerotate 6s infinite linear;
+    filter: hue-rotate(360deg);
+}
+
+@keyframes huerotate {
+    0% {
+        filter: hue-rotate(0deg);
+    }
+    100% {
+        filter: hue-rorate(360deg);
+    }
+}
+    </style>
+</head>
+
+<body>
+    <div class="border-radius">
+    </div>
+    <div class="gradient"></div>
+    <div class="outline"></div>
+    <div class="rainbow">
+        Rotating border
+    </div>
+    <div class="rainbow2">
+    </div>
+    <div class="rainbow3"></div>
+
+    <div class="conic"></div>
+    <div class="conic conic-demo"></div>
+
+    <div class="skulls">
+        /* 边框自传 */
+    </div>
+
+    <div class="border-image-clip-path">边框渐变动画</div>
+</body>
+
+</html>
