@@ -7,7 +7,8 @@
     <!-- <car></car> -->
     <!-- <city></city> -->
     <!-- <d3card></d3card> -->
-    <robot></robot>
+    <!-- <robot></robot> -->
+    <photo3d></photo3d>
   </div>
 </template>
 
@@ -20,6 +21,7 @@
  import city from './components/city.vue' //乡村城市
  import d3card from './components/d3Card.vue' //3d贺卡
  import robot from './components/robot.vue' //镜面光阵机器人
+ import photo3d from './components/photo3d.vue' //3D照片
  
 </script>
 

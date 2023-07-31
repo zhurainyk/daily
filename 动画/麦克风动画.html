@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+<html>
+
+<head>
+    <title>微信语音样式</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+ 
+
+        .wifi-symbol {
+            width: 25px;
+            height: 25px;
+            box-sizing: border-box;
+            overflow: hidden;
+            transform: rotate(45deg);
+        }
+
+        .wifi-circle {
+            border: 1px solid #23FFFC;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .first {
+            width: 3px;
+            height: 3px;
+            background: #23FFFC;
+            top: 20px;
+            left: 20px;
+        }
+
+        .second {
+            width: 10px;
+            height: 10px;
+            top: 15px;
+            left: 15px;
+            animation: fadeInOut 1s infinite 0.2s;
+
+        }
+
+        .third {
+            width: 20px;
+            height: 20px;
+            top: 10px;
+            left: 10px;
+            animation: fadeInOut 1s infinite 0.4s;
+        }
+
+        @keyframes fadeInOut {
+            0% {
+                opacity: 0;
+                /*初始状态 透明度为0*/
+            }
+
+            100% {
+                opacity: 1;
+                /*结尾状态 透明度为1*/
+            }
+        }
+    </style>
+</head>
+
+<body>
+ 
+        <div class="wifi-symbol">
+            <div class="wifi-circle first"></div>
+            <div class="wifi-circle second"></div>
+            <div class="wifi-circle third"></div>
+        </div>
+ 
+</body>
+
+</html>
