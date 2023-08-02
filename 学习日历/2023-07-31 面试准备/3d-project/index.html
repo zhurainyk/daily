@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Threejs-city-model-show</title>
+    <meta charset="utf-8" /><metaname="viewport"content="width=device-width, user-scalable=no, minimum-scale=1.0,
+        maximum-scale=1.0" />
+    <style>
+        body {
+            color: #fff;
+            margin: 0px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+
+<body>
+    <script src="../build/three.min.js"></script>
+    <!-- 引入我们可爱的加载器 -->
+    <!-- <script src="js/loaders/MTLLoader.js"></script>
+    <script src="js/loaders/OBJLoader.js"></script> -->
+
+    <script src="js/loaders/GLTFLoader.js"></script>
+    <script src="js/loaders/DRACOLoader.js"></script>
+    <!-- fps  -->
+    <script src="js/libs/stats.min.js"></script>
+    <script>
+
+        var camera, scene, renderer;
+        var container;
+        var ambientLight, pointLight;// 初始化
+        var stats;
+        init()
+        // 循环渲染每一帧  一帧一帧的 就是你打游戏时的FPS
+        animate()
+        function init() {// 初始化相机 // 这里使用的是透视相机来模拟人眼看到的效果 近大远小
+
+            camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 1, 2000);
+            camera.position.z = 70;
+            camera.position.x = 50;
+            camera.position.y = 10;
+            // 初始化场景
+            scene = new THREE.Scene();
+            // 初始化灯光// 环境光 能保持整体都是亮点
+            ambientLight = new THREE.AmbientLight(0x404040)
+            // 点光源 就像灯泡一样的效果  白色灯光 亮度0.6
+            pointLight = new THREE.PointLight(0xffffff, 0.6);// 将灯光加入到场景中
+            scene.add(ambientLight)// 将灯光加到摄像机中 点光源跟随摄像机移动// 为什么这样做  因为这样可以让后期处理时的辉光效果更漂亮 
+            camera.add(pointLight);// 我们将摄像机加入到场景中
+            scene.add(camera);// 初始化渲染器
+            renderer = new THREE.WebGLRenderer({
+                // 开启抗锯齿
+                antialias: true,// 开启背景透明
+                alpha: true
+            });// 把自动清除颜色缓存关闭 这个如果不关闭 后期处理这块会不能有效显示
+            // 书上的描述是 如果不这样做，每次调用效果组合器的render()函数时，之前渲染的场景会被清理掉。通过这种方法，我们只会在render循环开始时，把所有东西清理一遍。
+            renderer.autoClear = false;// 背景透明 配合 
+            alpharenderer.setClearColor(0xffffff, 0);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            // 伽马值启动 更像人眼观察的场景
+            renderer.gammaInput = true;
+            renderer.gammaOutput = true;// 渲染到DOM中去
+            container = document.createElement("div");
+            container.appendChild(renderer.domElement);
+            stats = new Stats(); //FPS
+            container.appendChild(stats.dom);
+            document.body.appendChild(container);
+            var controls  //控制器 
+            controls = new THREE.OrbitControls(camera, renderer.domElement);
+            camera.lookAt = scene.position //效果也很不错。
+
+            //实验结果是，TextureLoader、CubeTexture和SphereGeometry都可以作为背景图，简单介绍下这三者。
+            // TextureLoader 一张图，背景看起来是静止不动的
+            // CubeTexture 立方纹理 图片是分割成6块 相当于摄像机和模型在一个正方体盒子中 背景随着摄像机转动而转动
+            // SphereGeometry 一张图 全景图原理 相当于摄像机和模型在一个圆球盒子中 背景随着摄像机转动而转动
+            // 不太理解可以百度下threejs全景图原理，不做过多叙述
+            scene.background = new THREE.TextureLoader().load("你的背景图")
+
+
+        }
+        // 这样一来，基础场景创建就完成了，接下来我们来让它循环渲染起来
+
+        function animate() {
+            // 这个方法低版本浏览器兼容不好 可以从github上找些兼容库 如果要兼容低版本浏览器
+            requestAnimationFrame(animate);// 渲染我们的场景  摄像机啪啪啪的拍和录
+            // 由于把renderer autoClear  关闭了 所以我们要在渲染函数中手动清除
+            renderer.clear();
+            stats.update();//FPS
+            renderer.render(scene, camera);
+        }
+
+        // 如何设置环境贴图呢？回到我们加载模型的部分。核心就是创建立方纹理然后设置某个模型的material的envMap为这个立方纹理。
+        //  环境贴图的使用限制受纹理影响，有一部分纹理加不上环境贴图。
+        // 创建一个立方纹理
+        var envMap = new THREE.CubeTextureLoader().setPath("textures/").load(new Array(6).fill("start.jpg"));
+        var loader = new THREE.GLTFLoader();// 这个是Threejs解析draco压缩之后的解析器 // 它从这里读取解析器JS
+        THREE.DRACOLoader.setDecoderPath("js/libs/draco/gltf/");
+        // 将Draco解析器和GltfLoader绑定在一起
+        loader.setDRACOLoader(new THREE.DRACOLoader());
+        loader.load("models/obj/hanchuan/city_small1.gltf", function (gltf) {
+            // gltf.scene 拿到这个可以处理模型
+            gltf.scene.traverse(function (child) {
+                if (child.isMesh) {
+                    /* 这些都是DEMO  具体看你模型调整 下节介绍通过鼠标点击确定模型所属对象 然后去调试模型 */
+                    // 这些名称都可以通过打印看出 
+                    console.log(child)
+                        // 比如我想给这些加上环境贴图 就可以这样写
+                        / hai | city | liubianxing / i.test(child.name) && (child.material.envMap = envMap);
+                    if (/city/i.test(child.name)) {
+                        // 更改模型颜色
+                        child.material.color = new THREE.Color(6, 6, 5);
+                        // 更改模型环境贴图影响  0-1
+                        child.material.reflectivity = 0.9;
+                    }// 更改模型位置
+                    /lumian|hai/i.test(child.name) && (child.position.y = 0.5);
+                    // ...
+                }
+            });
+            scene.add(gltf.scene)
+        },   onProgress, onError);
+
+        
+        // Raycaster 光线投射
+        /**
+        打印出所有的child不好定位是哪块模型，有没有更快的方法？
+        您好，有的。
+        通过 THREE.Raycaster 实现模型选中与信息显示，点击打印出当前点击的模型，在它的属性中修改颜色，位置等，可以直接更新效果，调试更方便
+        到此，经过我们的美化之后，效果就是这样了。还缺了点什么，道路咋不发光啊，看着没光效，不炫酷！
+         * */
+
+
+        //  利用EffectComposer（效果组合器）进行后期处理
+
+        // 利用EffectComposer进行后期处理——辉光(bloompass)D
+
+        // ok 基础部分完成 接下来我们来加载模型
+        var onProgress = function (xhr) {
+            if (xhr.lengthComputable) {
+                var percentComplete = (xhr.loaded / xhr.total) * 100;
+                console.log(Math.round(percentComplete, 2) + "% downloaded");
+            }
+        };
+        var onError = function () {
+            // 载入出错时候
+        };
+        // 加载Mtl贴图文件
+        new THREE.MTLLoader()
+            // 贴图文件的路径 
+            .setPath("models/obj/male02/").load("male02_dds.mtl", function (materials) {
+                // 看代码意思是预加载
+                materials.preload();
+                // 加载OBJ模型
+                new THREE.OBJLoader()
+                    // 设置OBJ模型的材质贴图
+                    .setMaterials(materials).setPath("models/obj/male02/").load("male02.obj", function (object) {
+                        object.position.y = -95; scene.add(object);
+                    }, onProgress, onError);
+            });
+        /**
+         *
+         * 这一步一般会出现的问题有如下
+
+模型加载后，不显示也不报错？
+检查场景是否正常渲染了，如果正常渲染模型的位置在哪里，摄像机在哪里，摄像机是否对着模型，灯光是否配置，模型是否太大或者太小了，超出了摄像机的摄影范围……
+模型可以正常加载，但是贴图不显示？
+首先检查network是否报404错误，如果报错，一般都是mtl贴图文件（看起来像是雪碧图那种）没给你，或者路径配置的不是相对路径，如果贴图没错误，模型是黑色的，在mtl文件中可以更改ka或kd的三个值（对应rgb），或者打印出模型属性，在material.color中更改点色值或别的属性。黑色的时候，看不到贴图。一般这样一通操作之后，就能看到了模型了
+模型文件太大了，浏览器在渲染的时候进程被完全卡死！要等待几十秒之久！天呐！
+这个问题看起来比较棘手，其实很好解决。ThreeJs官方推荐gltf格式的模型在浏览器中渲染，因为它是为浏览器而生的，性能好，体积小。我们项目中使用的模型文件，一开始是Obj和Mtl的，达到25MB大小，在vue项目中渲染会阻塞浏览器46s，原生html+js的项目中好些，几秒时间就行了，我怀疑是我写法的问题，但是我测试仅仅是加载模型渲染到场景，并没有多余操作和数据绑定，还是一样，阻塞进程，一度导致我怀疑人生？？？黑人问号脸。那么如何将Obj模型转换为gltf模型，还能再优化吗？进入下一章节！对了对了，Obj模型也是可以压缩的，而且ObjLoader2加载会快一点
+         * */
+
+    //  obj2gltf —— Obj模型转Gltf
+    // 全局安装后obj文件所在目录                             输出目录
+// obj2gltf  -i ./examples/models/obj/hanchuan/city.obj -o ./gltf/city.gltf --unlit --separate
+// 介绍下为什么要加这两个参数
+// --unlit的作用是可以保留环境贴图的效果，环境贴图后面再介绍
+// --separate是将贴图文件提取出来，提出来浏览器可以缓存，如果你需要继续压缩gltf文件，这里不加这个参数也行，因为压缩的时候也能提出来
+
+// gltf-pipeline
+// gltf-pipeline -i  ../../../gltf/city.gltf  -o  ../../../examples/models/obj/hanchuan/city_small1.gltf -d --separate
+// 介绍下参数
+// -d是--draco.compressMeshes的缩写，使用draco算法压缩模型
+// --separate就是将贴图文件提取出来，不提可以不加
+// 这样，我们就完成了gltf模型的转化和压缩，性能暴增！秒开！
+// 在我们最终的模型中，obj模型297Mb，转gltf之后还有150Mb左右，最终经过压缩，还有7.3Mb!
+
+    </script>
+</body>
+
+</html>
