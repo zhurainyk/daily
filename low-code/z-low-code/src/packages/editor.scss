@@ -73,3 +73,20 @@
         position: absolute;
     }
 }
+.editor-block{
+    position: absolute; 
+    &::after{
+        content:'';
+        position: absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom: 0;
+        background-color: #ccc;
+        opacity: 0.2;
+    }
+}
+.editor-block-focus{
+ 
+    border:3px dashed red;
+}

@@ -1,4 +1,4 @@
-import {defineComponent,computed,inject} from 'vue'
+import {defineComponent,computed,inject,onMounted,ref} from 'vue'
 export default defineComponent({
     props:{
         block:{
@@ -10,16 +10,28 @@ export default defineComponent({
         console.log(config)
         const component = config.componentMap[props.block.key]
         const RenderComponent = component.render()
-        const block = computed(()=>props.block)
+ 
         const blockStyle = computed(()=>{
             return {
-                top:`${block.value.top}px`,
-                left:`${block.value.left}px`,
-                zIndex:`${block.value.zIndex}`,
+                top:`${props.block.top}px`,
+                left:`${props.block.left}px`,
+                zIndex:`${props.block.zIndex}`,
+            }
+        })
+        const blockRef = ref(null)
+        onMounted(()=>{
+            let {offsetWidth,offsetHeight} = blockRef.value
+            console.log(props)
+            if(props.block.alignCenter){
+                //拖拽松手的时候居中
+                console.log('update')
+                props.block.left = props.block.left - offsetWidth/2
+                props.block.top = props.block.top - offsetHeight/2
+                props.block.alignCenter = false 
             }
         })
         return ()=>{
-            return  <div className='editor-block' style={blockStyle.value}>
+            return  <div class='editor-block' ref={blockRef} style={blockStyle.value}>
                        {RenderComponent}
                     </div>
         }
