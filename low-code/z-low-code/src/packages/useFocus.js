@@ -1,5 +1,5 @@
 import {computed,ref} from 'vue'
-export function useFocus(data,callback){ //获取焦点
+export function useFocus(data,callback,){ //获取焦点
     const selectIndex = ref(-1) //表示没有一个被选中
     const focusData = computed(()=>{
         let focusList = []
@@ -40,7 +40,7 @@ export function useFocus(data,callback){ //获取焦点
             //     block.focus = false
             // }
         } 
-        selectIndex.value = -1 ;
+        selectIndex.value =index ;
         if(callback){
             callback(e)
         }

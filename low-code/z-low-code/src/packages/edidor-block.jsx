@@ -22,6 +22,9 @@ export default defineComponent({
         onMounted(()=>{
             let {offsetWidth,offsetHeight} = blockRef.value
             console.log(props)
+            props.block.width = offsetWidth
+            props.block.height = offsetHeight
+            
             if(props.block.alignCenter){
                 //拖拽松手的时候居中
                 console.log('update')

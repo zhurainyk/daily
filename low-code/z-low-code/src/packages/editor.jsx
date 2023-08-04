@@ -6,6 +6,7 @@ import './editor.scss'
 import EditorBlock from './edidor-block'
 import deepcopy from 'deepcopy';
 import { useBlockDragger } from './useBlockDragger'
+import {useCommand} from './useCommand.js'
 export default defineComponent({
     props: {
         modelValue: {
@@ -39,13 +40,20 @@ export default defineComponent({
 
         //2. 实现获取焦点 
 
-        const { containerMousedown, blockMousedown, focusData,lastSelectBlock } = useFocus(data, (e) => {
-            mousedown(e)
+        const { containerMousedown, blockMousedown, focusData, lastSelectBlock } = useFocus(data, (e) => {
+            mousedown(e, data)
         })
 
         //3.实现拖拽多个元素
 
-        const {mousedown} = useBlockDragger(focusData)
+        const { mousedown, markLine } = useBlockDragger(focusData, lastSelectBlock, data)
+
+        //菜单配置
+        const commands  = useCommand(data)
+        const buttons = [
+            { label: '撤销', icon: 'icon-back', handler: () =>commands.undo() },
+            { label: '重做', icon: 'icon-forward', handler: () => commands.redo() },
+        ]
 
 
         return () => <div className='editor'>
@@ -61,7 +69,14 @@ export default defineComponent({
                     </div>
                 }))}
             </div>
-            <div className='editor-top'>菜单栏</div>
+            <div className='editor-top'>
+                {buttons.map((btn, index) => {
+                    return <div class='editor-top-button' onClick={btn.handler}>
+                        <i class={btn.icon}></i>
+                        <span>{btn.label}</span>
+                    </div>
+                })}
+            </div>
             <div className='editor-right'>属性栏</div>
             <div className='editor-container'>
                 {/* 负责产生滚动条*/}
@@ -69,9 +84,16 @@ export default defineComponent({
                     <div className="editor-container-canvas-container" onMousedown={containerMousedown} ref={containerRef} style={containerStyle.value}>
                         {/* 内容区 */}
                         {
-                            (data.value.blocks.map((block,index) => {
-                                return <EditorBlock class={block.focus ? 'editor-block-focus' : ''} onMousedown={(e) => blockMousedown(e, block,index)}  block={block}></EditorBlock>
+                            (data.value.blocks.map((block, index) => {
+                                return <EditorBlock class={block.focus ? 'editor-block-focus' : ''} onMousedown={(e) => blockMousedown(e, block, index)} block={block}></EditorBlock>
                             }))
+                        }
+                        {
+                            markLine.x !== null && <div class='line-x' style={{ left: markLine.x + 'px' }}></div>
+
+                        }
+                        {
+                            markLine.y !== null && <div class='line-y' style={{ top: markLine.y + 'px' }}></div>
                         }
                     </div>
                 </div>
