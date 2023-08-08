@@ -51,6 +51,27 @@ export function useCommand(data) {
         }
     })
 
+        //注册导入更新容器事件
+    
+    register({
+        name:'updateContainer',
+        pushQueue:true,
+        execute(newValue){
+            let state= {
+                before:data.value,
+                after:newValue
+            }
+            return {
+                redo:()=>{
+                    data.value = state.after
+                },
+                undo:()=>{
+                    data.value = state.before
+                }
+            }
+        }
+    })
+
     register({
         name: 'undo',
         keyboard: 'ctrl+z',

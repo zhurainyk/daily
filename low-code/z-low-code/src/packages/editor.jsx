@@ -6,7 +6,8 @@ import './editor.scss'
 import EditorBlock from './edidor-block'
 import deepcopy from 'deepcopy';
 import { useBlockDragger } from './useBlockDragger'
-import {useCommand} from './useCommand.js'
+import { useCommand } from './useCommand.js'
+import { $dialog } from '../components/Dialog.jsx'
 export default defineComponent({
     props: {
         modelValue: {
@@ -49,10 +50,24 @@ export default defineComponent({
         const { mousedown, markLine } = useBlockDragger(focusData, lastSelectBlock, data)
 
         //菜单配置
-        const commands  = useCommand(data)
+        const commands = useCommand(data)
         const buttons = [
-            { label: '撤销', icon: 'icon-back', handler: () =>commands.undo() },
+            { label: '撤销', icon: 'icon-back', handler: () => commands.undo() },
             { label: '重做', icon: 'icon-forward', handler: () => commands.redo() },
+            {
+                label: '导入', icon: 'icon-import', handler: () => $dialog({
+                    title: '导入json', footer: true, content: '', onConfirm(text) {
+                 
+                        const _data= JSON.parse(text) //直接给data.value赋值  不会触发dom更新 需要单个赋值
+                        Object.keys(data.value).forEach(k=>{
+                            data.value[k] = _data[k]
+                        })
+                        commands.updateContainer(data.value)
+                        // 
+                    }
+                })
+            },
+            { label: '导出', icon: 'icon-export', handler: () => $dialog({ title: '导出json',  content: JSON.stringify(data.value) }) },
         ]
 
 
