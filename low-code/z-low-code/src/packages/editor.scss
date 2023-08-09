@@ -3,8 +3,7 @@
     height: 100%;
     position: relative;
     &-left,&-right{
-        position: absolute;
-        background-color: red;
+        position: absolute; 
         top:0;
         bottom:0;
         width:270px;
@@ -82,7 +81,7 @@
             &-container{
                 position: relative;
                 margin:20px auto; 
-                background-color: yellow;
+                background-color: rgb(230, 230, 218);
             }
         } 
     }
@@ -107,6 +106,11 @@
  
     border:3px dashed red;
 }
+.editor-block-preview{
+    &::after{
+        display: none;
+    }
+}
 
 //线移动的left top
 .line-x{
@@ -120,4 +124,24 @@
     left:0;
     right: 0;
     border-top:1px dashed red;
+}
+
+//下拉框
+.dropdown{
+    display: none;
+    position: absolute;
+    background-color: #fff;
+    box-shadow: 2px 2px #ccc;
+}
+.dropdown.dropdown-isshow{
+    display: block;
+}
+
+.dropdown-item{
+    line-height: 30px;
+    width: 100px;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+    user-select: none;
+    cursor: pointer;
 }

@@ -7,7 +7,7 @@ export default defineComponent({
     },
     setup(props){
         const config = inject('config')
-        console.log(config)
+ 
         const component = config.componentMap[props.block.key]
         const RenderComponent = component.render()
  
@@ -21,7 +21,7 @@ export default defineComponent({
         const blockRef = ref(null)
         onMounted(()=>{
             let {offsetWidth,offsetHeight} = blockRef.value
-            console.log(props)
+    
             props.block.width = offsetWidth
             props.block.height = offsetHeight
             

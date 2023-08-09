@@ -1,10 +1,11 @@
 import {computed,ref} from 'vue'
-export function useFocus(data,callback,){ //获取焦点
+export function useFocus(data,previewRef,callback,){ //获取焦点
     const selectIndex = ref(-1) //表示没有一个被选中
     const focusData = computed(()=>{
         let focusList = []
         let unfocusedList = []
         data.value.blocks.forEach(block=>(block.focus?focusList:unfocusedList).push(block))
+        console.log({focusList,unfocusedList})
         return {
             focusList,
             unfocusedList
@@ -17,7 +18,7 @@ export function useFocus(data,callback,){ //获取焦点
     const lastSelectBlock = computed(()=>data.value.blocks[selectIndex.value])
    
     const blockMousedown = (e, block,index) => {
-        console.log(e)
+         if(previewRef.value) return //预览
         e.preventDefault()
         e.stopPropagation()
         //block上设置一个属性 focus  获取焦点后 focus置为true
@@ -46,9 +47,11 @@ export function useFocus(data,callback,){ //获取焦点
         }
     }
     const containerMousedown = ()=>{ //点击画布清空所有focus
+        if(previewRef.value) return //预览
         clearBlockFocus()
     }
     return {
+        clearBlockFocus,
         focusData,
         blockMousedown,
         containerMousedown,

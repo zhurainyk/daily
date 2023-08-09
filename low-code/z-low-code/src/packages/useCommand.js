@@ -2,7 +2,7 @@ import deepcopy from "deepcopy"
 import { events } from "./events"
 import { onUnmounted } from "vue"
 
-export function useCommand(data) {
+export function useCommand(data,focusData) {
     //栈存储
     const state = {//前进后退 需要指针
         current: -1,  //前进后退的索引值
@@ -14,8 +14,8 @@ export function useCommand(data) {
     }
     const register = (command) => {
         state.commandArray.push(command)
-        state.commands[command.name] = () => { //命令名字对应执行函数
-            const { redo, undo } = command.execute()
+        state.commands[command.name] = (...args) => { //命令名字对应执行函数
+            const { redo, undo } = command.execute(...args )
             redo()
             if (!command.pushQueue) {  //不需要放到队列 跳过
                 return
@@ -57,6 +57,7 @@ export function useCommand(data) {
         name:'updateContainer',
         pushQueue:true,
         execute(newValue){
+            console.log('更新容器',newValue)
             let state= {
                 before:data.value,
                 after:newValue
@@ -71,6 +72,119 @@ export function useCommand(data) {
             }
         }
     })
+
+    register({ //更换节点数据
+        name:'updateBlock',
+        pushQueue:true,
+        execute(newblock,oldblock  ){ 
+             
+            let before = data.value.blocks;
+            let after = (()=>{
+                let blocks = [...data.value.blocks]
+               
+                const index = data.value.blocks.indexOf(oldblock)
+                
+                if(index>-1){
+                    Object.keys(newblock).forEach(k=>{
+                        blocks[index][k] = newblock[k] 
+                    })
+                    // blocks.splice(index,1,newblock)
+                    
+                }
+          
+                return blocks
+            })()
+            return {
+
+                redo:()=>{ 
+                   
+                    data.value = {...data.value,blocks:after}
+                },
+                undo:()=>{ 
+                    data.value.blocks = {...data.value,blocks:before}
+                }
+            }
+        }
+    })
+
+    register({//置顶操作 
+        name:'placeTop',
+        pushQueue:true,
+        execute:()=>{
+            let before = deepcopy(data.value.blocks)
+            let after = (()=>{
+                let {focusList,unfocusedList} = focusData.value ;
+                let maxZIndex = unfocusedList.reduce((prev,block)=>{ //取出没有焦点的元素中 最大的zindex
+                    return Math.max(prev,block.zIndex)
+                },-Infinity)
+                focusList.forEach(block=>block.zIndex = maxZIndex + 1) //所有选中的元素在最大的zindex基础上+1 即可置顶
+                return data.value.blocks
+            })()
+            return {
+                undo:()=>{
+                    data.value.blocks = [...before]
+                },
+                redo:()=>{
+                    data.value.blocks = after 
+                }
+            }
+        }
+    })
+    register({//置底操作 
+        name:'placeBottom',
+        pushQueue:true,
+        execute:()=>{
+            let before = deepcopy(data.value.blocks)
+            let after = (()=>{
+                let {focusList,unfocusedList} = focusData.value ;
+                let minZIndex = unfocusedList.reduce((prev,block)=>{ //取出没有焦点的元素中 最小的zindex
+                    return Math.min(prev,block.zIndex)
+                },Infinity) - 1 
+                //不能直接减一 因为zindex不能出现负值 负值就看不到组件了 
+                if(minZIndex < 0 ){
+                    //如果负值 就让没有焦点的所有元素zindex 取正值 自己变成0即可
+                    const dur = Math.abs(minZIndex)
+                    minZIndex = 0 ;
+                    unfocusedList.forEach(block=>block.zIndex += dur ) //然后让
+                }
+                focusList.forEach(block=>block.zIndex = minZIndex) //所有选中的元素 设置为最小值即可 
+                return data.value.blocks
+            })()
+            return {
+                undo:()=>{
+                    data.value.blocks = [...before]
+                },
+                redo:()=>{
+                    data.value.blocks = after 
+                }
+            }
+        }
+    })
+    register({
+        name:'delete',
+        pushQueue:true,
+        execute(){
+            let state = {
+                before:deepcopy(data.value.blocks),
+                after:deepcopy(focusData.value.unfocusedList)  //选中的都删除 
+            }
+            console.log(state.before,state.after)
+            //选中的都删除
+            return {
+                
+                undo:()=>{
+                    console.log('删除1',state.before)
+                    data.value.blocks = state.before
+                },
+                redo:()=>{
+                    console.log('删除2', state.after)
+                    data.value.blocks = state.after
+                }
+            }
+        }
+    })
+
+
 
     register({
         name: 'undo',

@@ -4,8 +4,18 @@
         "height":550
     },
     "blocks":[
-        {"top":100,"left":100,"zIndex":1,"key":"text"},
-        {"top":200,"left":200,"zIndex":2,"key":"button"},
-        {"top":300,"left":300,"zIndex":3,"key":"input"}
+        {"top":100,"left":100,"zIndex":1,"key":"text","props":{
+            "text":"编辑文本",
+            "color":"#ff0000",
+            "size":"14px"}
+        },
+        {"top":200,"left":200,"zIndex":2,"key":"button","props":{
+            "text":"按钮",
+            "type":"primary",
+            "size":"mini"}
+        },
+        {"top":300,"left":300,"zIndex":3,"key":"input","props":{
+            
+        }}
     ]
 }

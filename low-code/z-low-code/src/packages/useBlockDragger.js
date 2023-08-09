@@ -46,8 +46,7 @@ export function useBlockDragger(focusData,lastSelectBlock,data){//实现组件�
                     lines.x.push({showLeft:ALeft + AWidth/2 ,left :ALeft + AWidth/2 - BWidth/2 }) //横 中对中
                     lines.x.push({showLeft:ALeft + AWidth ,left :ALeft + AWidth - BWidth }) // 右对右
                     lines.x.push({showLeft:ALeft   ,left :ALeft - BWidth  }) // 左对右
-                })
-                console.log(lines)
+                }) 
                 return lines
             })()
         }
