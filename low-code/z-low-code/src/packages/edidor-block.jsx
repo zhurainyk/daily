@@ -3,6 +3,9 @@ export default defineComponent({
     props:{
         block:{
             type:Object
+        },
+        formData:{
+            type:Object 
         }
     },
     setup(props){
@@ -11,7 +14,17 @@ export default defineComponent({
         const component = config.componentMap[props.block.key]
         console.log(props.block.props)
         const RenderComponent = component.render({ //属性回传 
-            props:props.block.props 
+            props:props.block.props ,
+            model:Object.keys(component.model || {}).reduce((prev,moduleName)=>{
+                let propName = props.block.model[moduleName] //username 
+                console.log(propName)
+                console.log(props.formData[propName])
+                prev[moduleName] = { //实现输入框双向绑定
+                    moduleValue:props.formData[propName],
+                    "onUpdate:modelValue":(v)=>props.formData[propName] = v 
+                }
+                return prev 
+            },{})
         })
  
         const blockStyle = computed(()=>{

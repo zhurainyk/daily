@@ -55,6 +55,12 @@ registerConfig.register({
 registerConfig.register({
     label: '输入框',
     preview: () => (<ElInput placeholder='请输入...'></ElInput>),
-    render: () => (<ElInput placeholder='请输入...'></ElInput>),
-    key: 'input'
+    render: ({model}) =>{
+        console.log(model.default)
+        return  (<ElInput placeholder='请输入...'    {...model.default} ></ElInput>)
+    },
+    key: 'input',
+    model:{ //输入框必备字段
+        default:'绑定字段'
+    }
 })

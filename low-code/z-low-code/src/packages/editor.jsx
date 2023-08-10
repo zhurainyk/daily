@@ -15,6 +15,9 @@ export default defineComponent({
     props: {
         modelValue: {
             type: Object
+        },
+        formData:{
+            type:Object
         }
     },
     emits: ['updata:modelValue'],
@@ -138,7 +141,7 @@ export default defineComponent({
                             (data.value.blocks.map((block, index) => {
                                 return <EditorBlock
                                     class={`${previewRef.value ? 'editor-block-preview' : ''}`}
-
+                                    formData = {props.formData}
                                     onMousedown={(e) => blockMousedown(e, block, index)} block={block}></EditorBlock>
                             }))
                         }
@@ -146,6 +149,7 @@ export default defineComponent({
                     </div>
                 </div>
                 <ElButton type='primary' onClick={() => editorRef.value = true}>继续编辑</ElButton>
+                {JSON.stringify(props.formData)}
 
             </>
             :
@@ -190,6 +194,7 @@ export default defineComponent({
                                     return <EditorBlock
                                         class={`${block.focus ? 'editor-block-focus' : ''} ${previewRef.value ? 'editor-block-preview' : ''}`}
                                         key={block.id}
+                                        formData = {props.formData}
                                         onMousedown={(e) => blockMousedown(e, block, index)} block={block}
                                         onContextmenu={(e) => onContextMenuBlock(e, block)}
 

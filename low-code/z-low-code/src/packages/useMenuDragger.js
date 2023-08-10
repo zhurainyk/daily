@@ -19,7 +19,8 @@ export function useMenuDragger(data,containerRef ){
             zIndex: 1,
             key: currentComponent.key,
             alignCenter:true,//松手的时候居中
-            props:{}
+            props:{},
+            model:{} ,//输入框必备
         })
         data.value.blocks = blocks
         data.value = {

@@ -1,24 +1,41 @@
 {
-    "container":{
-        "width":550,
-        "height":550
+    "container": {
+        "width": 550,
+        "height": 550
     },
-    "blocks":[
-        {"top":100,"left":100,"zIndex":1,"key":"text","props":{
-            "text":"编辑文本",
-            "color":"#ff0000",
-            "size":"14px"},
-            "id":"34234243"
+    "blocks": [
+        {
+            "top": 100,
+            "left": 100,
+            "zIndex": 1,
+            "key": "text",
+            "props": {
+                "text": "编辑文本",
+                "color": "#ff0000",
+                "size": "14px"
+            },
+            "id": "34234243"
         },
-        {"top":200,"left":200,"zIndex":2,"key":"button","props":{
-            "text":"按钮",
-            "type":"primary",
-            "size":"mini"},
-            "id":"342342433"
+        {
+            "top": 200,
+            "left": 200,
+            "zIndex": 2,
+            "key": "button",
+            "props": {
+                "text": "按钮",
+                "type": "primary",
+                "size": "mini"
+            },
+            "id": "342342433"
         },
-        {"top":300,"left":300,"zIndex":3,"key":"input","props":{
-            
-        },
-        "id":"3423342433"}
+        {
+            "top": 300,
+            "left": 300,
+            "zIndex": 3,
+            "key": "input",
+            "props": {},
+            "id": "3423342433",
+            "model":{}
+        }
     ]
 }

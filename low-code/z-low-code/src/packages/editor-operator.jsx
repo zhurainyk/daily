@@ -38,6 +38,8 @@ export default defineComponent({
             }else{ //更改组件属性 
                 state.editData.top = state.top?state.top:state.editData.top
                 state.editData.left = state.left?state.left:state.editData.left
+                console.log(state.editData)
+                console.log(props.block )
                 props.updateBlock(state.editData,props.block)
             }
         }
@@ -77,6 +79,17 @@ export default defineComponent({
                         </ElFormItem>
                     })
                     content.push(res)
+                }
+                //渲染输入框
+                if(component && component.model){
+                
+                    content.push(
+                        Object.entries(component.model).map(([moduleName,label])=>{
+                            return <ElFormItem label={label}>
+                                <ElInput v-model={state.editData.model[moduleName]}></ElInput>
+                            </ElFormItem>
+                        })
+                    )
                 }
             }
             return <ElForm labelPosition='top' style='padding:30px'>

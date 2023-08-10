@@ -1,6 +1,6 @@
 <template>
   <div class="app">
-    <Editor v-model="state"></Editor>
+    <Editor v-model="state" :formData="formData" ></Editor>
   </div>
 </template>
 <script setup>
@@ -10,6 +10,10 @@ import Editor from "./packages/editor";
 import { registerConfig as config } from "./utils/editor-config";
 const state = ref(data);
 provide("config", config);
+const formData = ref({ //输入框双向绑定字段
+  username:'zhuyu',
+  password:'123'
+})
 /**
  * 
  * 1. 创建面板 样式分离
