@@ -1,4 +1,4 @@
-import { defineComponent, computed, inject, ref } from 'vue'
+import { defineComponent, computed, inject, ref, watch } from 'vue'
 import { useMenuDragger } from './useMenuDragger'
 import { ElButton } from 'element-plus'
 import { useFocus } from './useFocus'
@@ -10,6 +10,7 @@ import { useCommand } from './useCommand.js'
 import { $dialog } from '../components/Dialog.jsx'
 import { $dropdown, DropdownItem } from '../components/Dropdown'
 import EditorOperator from './editor-operator'
+import {uuid} from '../utils/uuid.js'
 export default defineComponent({
     props: {
         modelValue: {
@@ -26,16 +27,25 @@ export default defineComponent({
                 return props.modelValue
             },
             set(newValue) { //v-model 双向绑定 从新渲染页面 
+              
+                newValue.blocks.forEach(block=>{
+                    block.id =  uuid() //强行更改id 刷新页面  
+                })
                 console.log('双向绑定', deepcopy(newValue))
                 ctx.emit('updata:modelValue', deepcopy(newValue))
             }
         })
+        
         const config = inject('config')
 
-        const containerStyle = computed(() => {
-            return {
-                width: data.value.container.width + 'px',
-                height: data.value.container.height + 'px'
+        const containerStyle = computed({
+            get(){
+                return {
+                    width: data.value.container.width + 'px',
+                    height: data.value.container.height + 'px'
+                }
+            },
+            set(newValue){ 
             }
         })
         const containerRef = ref(null)
@@ -56,8 +66,7 @@ export default defineComponent({
 
         // 右键菜单
         const onContextMenuBlock = (e, block) => {
-            e.preventDefault()
-            console.log('点击了')
+            e.preventDefault() 
             //为哪一个元素产生下拉框
             $dropdown({
                 el: e.target,
@@ -164,7 +173,12 @@ export default defineComponent({
                     })}
                 </div>
                 <div className='editor-right'>
-                    <EditorOperator data={data.value} block={lastSelectBlock.value}></EditorOperator>
+                    <EditorOperator 
+                        data={data.value} 
+                        block={lastSelectBlock.value}
+                        updateContainer = {commands.updateContainer}
+                        updateBlock = {commands.updateBlock}
+                        ></EditorOperator>
                 </div>
                 <div className='editor-container'>
                     {/* 负责产生滚动条*/}
@@ -175,7 +189,7 @@ export default defineComponent({
                                 (data.value.blocks.map((block, index) => {
                                     return <EditorBlock
                                         class={`${block.focus ? 'editor-block-focus' : ''} ${previewRef.value ? 'editor-block-preview' : ''}`}
-                                        key={block.top+index}
+                                        key={block.id}
                                         onMousedown={(e) => blockMousedown(e, block, index)} block={block}
                                         onContextmenu={(e) => onContextMenuBlock(e, block)}
 

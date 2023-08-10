@@ -9,7 +9,10 @@ export default defineComponent({
         const config = inject('config')
  
         const component = config.componentMap[props.block.key]
-        const RenderComponent = component.render()
+        console.log(props.block.props)
+        const RenderComponent = component.render({ //属性回传 
+            props:props.block.props 
+        })
  
         const blockStyle = computed(()=>{
             return {

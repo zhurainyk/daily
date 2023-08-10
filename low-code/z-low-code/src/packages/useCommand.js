@@ -30,7 +30,7 @@ export function useCommand(data,focusData) {
             }
             queue.push({ redo, undo }) //保存指令的前进后退
             state.current = current + 1
-            console.log(queue)
+            
         }
     }
     //注册我们需要的命令
@@ -40,7 +40,7 @@ export function useCommand(data,focusData) {
         execute() {
             return {
                 redo() {
-                    console.log('重做')
+                    
                     let item = state.queue[state.current + 1]//找到当前的下一步还原操作
                     if (item) {
                         item.redo && item.redo()
@@ -56,24 +56,25 @@ export function useCommand(data,focusData) {
     register({
         name:'updateContainer',
         pushQueue:true,
-        execute(newValue){
-            console.log('更新容器',newValue)
+        execute(newValue){ 
             let state= {
-                before:data.value,
-                after:newValue
+                before:deepcopy(data.value),
+                after:deepcopy(newValue)
             }
             return {
                 redo:()=>{
-                    data.value = state.after
+                    data.value.container = state.after.container
+                    data.value.blocks =  state.after.blocks
                 },
-                undo:()=>{
-                    data.value = state.before
+                undo:()=>{ 
+                    data.value.container = state.before.container
+                    data.value.blocks =  state.before.blocks
                 }
             }
         }
     })
 
-    register({ //更换节点数据
+    register({ //更换组件数据
         name:'updateBlock',
         pushQueue:true,
         execute(newblock,oldblock  ){ 
@@ -167,17 +168,14 @@ export function useCommand(data,focusData) {
             let state = {
                 before:deepcopy(data.value.blocks),
                 after:deepcopy(focusData.value.unfocusedList)  //选中的都删除 
-            }
-            console.log(state.before,state.after)
+            } 
             //选中的都删除
             return {
                 
-                undo:()=>{
-                    console.log('删除1',state.before)
+                undo:()=>{ 
                     data.value.blocks = state.before
                 },
-                redo:()=>{
-                    console.log('删除2', state.after)
+                redo:()=>{ 
                     data.value.blocks = state.after
                 }
             }
@@ -192,7 +190,7 @@ export function useCommand(data,focusData) {
         execute() {
             return {
                 redo() {
-                    console.log('撤销')
+                    
                     if (state.current == -1) return;//没有可以撤销了
                     let item = state.queue[state.current]//找到上一步还原
                     if (item) {
@@ -210,13 +208,13 @@ export function useCommand(data,focusData) {
         init() {//初始化 默认会自动执行
             this.before = null //监听拖拽之前的状态
             const start = () => {
-                console.log('start')
+                
                 this.before = deepcopy(data.value.blocks)
             }
             //监听拖拽之后 要触发对应的指令
             const end = () => {
                 state.commands.drag()
-                console.log('end')
+                
             }
 
             events.on('start', start)
@@ -231,11 +229,13 @@ export function useCommand(data,focusData) {
             let after = data.value.blocks //之后的状态
             return {
                 redo() {//默认一松手 就直接把当前事情做了
-                    console.log('redo')
+            
+                    
                     data.value.blocks = after
                 },
                 undo() {//前一步的
-                    console.log('undo')
+                
+                    
                     data.value.blocks = before
                 }
             }

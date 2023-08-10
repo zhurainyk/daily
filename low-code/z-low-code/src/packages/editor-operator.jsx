@@ -9,20 +9,36 @@ export default defineComponent({
         },
         data: { //所有的数据
             type: Object
+        },
+        updateContainer:{
+            type:Function
+        },
+        updateBlock:{
+            type:Function 
         }
     },
     setup(props, ctx) {
         const config = inject('config') //组件配置信息
         const state = reactive({
-            editData:{}
-        })
-        console.log({props})
+            editData:{},
+            top:props.block?.top,//调整编辑后的位置
+            left:props.block?.left
+        }) 
         const reset = ()=>{
             if(!props.block){
                 state.editData = deepcopy(props.data.container)
             }else{
                 state.editData = deepcopy(props.block)
                 console.log(state.editData )
+            }
+        }
+        const apply = ()=>{
+            if(!props.block){ //更改容器大小
+                 props.updateContainer({...props.data,container:state.editData})
+            }else{ //更改组件属性 
+                state.editData.top = state.top?state.top:state.editData.top
+                state.editData.left = state.left?state.left:state.editData.left
+                props.updateBlock(state.editData,props.block)
             }
         }
         watch(()=>props.block,reset,{
@@ -43,14 +59,17 @@ export default defineComponent({
                 )
             } else {
                 let component = config.componentMap[props.block.key]
+                console.log(props,state)
+                state.top = props.block.top 
+                state.left = props.block.left 
                 if (component && component.props) { //{text:{type:'xxxx'},size:{},color:{}}
                     let res = Object.entries(component.props).map(([propName, propConfig]) => {
-                        return <ElFormItem label={propName}>
+                        return <ElFormItem label={propConfig.label}>
                             {{
                                 input: () => <ElInput v-model={state.editData.props[propName]}></ElInput>,
                                 color: () => <ElColorPicker v-model={state.editData.props[propName]}></ElColorPicker>,
                                 select: () => <ElSelect v-model={state.editData.props[propName]}>
-                                    {propConfig.options.map(opt => {
+                                    {propConfig.option.map(opt => {
                                         return <ElOption label={opt.label} value={opt.value}></ElOption>
                                     })}
                                 </ElSelect>
@@ -63,8 +82,8 @@ export default defineComponent({
             return <ElForm labelPosition='top' style='padding:30px'>
                 {content}
                 <ElFormItem>
-                    <ElButton type='primary'>应用</ElButton>
-                    <ElButton>重置</ElButton>
+                    <ElButton type='primary' onClick={()=>apply()}>应用</ElButton>
+                    <ElButton onClick={reset}>重置</ElButton>
                 </ElFormItem>
             </ElForm>
         }

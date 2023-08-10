@@ -5,7 +5,7 @@ export function useFocus(data,previewRef,callback,){ //获取焦点
         let focusList = []
         let unfocusedList = []
         data.value.blocks.forEach(block=>(block.focus?focusList:unfocusedList).push(block))
-        console.log({focusList,unfocusedList})
+    
         return {
             focusList,
             unfocusedList
