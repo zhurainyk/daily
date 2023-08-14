@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="../../第三方插件库/vue/vue.js"></script>
+    <script src="../../第三方插件库/react/react.js"></script>
+    <script src="../../第三方插件库/react/react-dom.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+
+      //vue中使用react组件
+
+      // 识别是react还是vue组件  插件特殊处理
+
+
+      import  A from '../react/components/a'
+      new Vue({
+          components:{
+              a:A
+          }
+      })
+
+      //react中挂在vue
+      class VueWrapper extends React.Component{
+          constructor(props){
+              super(proper)
+              this.currentVueComponent = props.component;
+
+          }
+          creatVueInstance = el=>{
+              const {component,...props} = this.props;   
+          }
+
+          render(){
+              return React.createElement('div',{ref:this.creatVueInstance })
+          }
+      }
+
+      const makeReactComponent = (component)=>{
+          return class ReactRunInVue extends React.Component{
+              static displayName = 'vue-react';
+              constructor(props){
+                  super(props);
+                  this.state = {
+                      ...props
+                  }
+              }
+
+              wrappChildren(children){
+                  //Vue 
+                  return {
+                      render:h=>h('div',children)
+                  }
+              }
+
+              render(){
+                  const {children ,...rest} = this.state;
+                  const wrappChildren = this.wrappChildren(children)
+                  return React.createElement( Component,{...rest},children && React.createElement(VueWrpper,{component:children}))
+              }
+          }
+      }
+
+      //ReactWrapper组件 Vue组件 
+      const ReactWrapper ={
+          props:['component'],
+          render(h){
+              return h('div',{ref:'react'})
+          },
+          methods:{
+              //在mount之后 渲染react组件到div上
+              //核心部分  本质就在  
+              mountReactComponent(component){
+                  const Component = makeReactComponent(component)
+                  const chuildren = this.$slots.default !== void 0 ? {chuildren:this.$slots.default} :{};
+                  ReactDOM.render(
+                      React.createElement( 
+                          Component,
+                          {...this.$attrs,...this.$listeners,...chuildren,ref:ref=>(this.reactCompoentRef=ref)}
+                      ),
+                      this.$refs.react
+                  )
+          },
+          mounted(){
+              this.mountReactComponent(this.$props.component)
+          },
+          beforeDestroy(){
+              ReactDOM.unmountComponentAtNode(this.$refs.react)
+          },
+          inheritAttrs: false,
+          watch:{ //监听组件属性变化 通知react组件 
+              $attrs:{
+                  handler(){
+                      this.reactComponentRef.setState({
+                          ...this.$sttrs
+                      })
+                  },
+                  deep:true
+              },
+              '$props.component':{
+                  handler(newComponent){
+                      this.mountReactComponent(newComponent)
+                  }
+              }
+          }
+      }
+
+
+
+      //判断是不是react组件 //不是vue 就是react
+      const isReactComponent = component =>{ //先在Vue.prototype.constructor.isVue = true
+          return !(typeof component ==='function' && component.prototype && component.prototype.constructor.super && component.prototype.constructor.super.isVue ||component.prototype instanceof Vue)
+      }
+
+      //如果是react组件  处理 成vue组件
+      //最终是正在wrapper组件里去完成react组件的挂载 属性传递
+      const Resolver = component=>{
+          return {
+              props:[],
+              components:{
+                  ReactWrapper
+              },
+              inheritAttrs: false,
+              render(h){
+                  return h('react-wrapper',{ //处理react的中间层 
+                      props:{component},
+                      attrs:this.$attrs, //透传属性
+                      on:this.$listeners,
+
+                  },this.$slots.default)
+              }
+          }
+      }
+
+      const
+      const ReactRunInVuePlugin = {
+          install(Vue,options){
+              //保留原始合并componentns策略
+              const originalOptionsMergeStrategies = Vueapp.config.optionMergeStrategies.components;//重写这个方法
+           Vue.config.optionMergeStrategies.components = (parent,...args) =>{ //重写合并策略
+               const mergedComponentsOptions = originalOptionsMergeStrategies(parent,...arg);
+               const wrappedComponents = mergedComponentsOptions ? Object.entries(mergedComponentsOptions).reduce((acc,[k,v])=>({
+                   ...acc,
+                   [k] :isReactComponent(v)?Resolver(v):v //判断是不是react组件 是 就处理一下
+               }),{}):mergedComponentsOptions //判断走不走react 处理逻辑
+
+               //对象 mixin一下
+               return Object.assign(mergedComponentsOptions,wrappedComponents)
+           }
+
+            Vue.prototype.constructor.isVue = true;
+          }
+      }
+    </script>
+  </body>
+</html>

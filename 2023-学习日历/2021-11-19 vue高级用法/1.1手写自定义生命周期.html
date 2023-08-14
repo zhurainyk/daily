@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+        <script src="../../第三方插件库/vue/vue.js"></script>
+</head>
+<body>
+    <div id="app"></div>
+    <script>
+        console.log(Vue.config)
+        const optionMergeStrategies = Vue.config.optionMergeStrategies;
+        optionMergeStrategies.click = optionMergeStrategies.created 
+
+        const notify = (name,vm)=>{
+            const lifeCycles = vm.$options[name]
+            if(lifeCycles && lifeCycles.length){
+                lifeCycles.forEach(lc=>lc.call(vm))
+            }
+            const children = vm.$children;
+            if(children.length){
+                children.forEach(child=>notify(child,vm ))
+            }
+        }
+
+        const bind = (vm)=>{
+            addEventListener('click',()=>{
+                notify('click',vm)
+            })
+        }
+
+        const vm = new Vue({
+            el:document.querySelector('#app'),
+            template:`<h1>你好</h1>`,
+            click(){
+                console.log('点击了')
+            }
+        })
+
+        bind(vm)
+
+        window.onbeforeunload = function () {
+              alert('test'); //IE 火狐浏览器提示
+            };
+    </script>
+</body>
+</html>

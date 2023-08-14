@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let xhr = new XMLHttpRequest();
+
+      const URL = "https://thatcopy.pw/catapi/rest/";
+      xhr.open(URL, {
+        method: "GET",
+      });
+      xhr.onreadystatechange = function () {
+        if (xhr.readyState !== 4) {
+          return;
+        }
+        if (xhr.status === 200) {
+        }
+      };
+      xhr.send();
+      xhr.abort();
+      //终止请求
+
+      //fetch 没有自带的请求终止
+    //   需要借助第三模块
+    const controller = new AbortController()
+      fetch(URL, {
+          method:'GET',
+          credentials:'same-origin',
+          signal:controller.signal
+      }).then(res=>{
+          if(res.ok){
+              return res.json()
+          }
+      }).then(res=>{
+          console.log(res)
+      })
+
+      controller.abort() //直接取消
+    </script>
+  </body>
+</html>

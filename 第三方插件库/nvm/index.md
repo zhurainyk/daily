@@ -10,7 +10,7 @@
     node_mirror: https://npm.taobao.org/mirrors/node/
     npm_mirror: https://npm.taobao.org/mirrors/npm/
 ```
-+ 通过nvm安装node cmd输入   nvm install v16.15.0  
++ 通过nvm安装node cmd输入   nvm install v16.15.0   nvm ls-remote   nvm uninstall v16.15.0
 + 查看已经安装的node版本 cmd  输入 nvm ls 
 + 使用node版本  cmd输入 nvm use v16.15.0  如果出现乱码 使用管理员cmd 
 + 环境变量配置 设置路径：此电脑->属性->高级程序设置->高级->环境变量
