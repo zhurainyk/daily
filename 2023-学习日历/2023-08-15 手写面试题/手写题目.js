@@ -71,3 +71,69 @@ function deepClone2(obj){
     }
     return clone(obj)
 }
+
+function deepclone3(obj){
+    const map = new WeakMap()
+    map.set(obj,true)
+    const copy = (obj)=>{ 
+        if(!obj && typeof obj === 'object' ){
+            return obj 
+        }
+        let result =  obj instanceof Array ? [] :{}
+        for (const k in obj){
+            const value = obj[k] 
+            if(typeof value !=='object' || value === null){
+                result[k] = value 
+            }else{
+                if(map.has(value)){
+                    result[k] = null 
+                }else{
+                    map.set(value,true)
+                    result[k] = copy(value)
+                }
+            } 
+        } 
+        return result 
+    }
+    return copy(obj)
+}
+
+function deepClone4(obj){
+    const map = new WeakMap()
+    map.set(obj,true )
+    const isObj = (o)=>(typeof o === 'object' && o !== null )
+    const copy = (obj)=>{ 
+        if(!isObj(obj)){
+            return obj 
+        } 
+        let result  = Array.isArray(obj)?[]:{} 
+        for(const k in obj){
+            const value = obj[k]
+            if(!isObj(value)){
+                result[k] = value 
+            }else{
+                if(map.has(value)){
+                    result[k] = null
+                }else{
+                    map.set(value,true )
+                    result[k] = copy(value) 
+                }
+                
+            }
+        }
+        return result
+    } 
+    return copy(obj)
+}
+
+//instanceof
+function myInstanceof(left,right){
+    let _proto_ = left.getPrototypeOf(left)
+    let prototype = right.prototype;
+    while(true){
+        if(!_proto_) return false 
+        if(_proto_ === prototype) return true ;
+        _proto_ = _proto_.getPrototypeOf(_proto_)
+    }
+}
+
