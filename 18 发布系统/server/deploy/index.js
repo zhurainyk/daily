@@ -18,7 +18,7 @@ spinner.start();
 // 第二个参数：服务器配置
 // 第三个参数：上传回调函数
 scpClient.scp(
-    '../*',
+    './*', //路径是根目录
     {
         host: server.host,
         port: server.port,

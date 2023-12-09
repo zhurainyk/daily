@@ -5,7 +5,7 @@ const server = {
   port: 8022, // 服务器端口，默认为22，一般情况下都是22
   username: "zhuyu", // 服务器登录名 - 登录xshell时的用户名
   password: "zhuyu123456", // 服务器登录密码 - 登录xshell时的密码
-  path: "/home/zhuyu/server", // 文件上传到服务器的路径
+  path: "/home/zhuyu/service", // 文件上传到服务器的路径
 };
 
 module.exports = server;

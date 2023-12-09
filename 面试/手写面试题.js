@@ -1,9 +1,12 @@
 
+
 /**
  * 实现一个 add(1)(2)(3) = 6无限调用的函数
  * 
  * 思路：用一个变量存所有的值 返回一个函数  这个函数有一个toString方法 alert的时候会转义  
  */
+
+const { WeakMap } = require("globalthis/implementation");
 
 function add(x){
     let sum = x;
@@ -33,8 +36,12 @@ function testadd(x){
 // alert(add(1)(2)(3)) 
 
 /**
- * 防抖实现  在一段时间内，事件只会最后触发一次。  执行之前先清空  
- * 比如公交车  坐满才走  连续调用多次 ，只有最后一次生效
+ * 防抖实现  在一段时间内，事件只会最后触发一次。  执行之前先清空  输入校验最后一次
+ * 比如公交车  坐满才走  连续调用多次 ，只有最后一次生效   滚动条操作
+ * 
+防抖 (debounce): 将多次高频操作优化为只在最后一次执行，通常使用的场景是：用户输入，只需再输入完成后做一次输入校验即可。
+
+节流(throttle): 每隔一段时间后执行一次，也就是降低频率，将高频操作优化成低频操作，通常使用场景: 滚动条事件 或者 resize 事件，通常每隔 100~500 ms执行一次即可。
  */
 
 function debounce (fn,time=10){
@@ -152,6 +159,17 @@ function deepClone(obj){
         newObj[key] = isObj(obj[key]) ? deepClone(obj[key]):obj[key]
     })
     return newObj;
+}
+
+
+function deepClone(obj){
+    const map = new WeakMap()
+    map.set(obj,true)
+    const copy = (obj)=>{
+        
+        return 
+    }
+    return copy(obj)
 }
 
 /**
