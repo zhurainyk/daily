@@ -1,0 +1,88 @@
+[
+  {
+    "db_id_templateName": "直梯常规保养模板",
+    "db_id": "1527562363535223001",
+    "db_elevType": "0",
+    "db_maintModelCode": "01",
+    "db_upkeepType": "01"
+  },
+  {
+    "db_id_templateName": "直梯周期性保养模板",
+    "db_id": "1527562363535223002",
+    "db_elevType": "0",
+    "db_maintModelCode": "01",
+    "db_upkeepType": "02"
+  },
+  {
+    "db_id_templateName": "直梯阶段重点保养模板",
+    "db_id": "1527562363535223003",
+    "db_elevType": "0",
+    "db_maintModelCode": "01",
+    "db_upkeepType": "03"
+  },
+  {
+    "db_id_templateName": "直梯全面重点保养模板",
+    "db_id": "1527562363535223004",
+    "db_elevType": "0",
+    "db_maintModelCode": "01",
+    "db_upkeepType": "04"
+  },
+
+  {
+    "db_id_templateName": "直梯半月保养模板",
+    "db_id": "1527562363535223008",
+    "db_elevType": "0",
+    "db_maintModelCode": "02",
+    "db_upkeepType": "05"
+  },
+  {
+    "db_id_templateName": "直梯季度保养模板",
+    "db_id": "1527562363535223009",
+    "db_elevType": "0",
+    "db_maintModelCode": "02",
+    "db_upkeepType": "06"
+  },
+  {
+    "db_id_templateName": "直梯半年保养模板",
+    "db_id": "1527562363535223010",
+    "db_elevType": "0",
+    "db_maintModelCode": "02",
+    "db_upkeepType": "07"
+  },
+  {
+    "db_id_templateName": "直梯年度保养模板",
+    "db_id": "1527562363535223011",
+    "db_elevType": "0",
+    "db_maintModelCode": "02",
+    "db_upkeepType": "08"
+  },
+
+  {
+    "db_id_templateName": "扶梯半月保养模板",
+    "db_id": "1527562363535223012",
+    "db_elevType": "1",
+    "db_maintModelCode": "02",
+    "db_upkeepType": "05"
+  },
+  {
+    "db_id_templateName": "扶梯季度保养模板",
+    "db_id": "1527562363535223013",
+    "db_elevType": "1",
+    "db_maintModelCode": "02",
+    "db_upkeepType": "06"
+  },
+  {
+    "db_id_templateName": "扶梯半年保养模板",
+    "db_id": "1527562363535223014",
+    "db_elevType": "1",
+    "db_maintModelCode": "02",
+    "db_upkeepType": "07"
+  },
+  {
+    "db_id_templateName": "扶梯年度保养模板",
+    "db_id": "1527562363535223015",
+    "db_elevType": "1",
+    "db_maintModelCode": "02",
+    "db_upkeepType": "08"
+  }
+]

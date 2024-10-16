@@ -1,0 +1,802 @@
+.servicereport {
+
+    overflow-y: auto;
+    height: 1009px;
+
+    &::-webkit-scrollbar-thumb {
+        background-color: rgb(32, 91, 167);
+    }
+
+    &::-webkit-scrollbar-track {
+        background-color: rgb(32, 44, 94);
+    }
+
+    .temp-old {
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+        padding: 15px;
+
+        justify-content: space-between;
+
+        .temp-left.fullscreen {
+            width: 930px;
+        }
+
+        .temp-left {
+            width: 830px; //830px; 动态
+
+            .change {
+                display: flex;
+
+                .changetype,
+                .changetime {
+                    margin-left: 56px;
+                    font-size: 16px;
+                    color: #0785D5;
+                    background: rgba(35, 154, 255, 0.1);
+                    border: 1px solid rgba(7, 133, 213, .5);
+                    line-height: 36px;
+                    padding: 0 23px;
+                }
+
+                div {
+                    cursor: pointer;
+                    user-select: none;
+                }
+
+                .changetime {
+                    margin-left: 25px;
+                }
+            }
+
+            .head {
+                display: flex;
+                justify-content: space-around;
+                box-sizing: border-box;
+                margin-bottom: 28px;
+                margin-top: 20px;
+                background-color: rgba(7, 133, 213, .3);
+                padding: 25px 24px 23px 31px;
+
+                .dateinfo {
+
+
+                    .title {
+                        font-size: 20px;
+                        font-family: Microsoft YaHei;
+                        font-weight: bold;
+                        color: #FEFEFE;
+                        line-height: 36px;
+                    }
+
+                    .date {
+                        font-size: 16px;
+                        font-family: Microsoft YaHei;
+                        white-space: nowrap;
+                        color: #FEFEFE;
+                        line-height: 36px;
+                    }
+
+                    .type {
+                        width: 86px;
+                        height: 40px;
+
+
+
+                        display: flex;
+                        flex-wrap: wrap;
+                        justify-content: center;
+                        flex-direction: column;
+                        align-items: center;
+                        background: linear-gradient(rgb(44, 115, 220), rgb(34, 131, 244), rgb(28, 151, 250));
+
+                        div {
+                            font-size: 10px;
+                            font-family: Microsoft YaHei;
+                            letter-spacing: 2px;
+                            color: #FFFFFF;
+                        }
+                    }
+                }
+
+                .companys {
+                    .com {
+                        font-size: 16px;
+                        font-family: Microsoft YaHei;
+                        font-weight: 400;
+                        color: #FEFEFE;
+                        line-height: 36px;
+                        white-space: nowrap;
+                    }
+                }
+
+                .comments {
+                    width: 309px;
+                    height: 127px;
+                    background: rgba(0, 154, 252, .3);
+                    font-size: 16px;
+                    font-family: Microsoft YaHei;
+                    font-weight: 400;
+                    color: #FEFEFE;
+                    box-sizing: border-box;
+                    padding: 16px;
+                    overflow-y: auto;
+
+                    .comment {
+                        padding: 5px 0;
+                        line-height: 20px;
+                        box-sizing: border-box;
+                    }
+                }
+
+            }
+
+            .totaltemp {}
+
+            .totaltemp {
+                .floor1 {
+                    display: flex;
+                    justify-content: space-between;
+
+                    .kunrencard,
+                    .huanjian {
+                        width: 220px;
+                        height: 170px;
+                        margin-right: 15px;
+
+                        .numcards {
+                            margin-top: 20px;
+                        }
+                    }
+
+                    .weibaocard {
+                        // margin-left: 1px;
+                        width: 450px;
+                        height: 170px;
+
+                        .numcards {
+                            margin-top: 20px;
+                        }
+                    }
+                }
+
+                .floor2 {
+                    display: flex;
+
+                    .floor2-l {
+                        margin-right: 20px;
+                        width: 460px;
+
+                        .huizhaocard {
+                            width: 100%;
+                            height: 530px;
+                            margin-top: 15px;
+
+
+
+                            .personcard {
+                                width: 360px;
+                                height: 117px;
+                                margin: 25px auto 0;
+                                background: rgba(7, 133, 213, .3);
+                                color: #fff;
+                                font-size: 16px;
+                                box-sizing: border-box;
+                                padding: 23px 40px;
+                                display: flex;
+                                justify-content: flex-start;
+                                flex-wrap: wrap;
+
+                                span {
+                                    text-align: center;
+                                    width: 44px;
+                                    margin-right: 25px;
+                                    margin-bottom: 13px;
+                                }
+                            }
+
+                            .temp ._temp {
+
+
+
+                                .numcards {
+                                    margin: 0 auto;
+                                }
+
+                                .form {
+                                    width: 317px;
+
+                                    margin: 0 auto;
+
+                                    .tab {
+                                        line-height: 28px;
+                                    }
+
+                                    .left {
+                                        .tab .label {
+                                            white-space: nowrap;
+                                        }
+                                    }
+
+                                    .right {
+                                        .tab:last-child {
+                                            .label {
+                                                line-height: 16px;
+                                                margin-right: 16px;
+                                            }
+
+                                        }
+                                    }
+                                }
+
+
+                            }
+
+                            .flex {
+                                margin-top: 66px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                margin-bottom: 20px;
+
+                            }
+
+
+                        }
+                    }
+
+                    .floor2-r {
+                        width: 450px;
+                        margin-top: 15px;
+
+                        .stopcard {
+                            width: 100%;
+                            height: 260px;
+
+                            .flex {
+                                margin-top: 36px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                margin-bottom: 12px;
+                            }
+
+                            .numcards {
+                                margin-left: 8px;
+                            }
+
+                            .form {
+                                margin-right: 12px;
+
+                                .right {
+                                    .tab:last-child {
+                                        .label {
+                                            line-height: 16px;
+                                            margin-right: 16px;
+                                        }
+
+                                    }
+
+                                    .tab:not(:last-child) {
+                                        white-space: nowrap;
+                                    }
+                                }
+                            }
+
+
+                        }
+
+                        .xianchangecard {
+                            width: 100%;
+                            height: 260px;
+                            margin-top: 10px;
+
+                            .numcards {
+                                margin-top: 20px;
+                            }
+
+                            .personcard {
+                                width: 330px;
+                                height: 117px;
+                                margin: 25px auto 0;
+                                margin-right: 12px;
+                                background: rgba(7, 133, 213, .3);
+                                color: #fff;
+                                font-size: 16px;
+                                box-sizing: border-box;
+                                padding: 23px 40px;
+                                display: flex;
+                                justify-content: flex-start;
+                                flex-wrap: wrap;
+
+                                span {
+                                    text-align: center;
+                                    width: 44px;
+                                    margin-right: 15px;
+                                    margin-bottom: 13px;
+                                }
+                            }
+
+                            .temp ._temp {
+
+                                .numcards {
+                                    margin: 0 auto;
+                                }
+
+                                .form {
+                                    width: 317px;
+
+                                    margin-right: 12px;
+
+                                    .tab {
+                                        line-height: 28px;
+                                    }
+
+                                    .right {
+                                        .tab:last-child {
+                                            .label {
+                                                line-height: 16px;
+                                                margin-right: 16px;
+                                            }
+
+                                        }
+                                    }
+                                }
+                            }
+
+                            .flex {
+                                margin-top: 36px;
+                                display: flex;
+                                align-items: center;
+                                justify-content: space-between;
+                                margin-bottom: 12px;
+
+
+                            }
+
+
+                        }
+                    }
+                }
+            }
+
+
+        }
+
+
+        .temp-right {
+            width: 939px;
+            margin-left: 10px;
+
+            .yunxingcard {
+                width: 100%;
+                height: 507px;
+
+                .temp {
+                    .tabs {
+                        width: 100%;
+                        overflow: hidden;
+                        display: flex;
+                        justify-content: center;
+                        margin-top: 10px;
+
+                        .left-tab,
+                        .right-tab {
+                            display: flex;
+                            justify-content: space-around;
+                            width: 100%;
+                            box-sizing: border-box;
+                            overflow: hidden;
+
+                            .tab {
+                                margin: 0;
+
+                                .numcard {
+                                    position: relative;
+                                }
+
+                                .numcards .arrow {
+                                    letter-spacing: -1px;
+                                    white-space: nowrap;
+                                }
+
+                                .numcards .num {
+                                    font-size: 25px;
+                                    line-height: 46px;
+                                    color: rgba(0, 108, 255, 1);
+                                }
+
+                                .num.blue {
+                                    color: #29b6ff;
+                                }
+                            }
+                        }
+                    }
+
+                    .graphtabs {
+                        display: flex;
+                        justify-content: space-around;
+                        margin-top: 10px;
+
+                        .graphtab {
+                            .subText {
+                                padding-top: 10px;
+                                color: #23FFFC;
+                                white-space: nowrap;
+                                text-align: center;
+
+                            }
+
+                            .common-graphtab {
+                                width: 350px;
+                                height: 185px;
+
+                            }
+
+                            .common-graphtab.fullscreen {
+                                width: 450px;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+
+        }
+
+
+
+        .form {
+            width: 336px;
+
+            background: rgba(7, 133, 213, .3);
+            display: flex;
+
+            .left,
+            .right {
+                position: relative;
+                width: 50%;
+                box-sizing: border-box;
+                padding: 10px 20px;
+
+                .tab {
+                    line-height: 28px;
+                    font-size: 16px;
+                    color: #fff;
+                    display: flex;
+
+                    .label {
+                        margin-right: 20px;
+                    }
+
+                    .value {
+
+                        color: #c0dfff;
+                    }
+                }
+            }
+
+            .left::before {
+                content: '';
+                position: absolute;
+                top: 10%;
+                right: 0;
+                width: 1px;
+                height: 80%;
+                background-color: rgba(255, 255, 255, .3);
+            }
+        }
+
+        .bottom {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            .title {
+                color: #fff;
+                line-height: 40px;
+                text-align: center;
+                font-size: 16px;
+            }
+
+            .arrow.up {
+                font-size: 14px;
+                color: #DE8536;
+                vertical-align: bottom;
+            }
+
+            .arrow.down {
+                color: #18C097;
+            }
+        }
+
+    }
+
+    .numcards {
+        display: flex;
+        justify-content: space-around;
+
+        .numcard {
+            text-align: center;
+
+            .num {
+                font-size: 35px;
+                font-weight: bold;
+                color: #b149ff;
+                line-height: 50px;
+            }
+
+            .num.red {
+                color: #ff6882;
+            }
+
+            .num.blue {
+                color: #29b6ff;
+            }
+
+            .numlabel {
+                font-size: 16px;
+                font-family: PingFang SC;
+                color: #FFFFFF;
+            }
+
+            .arrow {
+                color: rgba(153, 153, 153, 1);
+                font-size: 12px;
+
+            }
+
+            .arrow.up {
+                color: rgba(222, 133, 54, 1);
+            }
+
+            .arrow.down {
+                color: rgba(24, 192, 151, 1);
+            }
+        }
+    }
+
+    .listcard {
+        margin-top: 20px;
+        width: 100%;
+        height: 453px;
+
+        .temp {
+            .listcontent {
+                display: flex;
+                justify-content: space-between;
+                flex-wrap: wrap;
+                width: 100%;
+
+                .list {
+                    width: 50%;
+                    box-sizing: border-box;
+                    padding: 8px 20px;
+
+                    .sub-head {
+                        display: flex;
+                        justify-content: space-between;
+
+                        .title {
+                            font-size: 14px;
+                            font-family: Microsoft YaHei;
+                            font-weight: 400;
+                            color: #23FFFC;
+                            // line-height: 32px;
+                            padding-top: 16px;
+                        }
+
+                        .more {
+                            // font-size: 14px;
+                            // color: #0785D5;
+                            // box-sizing: border-box;
+                            // background: rgba(35, 154, 255, 0.1);
+                            // border: 1px solid rgba(7, 133, 213, .5);
+                            // line-height: 32px;
+                            // padding: 0 17px;
+                        }
+                    }
+
+                    .list-main {
+                        width: 100%;
+                        text-align: center;
+
+                        .list-head {
+                            display: flex;
+                            justify-content: space-evenly;
+
+                            .head-item {
+                                width: 16.6%;
+                                white-space: nowrap;
+                                font-size: 10px;
+                                font-family: Microsoft YaHei;
+                                font-weight: 400;
+                                color: #F3FCFF;
+                                line-height: 36px;
+                            }
+
+                            .head-item:first-child {
+                                width: 10%;
+                            }
+
+                            .head-item:not(:first-child) {
+                                flex-grow: 1;
+                            }
+
+                        }
+
+                        .list-head.count5 .head-item {
+                            width: 20%;
+                        }
+
+                        .temp-scroll {
+                            width: 100%;
+                            height: 126px;
+                            overflow-y: auto;
+
+                            .list-cell {
+                                width: 100%;
+                                display: flex;
+                                justify-content: space-evenly;
+                                line-height: 26px;
+
+                                .cell-item {
+                                    width: 16.6%;
+                                    font-size: 10px;
+                                    font-family: Microsoft YaHei;
+                                    font-weight: 300;
+                                    color: #c0dfff;
+                                }
+
+                                .cell-item:first-child {
+                                    width: 10%;
+                                }
+
+                                .cell-item:not(:first-child) {
+                                    flex-grow: 1;
+                                }
+                            }
+
+                            .list-cell.count5 .cell-item {
+                                width: 20%;
+                            }
+                        }
+
+                        .temp-scroll::-webkit-scrollbar-thumb {
+                            background-color: rgb(32, 91, 167);
+                        }
+
+                        .temp-scroll::-webkit-scrollbar-track {
+                            background-color: rgb(32, 44, 94);
+                        }
+
+                        .temp-scroll::-webkit-scrollbar {
+                            // display: none;
+                        }
+                    }
+                }
+            }
+
+            .listcontent.fullscreen {
+                .head-item {
+                    font-size: 14px !important;
+                }
+
+                .cell-item {
+                    font-size: 12px !important;
+                }
+
+            }
+        }
+    }
+
+    .temp-new {
+        width: 100%;
+        display: flex;
+        box-sizing: border-box;
+        padding: 15px;
+        padding-top: 0;
+        justify-content: space-between;
+
+        .listcard {
+            height: 358px;
+            margin-top: 0;
+        }
+
+        .listcard.w1 {
+            width: 602px;
+            margin-right: 16px;
+
+            .temp .listcontent .list {
+                width: 100%;
+
+                .list-main .temp-scroll {
+                    height: 240px;
+                }
+            }
+        }
+
+        .listcard.w2 {
+            width: 1260px;
+
+            .temp .listcontent {
+                align-items: center;
+
+                .temp1 {
+                    width: 148px;
+
+                    .numcards {
+                        margin-top: 40px;
+                    }
+                }
+
+                .temp2 {
+                    width: calc(100% - 160px);
+                    display: flex;
+                    justify-content: space-between;
+
+                    .list {
+                        width: 48%;
+                    }
+
+                }
+            }
+
+            .temp .listcontent .list {
+
+                .list-main .temp-scroll {
+                    height: 240px;
+                }
+            }
+        }
+
+    }
+
+}
+
+.reporttable {
+    width: 100%;
+    text-align: center;
+    color: #fff;
+
+    .head {
+        display: flex;
+
+        .tab-item {
+            width: 100%;
+            font-size: 16px;
+        }
+    }
+
+    .main {
+        height: 250px;
+        overflow-y: scroll;
+
+        .main-tab {
+            display: flex;
+            border-bottom: 1px solid #888;
+            cursor: pointer;
+
+            .tab-item {
+                width: 100%;
+                font-size: 14px;
+                line-height: 40px;
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+            }
+        }
+
+        .main-tab:hover {
+            background-color: #0785D5;
+        }
+    }
+
+    .main::-webkit-scrollbar {
+        display: none;
+    }
+
+
+}

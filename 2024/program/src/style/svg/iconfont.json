@@ -1,0 +1,359 @@
+{
+  "id": "3331556",
+  "name": "IOT",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "35957832",
+      "name": "language",
+      "font_class": "language-mian",
+      "unicode": "e625",
+      "unicode_decimal": 58917
+    },
+    {
+      "icon_id": "31255959",
+      "name": "工单数据",
+      "font_class": "gongdanshuju",
+      "unicode": "e623",
+      "unicode_decimal": 58915
+    },
+    {
+      "icon_id": "31255960",
+      "name": "任务数据",
+      "font_class": "renwushuju",
+      "unicode": "e624",
+      "unicode_decimal": 58916
+    },
+    {
+      "icon_id": "30451725",
+      "name": "保险公司",
+      "font_class": "baoxiangongsi1",
+      "unicode": "e620",
+      "unicode_decimal": 58912
+    },
+    {
+      "icon_id": "30451726",
+      "name": "配件清单",
+      "font_class": "peijianqingdan1",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "30451727",
+      "name": "维保公司",
+      "font_class": "weibaogongsi1",
+      "unicode": "e622",
+      "unicode_decimal": 58914
+    },
+    {
+      "icon_id": "30450330",
+      "name": "项目管理",
+      "font_class": "xiangmuguanli1",
+      "unicode": "e61f",
+      "unicode_decimal": 58911
+    },
+    {
+      "icon_id": "30450176",
+      "name": "物料清单",
+      "font_class": "wuliaoqingdan",
+      "unicode": "e61e",
+      "unicode_decimal": 58910
+    },
+    {
+      "icon_id": "30322453",
+      "name": "客服管理",
+      "font_class": "kefuguanli",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "30322454",
+      "name": "预测性分析",
+      "font_class": "yucexingfenxi",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "30349880",
+      "name": "版本管理",
+      "font_class": "banben",
+      "unicode": "e63a",
+      "unicode_decimal": 58938
+    },
+    {
+      "icon_id": "30447339",
+      "name": "使用单位管理",
+      "font_class": "weibaogongsi2",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    },
+    {
+      "icon_id": "30447899",
+      "name": "用户管理",
+      "font_class": "tuanduiguanli2",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "30448585",
+      "name": "电梯日志",
+      "font_class": "rizhiguanli2",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "30448848",
+      "name": "配件供应商",
+      "font_class": "gongyingshang",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "30449103",
+      "name": "电梯档案管理",
+      "font_class": "diantipeizhi2",
+      "unicode": "e63f",
+      "unicode_decimal": 58943
+    },
+    {
+      "icon_id": "30449110",
+      "name": "项目权限",
+      "font_class": "xiangmuquanxian",
+      "unicode": "e640",
+      "unicode_decimal": 58944
+    },
+    {
+      "icon_id": "30449111",
+      "name": "常量管理",
+      "font_class": "changliangguanli",
+      "unicode": "e641",
+      "unicode_decimal": 58945
+    },
+    {
+      "icon_id": "30449117",
+      "name": "初始化缓存",
+      "font_class": "chushihuahuancun",
+      "unicode": "e642",
+      "unicode_decimal": 58946
+    },
+    {
+      "icon_id": "30191452",
+      "name": "编辑",
+      "font_class": "bianji",
+      "unicode": "e61d",
+      "unicode_decimal": 58909
+    },
+    {
+      "icon_id": "30191236",
+      "name": "删除",
+      "font_class": "shanchu",
+      "unicode": "e61c",
+      "unicode_decimal": 58908
+    },
+    {
+      "icon_id": "29892906",
+      "name": "add",
+      "font_class": "add",
+      "unicode": "e61b",
+      "unicode_decimal": 58907
+    },
+    {
+      "icon_id": "29849585",
+      "name": "eye",
+      "font_class": "yanjing",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "29653843",
+      "name": "员工报表",
+      "font_class": "yuangongbaobiao",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
+      "icon_id": "29653844",
+      "name": "客户报表",
+      "font_class": "kehubaobiao",
+      "unicode": "e61a",
+      "unicode_decimal": 58906
+    },
+    {
+      "icon_id": "29609213",
+      "name": "应急处置",
+      "font_class": "yingjichuzhi",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "29609062",
+      "name": "工作台",
+      "font_class": "gongzuotai",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    },
+    {
+      "icon_id": "29609063",
+      "name": "投诉管理",
+      "font_class": "tousuguanli",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "29609064",
+      "name": "通话记录",
+      "font_class": "tonghuajilu",
+      "unicode": "e615",
+      "unicode_decimal": 58901
+    },
+    {
+      "icon_id": "29609066",
+      "name": "接警管理",
+      "font_class": "jiejingguanli",
+      "unicode": "e616",
+      "unicode_decimal": 58902
+    },
+    {
+      "icon_id": "29609067",
+      "name": "咨询管理",
+      "font_class": "zixunguanli",
+      "unicode": "e617",
+      "unicode_decimal": 58903
+    },
+    {
+      "icon_id": "29608329",
+      "name": "日志管理",
+      "font_class": "rizhiguanli",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "29608330",
+      "name": "电梯配置",
+      "font_class": "diantipeizhi",
+      "unicode": "e611",
+      "unicode_decimal": 58897
+    },
+    {
+      "icon_id": "29608331",
+      "name": "paas",
+      "font_class": "paas",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "29606750",
+      "name": "保险公司",
+      "font_class": "baoxiangongsi",
+      "unicode": "e60d",
+      "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "29606751",
+      "name": "维保公司",
+      "font_class": "weibaogongsi",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
+    },
+    {
+      "icon_id": "29606752",
+      "name": "配件清单",
+      "font_class": "peijianqingdan",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "29605487",
+      "name": "任务管理",
+      "font_class": "renwuguanli",
+      "unicode": "e60c",
+      "unicode_decimal": 58892
+    },
+    {
+      "icon_id": "29605394",
+      "name": "计划管理",
+      "font_class": "jihuaguanli",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "29605395",
+      "name": "团队管理",
+      "font_class": "tuanduiguanli",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "29604462",
+      "name": "合同管理",
+      "font_class": "hetongguanli",
+      "unicode": "e608",
+      "unicode_decimal": 58888
+    },
+    {
+      "icon_id": "29604463",
+      "name": "项目管理",
+      "font_class": "xiangmuguanli",
+      "unicode": "e609",
+      "unicode_decimal": 58889
+    },
+    {
+      "icon_id": "29602779",
+      "name": "保险报表",
+      "font_class": "baoxianbaobiao",
+      "unicode": "e607",
+      "unicode_decimal": 58887
+    },
+    {
+      "icon_id": "29602681",
+      "name": "保险报表",
+      "font_class": "baoxianbaobiao1",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "29602479",
+      "name": "客户报表",
+      "font_class": "kehubaobiao1",
+      "unicode": "e602",
+      "unicode_decimal": 58882
+    },
+    {
+      "icon_id": "29602480",
+      "name": "供应链报表",
+      "font_class": "gongyinglianbaobiao",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "29602481",
+      "name": "保险报表",
+      "font_class": "baoxianbaobiao2",
+      "unicode": "e604",
+      "unicode_decimal": 58884
+    },
+    {
+      "icon_id": "29602482",
+      "name": "工程报表",
+      "font_class": "gongchengbaobiao",
+      "unicode": "e605",
+      "unicode_decimal": 58885
+    },
+    {
+      "icon_id": "29602483",
+      "name": "物联网报表",
+      "font_class": "wulianwangbaobiao",
+      "unicode": "e606",
+      "unicode_decimal": 58886
+    },
+    {
+      "icon_id": "29598913",
+      "name": "运营看板",
+      "font_class": "yunyingkanban",
+      "unicode": "e601",
+      "unicode_decimal": 58881
+    }
+  ]
+}

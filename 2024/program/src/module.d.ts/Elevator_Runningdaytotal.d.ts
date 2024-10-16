@@ -1,0 +1,41 @@
+declare interface IElevator_Runningdaytotal {
+  db_accessCode: string
+  db_elevId: string
+  db_genTime: string
+  db_id: string
+  db_innerNum: string
+  db_intime: string
+  db_lastDoorTimes: string
+  db_lastLoadRunningDuration: string
+  db_lastLoadRunningMileage: string
+  db_lastLoadRunningTimes: string
+  db_lastRunningDuration: string
+  db_lastRunningMileage: string
+  db_lastRunningTimes: string
+  db_lastStopDuration: string
+
+  db_lastTakeNumber: string
+  db_registCode: string
+  db_relatedRule: string
+  db_sendTime: string
+  db_supplierCode: string
+  db_totalDoorTimes: string
+  db_totalLoadRunningDuration: string
+  db_totalLoadRunningMileage: string
+  db_totalLoadRunningTimes: string
+  db_totalRunningDuration: string
+  db_totalRunningMileage: string
+  db_totalRunningTimes: string
+  db_totalStopDuration: string
+  db_totalTakeNumber: string
+  db_version: string
+  ui_access: string
+  ui_end_genTime: string
+  ui_genTime: string
+  ui_intime: string
+  ui_sendTime: string
+  ui_start_genTime: string
+  ui_supplier: string
+  ui_projectName: string
+  ui_projectNum: string
+}

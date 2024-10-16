@@ -1,0 +1,72 @@
+declare interface IElevator_Project {
+  db_id: string
+  db_id_proName: string // 项目名称
+  db_province_city: string // 省市区
+  db_province: string // 省
+  db_city: string // 市
+  db_region: string // 区
+  db_street: string // 街道
+  db_community: string // 社区居委会
+  db_addr: string // 项目完整地址
+  db_mapAddr: string // 地图地址
+  db_mapLongi: string // 地图经度
+  db_mapLati: string // 地图纬度
+  db_useCompanyId: string // 使用单位id
+  db_chargeUser: string // 项目负责人名字，手动输入
+  db_chargeUserPhone: string // 项目负责人联系方式，手动输入
+  db_proPriorityCode: string // 项目优先级
+  db_secureUser: string // 安全管理员名字，手动输入
+  db_secureUserPhone: string // 安全管理员联系方式，手动输入
+  db_elevIds: string // 项目里的电梯id组，逗号拼接
+  db_userIds: string // 项目有权限的人id组，逗号拼接
+  ui_useCompanyName: string // 使用单位名称
+  ui_proPriority: string // 项目优先级
+  db_createtime: string // 项目创建日期
+  db_rule: string // 项目规则
+  db_labelCode: string // 项目标签
+
+  db_platformKey: string // 平台key
+  db_platformName: string // 平台名称
+  db_platformCode: string // 平台编码
+  db_platformSecret: string // 平台secret
+  db_platformTypeCode: string // 平台类型
+  db_propMUserId: string // 物业经理id
+  db_propMUserPhone: string // 物业经理手机号
+  db_propPassUserId: string // 物业验收人id
+  db_propPassUserPhone: string // 物业验收人手机号
+  db_projectMUserId: string // 项目经理id
+  db_projectMUserPhone: string // 项目经理手机号
+  db_enginMUserId: string // 工程经理id
+  db_enginMUserPhone: string // 工程经理手机号
+  db_insuMUserId: string // 保险客户经理id
+  db_insuMUserPhone: string // 保险客户经理Phone
+  db_sceneUserId1: string // 现场联系人1(工程人员)
+  db_sceneUser1Phone: string // 现场联系人1手机号
+  db_sceneUserId2: string // 现场联系人2(工程人员)
+  db_sceneUser2Phone: string // 现场联系人2手机号
+  db_sceneUserId3: string // 现场联系人3(工程人员)
+  db_sceneUser3Phone: string // 现场联系人3手机号
+  db_sceneUserId4: string // 现场联系人4(工程人员)
+  db_sceneUser4Phone: string // 现场联系人4手机号
+  db_insuCompanyId: string // 承保单位
+  db_maintCompanyId: string // 维保单位
+  db_startDate: string // 服务开始日期
+  db_endDate: string // 服务结束日期
+
+  ui_propMUserName: string // 物业经理名称
+  ui_propPassUserName: string // 物业验收人名称
+  ui_projectMUserName: string // 项目经理名称
+  ui_enginMUserName: string // 工程经理名称
+  ui_insuMUserName: string // 保险客户经理名称
+  ui_sceneUserName1: string // 现场联系人1（工程人员)
+  ui_sceneUserName2: string // 现场联系人2（工程人员)
+  ui_sceneUserName3: string // 现场联系人3（工程人员)
+  ui_sceneUserName4: string // 现场联系人4（工程人员)
+
+  ui_createtime: string // 项目创建日期
+  ui_startDate: string // 服务开始日期
+  ui_endDate: string // 服务结束日期
+  ui_start_createtime: string // 项目创建日期开始
+  ui_end_createtime: string // 项目创建日期结束
+  ui_queryNullField: string // 为空查询
+}

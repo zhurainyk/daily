@@ -1,0 +1,43 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist",
+    "module": "esnext",
+    "target": "esnext",
+    "lib": ["es6", "dom", "ESNext"],
+    "sourceMap": false,
+    "allowJs": true,
+    "jsx": "preserve",
+    "strict": true,
+    "alwaysStrict": true,
+    "moduleResolution": "node",
+    "rootDir": "./",
+    "removeComments": true,
+    "forceConsistentCasingInFileNames": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitAny": false,
+    "strictNullChecks": true,
+    "experimentalDecorators": true,
+    "useDefineForClassFields": true,
+    "noUnusedLocals": false,
+    "noUnusedParameters": false,
+    "allowSyntheticDefaultImports": true,
+    "allowUnusedLabels": true,
+    "allowUnreachableCode": true,
+    "esModuleInterop": true, // 支持 CommonJS 和 ES 模块之间的互操作性
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "watch": true
+  },
+  "exclude": ["node_modules", "jest", "config", "nodeBackEnd", "webpackConfig"],
+  "include": [
+    "src/**/*.ts",
+    "src/**/*.d.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "src/**/*.Vue",
+    "filemodule.d.ts"
+  ]
+}

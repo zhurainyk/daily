@@ -1,0 +1,30 @@
+{
+  "common": {
+    "success": "成功",
+    "error": "错误",
+    "fail": "失败",
+    "warning": "警告",
+    "username": "姓名",
+    "telephone": "电话号码",
+    "department": "部门",
+    "job": "职位"
+  },
+  "platform": {
+    "marketing": "营销平台",
+    "engineering": "工程服务平台",
+    "service": "客服平台",
+    "oa": "OA平台",
+    "BI": "BI平台",
+    "expertplatform": "专家平台"
+  },
+  "business": {
+    "projectName": "s",
+    "useCompanyName": "s",
+    "maintCompanyName": "维保asd单位",
+    "insuCompanyName": "承保asd单位",
+    "happenTime": "发生asd时间",
+    "createUserName": "创asd建人",
+    "createTime": "asd创建时间",
+    "content": "ad描述"
+  }
+}

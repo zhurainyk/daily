@@ -1,0 +1,90 @@
+declare interface IElevator_OrderInfo {
+  db_id: string
+  db_id_orderName: string // 工单名称
+  db_orderTypeCode: string // 工单类型code
+  db_orderDetail: string // 工单详情
+  db_taskId: string // 关联任务id
+  db_projectId: string // 所属项目id
+  db_registCode: string // 电梯注册代码
+  db_elevId: string // 电梯档案db_id
+  db_projectNum: string // 项目内编号
+  db_createUserId: string // 创建人
+  db_followUserId: string // 跟进人
+  db_executeUserId: string // 执行人
+  db_superiorPassUserId: string // 上级验收人
+  db_propPassUserId: string // 物业验收人
+  db_isVideo: string // 是否录制视频
+  db_createtime: string // 创建时间
+  db_preEndtime: string // 预计开始时间
+  db_turnToTime: string // 转派时间
+  db_dealStarttime: string // 开始处理时间
+  db_dealStartImgUrl: string // 开始处理打卡水印图地址
+  db_dealStartImgName: string // 开始处理打卡水印图名称
+  db_dealEndtime: string // 完成处理时间
+  db_dealEndImgUrl: string // 结束处理打卡水印图地址
+  db_dealEndImgName: string // 结束处理打卡水印图名称
+  db_dealEndDuration: string // 完成工单耗时
+  db_hangStarttime: string // 挂起处理时间
+  db_hangReasonCode: string // 挂起原因code
+  db_hangDuration: string // 挂起耗时
+  db_superiorPassTime: string // 上级验收时间
+  db_propPassTime: string // 物业验收时间
+  db_proElecSignatureUrl: string // 物业电子签名
+  db_orderPriorityCode: string // 优先级code
+  db_orderState: string // 工单状态
+  db_stopDuration: string // 停梯时长
+  db_flowRecords: string // 流转记录json[]
+  db_dynamicWorkItem: string // 动态工作项
+  db_videoUrls: string // 处理视频地址
+  db_passCount: string // 验收通过次数，默认1次
+  db_note: string // 备注
+  db_mapAddr: string // 地图地址
+  db_mapLongi: string // 地图经度
+  db_mapLati: string // 地图纬度
+  db_useCompanyId: string // 使用单位（物业公司）id
+  db_maintCompanyId: string // 维保单位id
+  db_insuCompanyId: string // 承保单位id
+  db_srcId: string // 源标识id
+
+  ui_useCompanyName: string // 使用单位（物业公司）
+  ui_maintCompanyName: string // 维保单位
+  ui_insuCompanyName: string // 承保单位
+  ui_projectName: string // 所属项目名称
+  ui_orderType: string // 工单类型
+  ui_taskName: string // 关联任务名称
+  ui_createUserName: string // 创建人
+  ui_followUserName: string // 跟进人
+  ui_executeUserName: string // 执行人
+  ui_superiorPassUserName: string // 上级验收人
+  ui_propPassUserName: string // 物业验收人
+  ui_isVideoDesc: string // 是否录制视频描述（用通用是否常量）
+  ui_createtime: string // 创建时间
+  ui_preEndtime: string // 预计开始时间
+  ui_turnToTime: string // 转派时间
+  ui_dealStarttime: string // 开始处理时间
+  ui_dealEndtime: string // 完成处理时间
+  ui_superiorPassTime: string // 上级验收时间
+  ui_propPassTime: string // 物业验收时间
+  ui_orderPriority: string // 优先级
+  ui_orderStateDesc: string // 工单状态描述
+  ui_typeOrder: object // 各类型工单实体
+  ui_displayTime: string // 展示时间
+
+  ui_start_createtime: string // 创建时间开始
+  ui_end_createtime: string // 创建时间结束
+
+  ui_start_preEndtime: string // 预计开始时间开始
+  ui_end_preEndtime: string // 预计开始时间结束
+
+  ui_start_dealEndtime: string // 完成时间开始
+  ui_end_dealEndtime: string // 完成时间结束
+
+  ui_start_propPassTime: string // 物业验收时间开始
+  ui_end_propPassTime: string // 物业验收时间结束
+
+  ui_printTag: string // 是否打印，0否，1是
+  ui_clockRange: string // 打卡范围，从项目或电梯规则里获取，如果规则没配置，为空
+  ui_mapAddr: string // 地图地址,从电梯获取，电梯里没有，从项目里获取，都没有，为空
+  ui_mapLongi: string // 地图经度,从电梯获取，电梯里没有，从项目里获取，都没有，为空
+  ui_mapLati: string // 地图纬度,从电梯获取，电梯里没有，从项目里获取，都没有，为空
+}

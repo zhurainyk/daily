@@ -1,0 +1,66 @@
+{
+  "sys01": {
+    "desciption": "营销平台",
+    "type": "sys01"
+  },
+  "sys06": {
+    "desciption": "工程服务平台",
+    "type": "sys06"
+  },
+  "sys02": {
+    "desciption": "客服平台",
+    "type": "sys02"
+  },
+  "sys09": {
+    "desciption": "人才平台",
+    "type": "sys09"
+  },
+  "sys10": {
+    "desciption": "OA平台",
+    "type": "sys10"
+  },
+  "sys08": {
+    "desciption": "BI平台",
+    "type": "sys08"
+  },
+  "sys05": {
+    "desciption": "物联网平台",
+    "type": "sys05"
+  },
+  "sys03": {
+    "desciption": "供应链平台",
+    "type": "sys03"
+  },
+  "sys04": {
+    "desciption": "运维平台",
+    "type": "sys04"
+  },
+  "sys07": {
+    "desciption": "保险公司平台",
+    "type": "sys07"
+  },
+  "sys20": {
+    "desciption": "手机平台",
+    "type": "sys20"
+  },
+  "sys11": {
+    "desciption": "专家平台",
+    "type": "sys11"
+  },
+  "sys21": {
+    "desciption": "微信平台",
+    "type": "sys21"
+  },
+  "sys22": {
+    "desciption": "物业平台",
+    "type": "sys22"
+  },
+  "sys23": {
+    "desciption": "工程平台",
+    "type": "sys23"
+  },
+  "sys24": {
+    "desciption": "服务平台",
+    "type": "sys24"
+  }
+}

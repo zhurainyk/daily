@@ -1,0 +1,60 @@
+declare interface IElevator_RunningEventPushLogs {
+  db_id: string
+  db_elevId: string // 电梯id
+  db_registCode: string // 电梯注册代码
+  db_innerNum: string // 电梯内部编号
+  db_projectId: string // 项目id
+  db_curDirection: string // 当前运行方向
+  db_curFloor: string // 当前楼层
+  db_curFloorNum: string // 当前楼层数值
+  db_somebodyIn: string // 是否有人
+  db_doorStatus: string // 开关门状态
+  db_doorZone: string // 是否在开锁区域
+  db_curAverageSpeed: string // 当前平均速度
+  db_eventState: string // 事件状态值(网关/控制系统事件)
+  db_stateSrcCode: string // 状态来源code
+  db_eventCode: string // 事件代码
+  db_eventPriorityCode: string // 事件优先级代码
+  db_iotOnlineState: string // 物联网在线状态
+  db_supplierCode: string // 供应商代码
+  db_version: string // 版本号
+  db_relatedRule: string // 关联主键规则
+  db_accessCode: string // 接入技术
+  db_gatewayTime: string // 网关时间
+  db_sendTime: string // 发送时间，可为空
+  db_inTime: string // 入库时间
+  db_pushTime: string // 推送时间
+  db_tagCode: string // 数据标识码
+  db_temperature: string // 温度
+  db_humidity: string // 湿度
+
+  db_passengers: string // 乘梯人数
+  db_speed: string // 当前速度
+  db_accSpeed: string // 瞬时加速度
+  db_shakeFrequency: string // 抖动频率
+  db_shakeAccSpeed: string // 抖动加速度
+  db_brightness: string // 亮度
+  db_useCompanyId: string // 使用单位（物业公司）id
+  db_maintCompanyId: string // 维保单位id
+  db_insuCompanyId: string // 承保单位id
+  db_pushGoal: string // 推送目标
+
+  ui_useCompanyName: string // 使用单位（物业公司）
+  ui_maintCompanyName: string // 维保单位
+  ui_insuCompanyName: string // 承保单位
+
+  ui_projectName: string // 项目名称
+  ui_eventPriority: string // 事件优先级
+  ui_eventName: string // 事件名称
+  ui_eventDesc: string // 事件描述
+  ui_supplier: string // 供应商名称
+  ui_access: string // 接入技术
+  ui_gatewayTime: string // 网关时间
+  ui_sendTime: string // 发送时间
+  ui_inTime: string // 入库时间
+  ui_pushTime: string // 推送时间
+  ui_curFloorNum: string // 当前楼层数
+  ui_tag: string // 数据标识
+  ui_curEvents: string // 当前事件
+  ui_brightnessDesc: string // 亮度描述
+}

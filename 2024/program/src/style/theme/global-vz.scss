@@ -1,0 +1,142 @@
+$default-theme: (
+  font-family: (
+    'HPSimplified-Regular'
+  ),
+  color-primary: #6158ff,
+  font-family-bold: 'HPSimplified-Bold',
+  color-primary-light: #5a8dee,
+  color-primary-deep: #171725,
+  color-primary-lighter: #7e84a3,
+  color-success: #21d59b,
+  color-success-light: #8af6ab,
+  color-success-deep: #009231,
+  color-warn: #ffc700,
+  color-warn-light: #f99600,
+  color-warn-deep: #bf924d,
+  color-error: #f0142f,
+  color-error-light: #ff7d7d,
+  color-error-deep: #d50611,
+  color-info: #929292,
+  color-info-light: #c8c8c8,
+  color-info-deep: #6d6d6d,
+  color-disabled: #ebeae7,
+  color-disabled-light: #f5f4f3,
+  color-disabled-deep: #b0b0ae,
+  color-title: #0058ff,
+  background-color: #7e71db,
+  background-color-deep: #ddd,
+  background-color-light: #fff
+);
+
+$pl-default-themes: (
+  'default': $default-theme,
+  'black': (
+    // color-primary: #92BBF3,
+    // color-primary-light: #ea8bd1,
+    // color-primary-deep: #ba008b,
+    // color-primary-lighter: #e8d1e4,
+    // color-success: #3eede5,
+    // color-success-light: #8bede5,
+    // color-success-deep: #299e99,
+    // color-warn: #9a61ff,
+    // color-warn-light: #d1acff,
+    // color-warn-deep: #6540a8,
+    // color-error: #ffa100,
+    // color-error-light: #ffbe7a,
+    // color-error-deep: #a36700,
+    // color-info: #a8fc57,
+    // color-info-light: #d4fca1,
+    // color-info-deep: #72ab3b,
+    // color-disabled: #d9d2d5,
+    // color-disabled-light: #F5F4F3,
+    // color-disabled-deep: #B0B0AE,
+    // color-title:#fff,
+    // background-color:#333,
+    // background-color-deep:#000,
+    // background-color-light:#999,
+  )
+);
+
+@function pl-var($key) {
+  @if (map_has_key($theme-map, $key)) {
+    @return map-get($theme-map, $key);
+  } @else {
+    @return map-get($default-theme, $key);
+  }
+}
+
+@mixin pl-themeify($theme, $append-default-theme: true) {
+  @if (length(map-keys($theme)) >0 and $append-default-theme) {
+    $pl-themes: map-merge($pl-default-themes, $theme) !global;
+  } @else {
+    $pl-themes: $theme !global;
+  }
+  @each $theme-name, $theme-map in $pl-themes {
+    $theme-map: $theme-map !global;
+
+    $p-font-family: pl-var(font-family) !global;
+    $p-font-family-bold: pl-var(font-family-bold) !global;
+    $p-color-primary: pl-var(color-primary) !global;
+    $p-color-primary-light: pl-var(color-primary-light) !global;
+    $p-color-primary-deep: pl-var(color-primary-deep) !global;
+    $p-color-primary-lighter: pl-var(color-primary-lighter) !global;
+    $p-color-success: pl-var(color-success) !global;
+    $p-color-success-light: pl-var(color-success-light) !global;
+    $p-color-success-deep: pl-var(color-success-deep) !global;
+    $p-color-warn: pl-var(color-warn) !global;
+    $p-color-warn-light: pl-var(color-warn-light) !global;
+    $p-color-warn-deep: pl-var(color-warn-deep) !global;
+    $p-color-error: pl-var(color-error) !global;
+    $p-color-error-light: pl-var(color-error-light) !global;
+    $p-color-error-deep: pl-var(color-error-deep) !global;
+    $p-color-info: pl-var(color-info) !global;
+    $p-color-info-light: pl-var(color-info-light) !global;
+    $p-color-info-deep: pl-var(color-info-deep) !global;
+    $p-color-disabled: pl-var(color-disabled) !global;
+    $p-color-disabled-light: pl-var(color-disabled-light) !global;
+    $p-color-disabled-deep: pl-var(color-disabled-deep) !global;
+    $p-color-title: pl-var(color-title) !global;
+    $p-background-color: pl-var(background-color) !global;
+    $p-background-color-light: pl-var(background-color-light) !global;
+    $p-background-color-deep: pl-var(background-color-deep) !global;
+
+    @if (str_length($theme-name) >0) {
+      .pl-theme-#{$theme-name} {
+        font-family: $p-font-family;
+        @content;
+      }
+    } @else {
+      html {
+        @content;
+      }
+    }
+  }
+}
+
+@mixin pl-theme-wrap($theme) {
+  @include pl-themeify($theme, true) {
+    @content;
+  }
+}
+
+@mixin pl-use-theme($theme: ()) {
+  @include pl-themeify($theme, false) {
+  }
+}
+
+@mixin pl-colors($prefix) {
+  @each $key in (primary, success, warn, error, info, disabled) {
+    $key: $key !global;
+    $pl-color: pl-var(color-#{$key}) !global;
+    $value: pl-var(color-#{$key}) !global;
+    $pl-color-deep: pl-var(color-#{$key}-deep) !global;
+    $pl-color-light: pl-var(color-#{$key}-light) !global;
+    @if (str_length($prefix) >0) {
+      &.#{$prefix}-color-#{$key} {
+        @content;
+      }
+    } @else {
+      @content;
+    }
+  }
+}
