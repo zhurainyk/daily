@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>返回首页</button>
+    <h1>因数计算</h1>
+    <p>你输入的数字是：<%= num %></p>
+    <ul>
+        <% arr.forEach((item)=>{ %>
+            <li><%= item %></li>
+        <% }) %>
+    </ul>
+    <script>
+        const button = document.querySelector('button')
+        button.addEventListener('click',()=>{
+            window.location.href = '/'
+        })
+    </script>
+</body>
+</html>
