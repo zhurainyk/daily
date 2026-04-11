@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/demo.css">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>因数计算</h1>
+    <label for="number">请输入一个数字：</label>
+    <input type="number" id="number" name="number" >
+    <button>计算</button>
+    <script>
+
+        const number = document.getElementById('number')
+        const button = document.querySelector('button')
+        button.addEventListener('click',()=>{
+            const num = Number(number.value)
+            if (isNaN(num)) {
+                alert('请输入一个数字')
+                return
+            }
+            window.location.href = `/${num}`
+        })
+    </script>
+</body>
+
+</html>
