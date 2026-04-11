@@ -1,0 +1,19 @@
+{
+  "name": "figma-mcp-plugin",
+  "version": "1.0.0",
+  "description": "A Figma plugin that integrates with Model Context Protocol",
+  "main": "src/code.js",
+  "scripts": {
+    "build": "echo 'Build script placeholder'"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.25.0"
+  },
+  "keywords": [
+    "figma",
+    "mcp",
+    "plugin"
+  ],
+  "author": "zhurainy",
+  "license": "MIT"
+}

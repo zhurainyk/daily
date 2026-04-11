@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCP Figma Plugin</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      margin: 0;
+      padding: 10px;
+      background-color: #f5f5f5;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    
+    button {
+      padding: 8px 12px;
+      background-color: #007AFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    
+    button:hover {
+      background-color: #0056CC;
+    }
+    
+    button:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+    
+    .status {
+      padding: 8px;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+    
+    .status.connected {
+      background-color: #d4edda;
+      color: #155724;
+    }
+    
+    .status.error {
+      background-color: #f8d7da;
+      color: #721c24;
+    }
+    
+    .selection-info {
+      font-size: 12px;
+      background-color: white;
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ddd;
+      max-height: 150px;
+      overflow-y: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h3>MCP Figma Plugin</h3>
+    
+    <button id="connectBtn">Connect to MCP Server</button>
+    
+    <div id="status" class="status" style="display: none;"></div>
+    
+    <button id="getSelectionBtn" disabled>Get Selection Info</button>
+    
+    <button id="sendContextBtn" disabled>Send Context to MCP</button>
+    
+    <div id="selectionInfo" class="selection-info" style="display: none;"></div>
+  </div>
+
+  <script>
+    // 连接按钮事件
+    document.getElementById('connectBtn').addEventListener('click', () => {
+      parent.postMessage({
+        pluginMessage: {
+          type: 'connect-mcp'
+        }
+      }, '*');
+    });
+    
+    // 获取选中元素信息按钮事件
+    document.getElementById('getSelectionBtn').addEventListener('click', () => {
+      parent.postMessage({
+        pluginMessage: {
+          type: 'get-selection'
+        }
+      }, '*');
+    });
+    
+    // 发送上下文到MCP按钮事件
+    document.getElementById('sendContextBtn').addEventListener('click', () => {
+      parent.postMessage({
+        pluginMessage: {
+          type: 'send-context'
+        }
+      }, '*');
+    });
+    
+    // 监听来自插件主代码的消息
+    window.addEventListener('message', (event) => {
+      const msg = event.data.pluginMessage;
+      
+      if (msg.type === 'connection-status') {
+        const statusEl = document.getElementById('status');
+        statusEl.style.display = 'block';
+        
+        if (msg.status === 'connected') {
+          statusEl.className = 'status connected';
+          statusEl.textContent = msg.message;
+          document.getElementById('connectBtn').disabled = true;
+          document.getElementById('getSelectionBtn').disabled = false;
+          document.getElementById('sendContextBtn').disabled = false;
+        } else {
+          statusEl.className = 'status error';
+          statusEl.textContent = msg.message;
+        }
+      }
+      
+      if (msg.type === 'selection-data') {
+        const selectionInfoEl = document.getElementById('selectionInfo');
+        selectionInfoEl.style.display = 'block';
+        
+        if (msg.data.length > 0) {
+          selectionInfoEl.innerHTML = `
+            <strong>Selected Elements (${msg.data.length}):</strong>
+            <ul>
+              ${msg.data.map(item => `<li>${item.name} (${item.type})</li>`).join('')}
+            </ul>
+          `;
+        } else {
+          selectionInfoEl.innerHTML = '<strong>No elements selected</strong>';
+        }
+      }
+      
+      if (msg.type === 'context-sent') {
+        const statusEl = document.getElementById('status');
+        statusEl.style.display = 'block';
+        
+        if (msg.status === 'success') {
+          statusEl.className = 'status connected';
+          statusEl.textContent = msg.message;
+        } else {
+          statusEl.className = 'status error';
+          statusEl.textContent = msg.message;
+        }
+      }
+    });
+  </script>
+</body>
+</html>

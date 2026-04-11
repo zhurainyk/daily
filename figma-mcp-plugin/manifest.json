@@ -1,0 +1,14 @@
+{
+  "name": "MCP Figma Plugin",
+  "id": "figma-mcp-plugin",
+  "api": "1.0.0",
+  "main": "src/code.js",
+  "ui": "src/ui.html",
+  "editorType": ["figma"],
+  "permissions": [
+    "currentuser"
+  ],
+  "networkAccess": {
+    "allowedDomains": ["*"]
+  }
+}
