@@ -3,6 +3,6 @@ module.exports = defineConfig({
   transpileDependencies: true,
   assetsDir: 'static',
   productionSourceMap: false,
-  integrity: true,
-  crossorigin: undefined,
+  // 开发模式禁用 SRI，避免哈希校验失败导致空白页
+  integrity: false,
 })

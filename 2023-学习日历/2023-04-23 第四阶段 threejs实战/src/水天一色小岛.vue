@@ -16,6 +16,17 @@ import {DRACOLoader} from 'three/examples/jsm/loaders/DRACOLoader'
 import {RGBELoader} from 'three/examples/jsm/loaders/RGBELoader'
 //css2d标签
 import {CSS2DObject,CSS2DRenderer} from 'three/examples/jsm/renderers/CSS2DRenderer'
+// 3D文字
+import {FontLoader} from 'three/examples/jsm/loaders/FontLoader'
+import {TextGeometry} from 'three/examples/jsm/geometries/TextGeometry'
+
+// 创建 CSS2DRenderer
+const css2DRenderer = new CSS2DRenderer()
+css2DRenderer.setSize(window.innerWidth, window.innerHeight)
+css2DRenderer.domElement.style.position = 'absolute'
+css2DRenderer.domElement.style.top = '0'
+css2DRenderer.domElement.style.pointerEvents = 'none' // 让点击穿透
+
 const scene = new THREE.Scene()
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 2000)
 camera.position.set(-50, 50, 200)
@@ -33,6 +44,7 @@ window.addEventListener('resize', () => {
   camera.aspect = window.innerWidth / window.innerHeight
   camera.updateProjectionMatrix()
   renderer.setSize(window.innerWidth, window.innerHeight)
+  css2DRenderer.setSize(window.innerWidth, window.innerHeight)
 })
 const container = ref(null)
 
@@ -40,6 +52,7 @@ const controle = new OrbitControls(camera,renderer.domElement)
 controle.enableDamping = true
 function render(){
   renderer.render(scene,camera)
+  css2DRenderer.render(scene, camera) // 渲染 CSS2D 标签
   controle.update()
   requestAnimationFrame(render)
 }
@@ -129,28 +142,57 @@ const ambientLight = new THREE.AmbientLight(0xffffff,.3)
 scene.add(ambientLight)
 
 
-//添加环境标签
-const addLabel = ()=>{
-  const div = document.createElement('div')
-  div.style.width = '200px'
-  div.style.height = '50px'
-  div.style.background = 'pink'
-  div.className = 'label'
-  div.textContent = '人工3d小岛'
-  // div.style.marginTop = '-1em'
-  const _div = new CSS2DObject(div)
-  _div.position.set(5,5,5)
-  scene.add(_div)
-  
-
-  // const cssRender = new CSS2DRenderer(  )
-  // cssRender.setSize(10,10)
-  //   cssRender.domElement.style.position = 'absolute';
-  //   cssRender.domElement.style.top = '0'
-  //   document.body.appendChild(cssRender)
+//添加3D文字标签
+const addLabel = () => {
+  const fontLoader = new FontLoader()
+  fontLoader.load(
+    '/assets/fonts/helvetiker_regular.typeface.json', // 从 public 目录加载字体
+    (font) => {
+      // 先测试英文（中文字体需要额外下载支持中文的字体文件）
+      const textGeometry = new TextGeometry('Hello 3D Island', {
+        font: font,
+        size: 8,            // 增大字体大小
+        height: 2,          // 字体厚度（3D 立体感）
+        curveSegments: 12,
+        bevelEnabled: true, // 开启倒角
+        bevelThickness: 0.3,
+        bevelSize: 0.2,
+        bevelOffset: 0,
+        bevelSegments: 5
+      })
+      
+      // 创建材质
+      const material = new THREE.MeshStandardMaterial({ 
+        color: 0xff6b6b,
+        metalness: 0.3,
+        roughness: 0.4
+      })
+      
+      const textMesh = new THREE.Mesh(textGeometry, material)
+      
+      // 居中文字
+      textGeometry.computeBoundingBox()
+      const center = new THREE.Vector3()
+      textGeometry.boundingBox.getCenter(center)
+      textMesh.position.sub(center)
+      
+      // 放在相机前方，高处（避免被小岛遮挡）
+      textMesh.position.set(-10,30, 60)
+      scene.add(textMesh)
+      
+      console.log('3D文字已添加', textMesh.position)
+    },
+    (progress) => {
+      console.log('字体加载进度', progress)
+    },
+    (err) => {
+      console.error('字体加载失败', err)
+    }
+  )
 }
 onMounted(() => {
   container.value.appendChild(renderer.domElement)
+  container.value.appendChild(css2DRenderer.domElement) // 添加 CSS2D 渲染器的 DOM
   render()
   addLabel()
 })
